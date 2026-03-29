@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { LogOut, Upload as UploadIcon, Grid, Calendar, User as UserIcon } from 'lucide-react';
+import { LogOut, Upload as UploadIcon, Grid, Calendar, User as UserIcon, Trash2, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import ProgressPanel from '../components/ProgressPanel';
 import Leaderboard from '../components/Leaderboard';
@@ -10,6 +10,7 @@ const Gallery = () => {
     const [loading, setLoading] = useState(true);
     const [gamification, setGamification] = useState(null);
     const [allChallenges, setAllChallenges] = useState([]);
+    const [lightbox, setLightbox] = useState(null);
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ const Gallery = () => {
 
     const fetchPhotos = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/photos/gallery.php');
+            const response = await fetch('https://maxime.go.yo.fr//api/photos/gallery.php');
             const data = await response.json();
             setPhotos(data);
         } catch (err) {
@@ -33,9 +34,7 @@ const Gallery = () => {
 
     const fetchGamification = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/gamification/stats.php', {
-                credentials: 'include'
-            });
+            const response = await fetch(`https://maxime.go.yo.fr//api/gamification/stats.php?user_id=${user.id}`);
             if (response.ok) {
                 setGamification(await response.json());
             }
@@ -46,7 +45,7 @@ const Gallery = () => {
 
     const fetchChallenges = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/challenges/list.php');
+            const response = await fetch('https://maxime.go.yo.fr//api/challenges/list.php');
             if (response.ok) setAllChallenges(await response.json());
         } catch (err) {}
     };
@@ -55,6 +54,29 @@ const Gallery = () => {
         logout();
         navigate('/login');
     };
+
+    const handleDelete = async (photoId) => {
+        if (!confirm('Supprimer cette photo ?')) return;
+        try {
+            const response = await fetch('https://maxime.go.yo.fr//api/photos/delete.php', {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ photo_id: photoId, user_id: user.id }),
+            });
+            if (response.ok) {
+                setPhotos(prev => prev.filter(p => p.id !== photoId));
+            }
+        } catch {
+            console.error("Erreur lors de la suppression");
+        }
+    };
+
+    useEffect(() => {
+        const onKey = (e) => { if (e.key === 'Escape') setLightbox(null); };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, []);
 
     if (!user) {
         navigate('/login');
@@ -70,7 +92,7 @@ const Gallery = () => {
                 </div>
                 <div style={{ display: 'flex', gap: '16px' }}>
                     <Link to="/upload" className="btn-primary">
-                        <UploadIcon size={20} /> Participer
+                        <UploadIcon size={20} /> Réaliser un défi
                     </Link>
                     <button onClick={handleLogout} className="btn-primary" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid var(--glass-border)' }}>
                         <LogOut size={20} />
@@ -110,20 +132,23 @@ const Gallery = () => {
                         const ext = photo.image_path.split('.').pop().toLowerCase();
                         const isVideo = ['mp4', 'mov', 'webm', 'avi', 'mpeg', '3gp'].includes(ext);
                         return (
-                        <div key={photo.id} className="photo-card glass-card">
+                        <div key={photo.id} className="photo-card glass-card" style={{ position: 'relative', cursor: 'pointer' }} onClick={() => setLightbox(photo)}>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); handleDelete(photo.id); }}
+                                title="Supprimer"
+                                style={{ position: 'absolute', top: '8px', right: '8px', zIndex: 10, background: '#e53e3e', border: 'none', cursor: 'pointer', color: 'white', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                                <Trash2 size={14} />
+                            </button>
                             {isVideo ? (
-                                <video src={`http://localhost:8000/uploads/${photo.image_path}`} controls style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px 12px 0 0' }} />
+                                <video src={`https://maxime.go.yo.fr//uploads/${photo.image_path}`} controls style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px 12px 0 0' }} onClick={(e) => e.stopPropagation()} />
                             ) : (
-                                <img src={`http://localhost:8000/uploads/${photo.image_path}`} alt="Défi photo" />
+                                <img src={`https://maxime.go.yo.fr//uploads/${photo.image_path}`} alt="Défi photo" />
                             )}
                             <div className="photo-info">
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                     <UserIcon size={14} />
                                     <span style={{ fontWeight: '600', fontSize: '0.9rem' }}>{photo.user_name}</span>
-                                </div>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.8, fontSize: '0.8rem' }}>
-                                    <Calendar size={12} />
-                                    <span>{new Date(photo.created_at).toLocaleDateString()}</span>
                                 </div>
                                 {photo.challenge_icon && (
                                     <div style={{ marginTop: '4px', fontSize: '0.78rem', color: 'rgba(255,255,255,0.7)' }}>
@@ -134,6 +159,18 @@ const Gallery = () => {
                         </div>
                         );
                     })}
+                </div>
+            )}
+            {lightbox && (
+                <div onClick={() => setLightbox(null)} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+                    <button onClick={() => setLightbox(null)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'rgba(255,255,255,0.1)', border: 'none', cursor: 'pointer', color: 'white', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <X size={20} />
+                    </button>
+                    {['mp4', 'mov', 'webm', 'avi', 'mpeg', '3gp'].includes(lightbox.image_path.split('.').pop().toLowerCase()) ? (
+                        <video src={`https://maxime.go.yo.fr//uploads/${lightbox.image_path}`} controls onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: '12px' }} />
+                    ) : (
+                        <img src={`https://maxime.go.yo.fr//uploads/${lightbox.image_path}`} alt="Défi photo" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '12px' }} />
+                    )}
                 </div>
             )}
         </div>

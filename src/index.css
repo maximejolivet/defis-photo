@@ -97,7 +97,7 @@ body {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   padding: 24px 0;
 }
@@ -128,11 +128,6 @@ body {
   padding: 20px;
   background: linear-gradient(transparent, rgba(0,0,0,0.8));
   color: white;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.photo-card:hover .photo-info {
   opacity: 1;
 }
 

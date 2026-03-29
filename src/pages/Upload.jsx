@@ -20,12 +20,12 @@ const Upload = () => {
     const selectedChallenge = challenges.find(c => c.id === challengeId);
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/challenges/list.php')
+        fetch('https://maxime.go.yo.fr//api/challenges/list.php')
             .then(r => r.json())
             .then(setChallenges)
             .catch(() => {});
 
-        fetch('http://localhost:8000/api/gamification/stats.php', { credentials: 'include' })
+        fetch(`https://maxime.go.yo.fr//api/gamification/stats.php?user_id=${user.id}`)
             .then(r => r.ok ? r.json() : null)
             .then(data => data && setDoneChallengeIds(data.my_challenges))
             .catch(() => {});
@@ -52,11 +52,10 @@ const Upload = () => {
         setLoading(true);
         const formData = new FormData();
         formData.append('photo', file);
-        formData.append('user_id', user.id);
         formData.append('challenge_id', challengeId);
 
         try {
-            const response = await fetch('http://localhost:8000/api/photos/upload.php', {
+            const response = await fetch(`https://maxime.go.yo.fr//api/photos/upload.php?user_id=${user.id}`, {
                 method: 'POST',
                 credentials: 'include',
                 body: formData
@@ -88,7 +87,7 @@ const Upload = () => {
             </Link>
 
             {step === 'challenge' ? (
-                <div className="glass-card" style={{ padding: '40px' }}>
+                <div style={{ padding: '40px', background: 'var(--card-bg)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid var(--glass-border)', borderRadius: '24px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.37)' }}>
                     <ChallengeSelector
                         challenges={challenges.filter(c => !doneChallengeIds.includes(c.id))}
                         selected={challengeId}
@@ -96,7 +95,7 @@ const Upload = () => {
                     />
                 </div>
             ) : (
-                <div className="glass-card" style={{ padding: '40px' }}>
+                <div style={{ padding: '40px', background: 'var(--card-bg)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid var(--glass-border)', borderRadius: '24px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.37)' }}>
                     {/* Selected challenge badge + back */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
                         <button

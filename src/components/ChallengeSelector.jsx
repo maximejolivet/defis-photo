@@ -9,7 +9,7 @@ export default function ChallengeSelector({ challenges, selected, onSelect }) {
       </p>
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+        gridTemplateColumns: 'repeat(2, 1fr)',
         gap: '16px',
       }}>
         {challenges.map((challenge) => {
