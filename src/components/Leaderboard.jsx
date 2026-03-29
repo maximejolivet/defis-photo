@@ -1,8 +1,8 @@
 const LEVEL_COLORS = {
-  Novice:   '#64748b',
-  Amateur:  '#10b981',
+  Novice: '#64748b',
+  Amateur: '#10b981',
   Confirmé: '#6366f1',
-  Expert:   '#f59e0b',
+  Expert: '#f59e0b',
 };
 
 function rankIcon(index) {
@@ -24,7 +24,7 @@ export default function Leaderboard({ entries, currentUserId }) {
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-        {entries.map((entry, index) => {
+        {entries.slice(0, 3).map((entry, index) => {
           const isMe = Number(entry.user_id) === Number(currentUserId);
           const levelColor = LEVEL_COLORS[entry.level] ?? '#6366f1';
           return (

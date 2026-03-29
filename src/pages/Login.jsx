@@ -43,10 +43,12 @@ const Login = () => {
         <div className="auth-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
             <div className="glass-card" style={{ padding: '40px', width: '100%', maxWidth: '400px' }}>
                 <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-                    <div style={{ fontSize: '3rem', background: 'var(--primary)', width: '64px', height: '64px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-                        🎂
+
+
+                    <div style={{ position: 'relative', width: '100px', margin: '0 auto 16px' }}>
+                        <img src="/ophelie.jpg" alt="Ophélie" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', display: 'block', border: '3px solid var(--primary)' }} />
+                        <div style={{ position: 'absolute', top: 0, left: 0, width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary)', border: '2px solid var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}>🎂</div>
                     </div>
-                    <h2 style={{ fontSize: '1.8rem', fontWeight: '700' }}>Connexion</h2>
                     <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Bienvenue à la soirée d'Ophélie</p>
                     <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Chaud pour le jeu des défis ?</p>
                 </div>

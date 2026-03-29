@@ -47,8 +47,8 @@ const Register = () => {
         <div className="auth-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
             <div className="glass-card" style={{ padding: '40px', width: '100%', maxWidth: '400px' }}>
                 <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-                    <div style={{ background: 'var(--primary)', width: '64px', height: '64px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-                        <UserPlus color="white" size={32} />
+                    <div style={{ fontSize: '3rem', background: 'var(--primary)', width: '64px', height: '64px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+                        🎂
                     </div>
                     <h2 style={{ fontSize: '1.8rem', fontWeight: '700' }}>Créer un compte</h2>
                     <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Créez votre compte pour participer 🎉</p>

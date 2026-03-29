@@ -5,13 +5,9 @@ export default function ChallengeSelector({ challenges, selected, onSelect }) {
         Choisissez votre défi
       </h2>
       <p style={{ color: 'var(--text-muted)', marginBottom: '32px', fontSize: '0.95rem' }}>
-        Sélectionnez le thème photo auquel vous répondez avec votre envoi.
+        Sélectionnez le défi photo auquel vous allez envoyer votre photo ou vidéo.
       </p>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '16px',
-      }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {challenges.map((challenge) => {
           const isSelected = selected === challenge.id;
           return (
@@ -20,21 +16,24 @@ export default function ChallengeSelector({ challenges, selected, onSelect }) {
               onClick={() => onSelect(challenge.id)}
               className="glass-card"
               style={{
-                padding: '20px 16px',
+                padding: '14px 16px',
                 cursor: 'pointer',
                 border: isSelected ? '2px solid var(--primary)' : '2px solid transparent',
-                textAlign: 'center',
-                transition: 'border-color 0.2s, transform 0.2s',
-                transform: isSelected ? 'translateY(-4px)' : 'none',
-                boxShadow: isSelected ? '0 8px 24px rgba(99,102,241,0.3)' : undefined,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px',
+                transition: 'border-color 0.2s',
+                boxShadow: isSelected ? '0 4px 16px rgba(99,102,241,0.3)' : undefined,
               }}
             >
-              <div style={{ fontSize: '2rem', marginBottom: '10px' }}>{challenge.icon}</div>
-              <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text)', marginBottom: '6px' }}>
-                {challenge.title}
-              </div>
-              <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', lineHeight: 1.4 }}>
-                {challenge.description}
+              <div style={{ fontSize: '1.6rem', flexShrink: 0 }}>{challenge.icon}</div>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text)', marginBottom: '6px' }}>
+                  {challenge.title}
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', whiteSpace: 'wrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {challenge.description}
+                </div>
               </div>
             </div>
           );

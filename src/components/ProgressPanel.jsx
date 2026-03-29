@@ -1,8 +1,8 @@
 const LEVEL_COLORS = {
-  Novice:   '#64748b',
-  Amateur:  '#10b981',
+  Novice: '#64748b',
+  Amateur: '#10b981',
   Confirmé: '#6366f1',
-  Expert:   '#f59e0b',
+  Expert: '#f59e0b',
 };
 
 export default function ProgressPanel({ me, myChallenges, allChallenges }) {
@@ -61,50 +61,6 @@ export default function ProgressPanel({ me, myChallenges, allChallenges }) {
             encore {me.next_level.at - points} pts pour {me.next_level.name}
           </div>
         )}
-      </div>
-
-      {/* Challenge icon grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(5, 1fr)',
-        gap: '8px',
-      }}>
-        {allChallenges.map((ch) => {
-          const done = completedSet.has(ch.id);
-          return (
-            <div
-              key={ch.id}
-              title={ch.title}
-              style={{
-                textAlign: 'center',
-                fontSize: '1.4rem',
-                opacity: done ? 1 : 0.25,
-                filter: done ? 'none' : 'grayscale(1)',
-                position: 'relative',
-                cursor: 'default',
-              }}
-            >
-              {ch.icon}
-              {done && (
-                <span style={{
-                  position: 'absolute',
-                  bottom: -2,
-                  right: -2,
-                  fontSize: '0.6rem',
-                  background: '#10b981',
-                  color: '#fff',
-                  borderRadius: '50%',
-                  width: 14,
-                  height: 14,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  lineHeight: 1,
-                }}>✓</span>
-              )}
-            </div>
-          );
-        })}
       </div>
     </div>
   );
