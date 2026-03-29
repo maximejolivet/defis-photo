@@ -23,12 +23,12 @@ const Upload = () => {
         fetch('https://maxime.go.yo.fr//api/challenges/list.php')
             .then(r => r.json())
             .then(setChallenges)
-            .catch(() => {});
+            .catch(() => { });
 
         fetch(`https://maxime.go.yo.fr//api/gamification/stats.php?user_id=${user.id}`)
             .then(r => r.ok ? r.json() : null)
             .then(data => data && setDoneChallengeIds(data.my_challenges))
-            .catch(() => {});
+            .catch(() => { });
     }, []);
 
     const handleChallengeSelect = (id) => {
@@ -87,7 +87,7 @@ const Upload = () => {
             </Link>
 
             {step === 'challenge' ? (
-                <div style={{ padding: '40px', background: 'var(--card-bg)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid var(--glass-border)', borderRadius: '24px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.37)' }}>
+                <div style={{ padding: '16px', background: 'var(--card-bg)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid var(--glass-border)', borderRadius: '24px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.37)' }}>
                     <ChallengeSelector
                         challenges={challenges.filter(c => !doneChallengeIds.includes(c.id))}
                         selected={challengeId}
@@ -95,9 +95,9 @@ const Upload = () => {
                     />
                 </div>
             ) : (
-                <div style={{ padding: '40px', background: 'var(--card-bg)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid var(--glass-border)', borderRadius: '24px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.37)' }}>
+                <div style={{ padding: '16px', background: 'var(--card-bg)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid var(--glass-border)', borderRadius: '24px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.37)' }}>
                     {/* Selected challenge badge + back */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px', flexWrap: 'wrap' }}>
                         <button
                             onClick={() => setStep('challenge')}
                             style={{
@@ -134,11 +134,12 @@ const Upload = () => {
                         )}
                     </div>
 
-                    <h2 style={{ fontSize: '1.8rem', fontWeight: '700', marginBottom: '8px' }}>Ajouter une photo</h2>
+                    <h2 style={{ fontSize: '1.8rem', fontWeight: '700', marginBottom: '8px' }}>Ajouter une photo ou vidéo</h2>
                     <p style={{ color: 'var(--text-muted)', marginBottom: '32px' }}>Montrez-nous votre meilleur cliché !</p>
 
                     {loading && (
                         <div style={{
+                            borderRadius: '24px',
                             position: 'fixed', inset: 0,
                             background: 'rgba(0,0,0,0.6)',
                             backdropFilter: 'blur(4px)',
@@ -153,7 +154,9 @@ const Upload = () => {
                                 borderRadius: '50%',
                                 animation: 'spin 0.8s linear infinite',
                             }} />
-                            <p style={{ color: '#fff', fontWeight: 600, fontSize: '1rem' }}>Envoi en cours…</p>
+                            <p style={{ color: '#fff', fontWeight: 600, fontSize: '1rem', textAlign: 'center' }}>Envoi en cours… Ne pas fermer la page</p>
+                            <p style={{ color: '#fff', fontWeight: 600, fontSize: '1rem', textAlign: 'center' }}>Attendre le transfert qui se termine, tu vas être redirigé vers la galerie.</p>
+
                             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
                         </div>
                     )}
@@ -183,7 +186,7 @@ const Upload = () => {
                                 <div style={{ padding: '40px 0' }}>
                                     <UploadIcon size={48} style={{ color: 'var(--primary)', marginBottom: '16px' }} />
                                     <p style={{ fontWeight: '600' }}>Cliquez pour sélectionner un fichier</p>
-                                    <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '4px' }}>Images (JPEG, PNG, WEBP, HEIC…) ou vidéos (MP4, MOV…) · Max 50MB</p>
+                                    <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '4px' }}>Images (JPEG, PNG, HEIC…) ou vidéos (MP4, MOV…) · Max 50MB</p>
                                 </div>
                             )}
                             <input id="file-upload" type="file" accept="image/*,video/*" onChange={handleFileChange} style={{ display: 'none' }} />
@@ -192,12 +195,13 @@ const Upload = () => {
                         {error && <p style={{ color: 'var(--accent)', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
 
                         <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loading || !file}>
-                            Publier ma photo
+                            Publier mon fichier
                         </button>
                     </form>
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 };
 

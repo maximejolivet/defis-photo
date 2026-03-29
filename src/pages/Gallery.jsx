@@ -62,7 +62,7 @@ const Gallery = () => {
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
             <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
                 <div>
-                    <h1 style={{ fontSize: '2.2rem', fontWeight: '800', background: 'linear-gradient(to right, #fdf2f8, var(--primary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>✨ 30 ans d'Ophélie</h1>
+                    <h1 style={{ fontSize: '2.2rem', fontWeight: '800' }}>🎂 30ans d'Ophélie</h1>
                     <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Partagez vos plus beaux souvenirs de la soirée !</p>
                 </div>
                 <div style={{ display: 'flex', gap: '16px' }}>

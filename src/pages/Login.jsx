@@ -40,7 +40,7 @@ const Login = () => {
     };
 
     return (
-        <div className="auth-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+        <div className="auth-container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '80vh', gap: '16px' }}>
             <div className="glass-card" style={{ padding: '40px', width: '100%', maxWidth: '400px' }}>
                 <div style={{ textAlign: 'center', marginBottom: '32px' }}>
 
@@ -99,6 +99,28 @@ const Login = () => {
                 <p style={{ textAlign: 'center', marginTop: '24px', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
                     Pas encore de compte ? <Link to="/register" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: '600' }}>S'inscrire</Link>
                 </p>
+            </div>
+
+            <div style={{
+                background: 'rgba(250, 204, 21, 0.08)',
+                border: '1px solid rgba(250, 204, 21, 0.35)',
+                borderRadius: '12px',
+                padding: '16px',
+                width: '100%',
+                maxWidth: '400px',
+                textAlign: 'left'
+            }}>
+                <p style={{ fontWeight: '600', color: '#fbbf24', marginBottom: '8px', fontSize: '0.95rem' }}>
+                    ✨ Comment ça marche ?
+                </p>
+                <ul style={{ color: '#fde68a', fontSize: '0.85rem', lineHeight: '1.7', paddingLeft: '16px', margin: 0 }}>
+                    <li>Crée ton compte avec un pseudo et un code PIN</li>
+                    <li>Relève des défis photo tout au long de la soirée</li>
+                    <li>Upload tes photos, tes vidéos et consulte celles des autres</li>
+                </ul>
+                <p style={{ fontWeight: '500', color: '#cecece', marginTop: '8px', fontSize: '0.75rem' }}>
+                    <span style={{ fontSize: '1.5rem' }}>
+                        📸  </span>   Toutes les photos, vidéos seront envoyés à Ophélie.</p>
             </div>
         </div>
     );
