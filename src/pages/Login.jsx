@@ -116,11 +116,11 @@ const Login = () => {
                 <ul style={{ color: '#e8c4a0', fontSize: '0.85rem', lineHeight: '1.7', paddingLeft: '16px', margin: 0 }}>
                     <li>Crée ton compte avec un pseudo et un code PIN</li>
                     <li>Relève des défis photo tout au long de la soirée</li>
-                    <li>Upload tes photos, tes vidéos et consulte celles des autres</li>
+                    <li>Upload tes photos, tes vidéos et consultes celles des autres</li>
                 </ul>
                 <p style={{ fontWeight: '500', color: 'var(--text-muted)', marginTop: '8px', fontSize: '0.75rem' }}>
                     <span style={{ fontSize: '1.5rem' }}>
-                        📸  </span>   Toutes les photos, vidéos seront envoyés à Ophélie.</p>
+                        📸  </span>   En souvenir, toutes les photos et vidéos seront transmises à Ophélie</p>
             </div>
         </div>
     );
