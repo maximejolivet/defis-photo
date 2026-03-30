@@ -23,7 +23,7 @@ const Register = () => {
         }
 
         try {
-            const response = await fetch('http://photo.jolivetmaxime.fr/api/auth/register.php', {
+            const response = await fetch('https://photo.jolivetmaxime.fr/api/auth/register.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ pseudo, pin })

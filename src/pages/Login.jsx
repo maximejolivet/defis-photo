@@ -17,7 +17,7 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await fetch('http://photo.jolivetmaxime.fr/api/auth/login.php', {
+            const response = await fetch('https://photo.jolivetmaxime.fr/api/auth/login.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
