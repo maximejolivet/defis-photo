@@ -20,12 +20,12 @@ const Upload = () => {
     const selectedChallenge = challenges.find(c => c.id === challengeId);
 
     useEffect(() => {
-        fetch('https://photo.jolivetmaxime.fr/api/challenges/list.php')
+        fetch('http://photo.jolivetmaxime.fr/api/challenges/list.php')
             .then(r => r.json())
             .then(setChallenges)
             .catch(() => { });
 
-        fetch(`https://photo.jolivetmaxime.fr/api/gamification/stats.php?user_id=${user.id}`)
+        fetch(`http://photo.jolivetmaxime.fr/api/gamification/stats.php?user_id=${user.id}`)
             .then(r => r.ok ? r.json() : null)
             .then(data => data && setDoneChallengeIds(data.my_challenges))
             .catch(() => { });
@@ -55,7 +55,7 @@ const Upload = () => {
         formData.append('challenge_id', challengeId);
 
         try {
-            const response = await fetch(`https://photo.jolivetmaxime.fr/api/photos/upload.php?user_id=${user.id}`, {
+            const response = await fetch(`http://photo.jolivetmaxime.fr/api/photos/upload.php?user_id=${user.id}`, {
                 method: 'POST',
                 credentials: 'include',
                 body: formData

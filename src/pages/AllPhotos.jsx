@@ -8,7 +8,7 @@ const AllPhotos = () => {
     const [lightbox, setLightbox] = useState(null);
 
     useEffect(() => {
-        fetch('https://photo.jolivetmaxime.fr/api/photos/gallery.php')
+        fetch('http://photo.jolivetmaxime.fr/api/photos/gallery.php')
             .then(r => r.json())
             .then(data => setPhotos(data))
             .catch(() => { })
@@ -54,13 +54,13 @@ const AllPhotos = () => {
                                 >
                                     {isVideo ? (
                                         <video
-                                            src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`}
+                                            src={`http://photo.jolivetmaxime.fr/uploads/${photo.image_path}`}
                                             controls
                                             style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px 12px 0 0' }}
                                             onClick={(e) => e.stopPropagation()}
                                         />
                                     ) : (
-                                        <img src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`} alt="Défi photo" />
+                                        <img src={`http://photo.jolivetmaxime.fr/uploads/${photo.image_path}`} alt="Défi photo" />
                                     )}
                                     <div className="photo-info">
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -91,9 +91,9 @@ const AllPhotos = () => {
                             <X size={20} />
                         </button>
                         {['mp4', 'mov', 'webm', 'avi', 'mpeg', '3gp'].includes(lightbox.image_path.split('.').pop().toLowerCase()) ? (
-                            <video src={`https://photo.jolivetmaxime.fr/uploads/${lightbox.image_path}`} controls onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: '12px' }} />
+                            <video src={`http://photo.jolivetmaxime.fr/uploads/${lightbox.image_path}`} controls onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: '12px' }} />
                         ) : (
-                            <img src={`https://photo.jolivetmaxime.fr/uploads/${lightbox.image_path}`} alt="Défi photo" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '12px' }} />
+                            <img src={`http://photo.jolivetmaxime.fr/uploads/${lightbox.image_path}`} alt="Défi photo" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '12px' }} />
                         )}
                     </div>
                 )}
