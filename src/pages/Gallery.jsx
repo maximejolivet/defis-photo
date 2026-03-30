@@ -59,7 +59,7 @@ const Gallery = () => {
             <Navbar />
             <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
                 <header style={{ marginBottom: '24px' }}>
-                    <h1 style={{ fontSize: '2.2rem', fontWeight: '800' }}>🎂 30ans d'Ophélie</h1>
+                    <h1 style={{ fontSize: '2.2rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--champagne)' }}>🎂 30 ans d'Ophélie</h1>
                     <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Partagez vos plus beaux souvenirs de la soirée !</p>
                     <Link to="/upload" className="btn-primary" style={{ marginTop: '16px', display: 'inline-flex' }}>
                         Réalise un défi
@@ -72,7 +72,7 @@ const Gallery = () => {
                         <div style={{ textAlign: 'center', padding: '100px' }}>Chargement de la galerie...</div>
                     ) : photos.filter(p => p.user_id === user.id).length === 0 ? (
                         <div className="glass-card" style={{ textAlign: 'center', padding: '80px', marginTop: '24px' }}>
-                            <Grid size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
+                            <span style={{ fontSize: '4rem' }}>📸</span>
                             <h3>Pas encore de photos</h3>
                             <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Soyez le premier à relever le défi photo !</p>
                             <Link to="/upload" className="btn-primary" style={{ marginTop: '24px' }}>
@@ -131,7 +131,7 @@ const Gallery = () => {
                         </div>
                     )
                 }
-            </div>
+            </div >
         </>
     );
 };

@@ -102,23 +102,23 @@ const Login = () => {
             </div>
 
             <div style={{
-                background: 'rgba(250, 204, 21, 0.08)',
-                border: '1px solid rgba(250, 204, 21, 0.35)',
+                background: 'rgba(212, 168, 67, 0.06)',
+                border: '1px solid rgba(212, 168, 67, 0.3)',
                 borderRadius: '12px',
                 padding: '16px',
                 width: '100%',
                 maxWidth: '400px',
                 textAlign: 'left'
             }}>
-                <p style={{ fontWeight: '600', color: '#fbbf24', marginBottom: '8px', fontSize: '0.95rem' }}>
+                <p style={{ fontWeight: '600', color: '#d4a843', marginBottom: '8px', fontSize: '0.95rem' }}>
                     ✨ Comment ça marche ?
                 </p>
-                <ul style={{ color: '#fde68a', fontSize: '0.85rem', lineHeight: '1.7', paddingLeft: '16px', margin: 0 }}>
+                <ul style={{ color: '#e8c4a0', fontSize: '0.85rem', lineHeight: '1.7', paddingLeft: '16px', margin: 0 }}>
                     <li>Crée ton compte avec un pseudo et un code PIN</li>
                     <li>Relève des défis photo tout au long de la soirée</li>
                     <li>Upload tes photos, tes vidéos et consulte celles des autres</li>
                 </ul>
-                <p style={{ fontWeight: '500', color: '#cecece', marginTop: '8px', fontSize: '0.75rem' }}>
+                <p style={{ fontWeight: '500', color: 'var(--text-muted)', marginTop: '8px', fontSize: '0.75rem' }}>
                     <span style={{ fontSize: '1.5rem' }}>
                         📸  </span>   Toutes les photos, vidéos seront envoyés à Ophélie.</p>
             </div>
