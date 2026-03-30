@@ -61,6 +61,9 @@ const Gallery = () => {
                 <header style={{ marginBottom: '24px' }}>
                     <h1 style={{ fontSize: '2.2rem', fontWeight: '800' }}>🎂 30ans d'Ophélie</h1>
                     <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Partagez vos plus beaux souvenirs de la soirée !</p>
+                    <Link to="/upload" className="btn-primary" style={{ marginTop: '16px', display: 'inline-flex' }}>
+                        Réalise un défi
+                    </Link>
                 </header>
 
                 <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '6px' }}>Mes photos, vidéos réalisées</h2>
