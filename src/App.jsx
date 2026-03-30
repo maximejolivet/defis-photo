@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Gallery from './pages/Gallery';
 import Upload from './pages/Upload';
+import AllPhotos from './pages/AllPhotos';
 import './index.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -33,6 +34,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Upload />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/all-photos"
+            element={
+              <ProtectedRoute>
+                <AllPhotos />
               </ProtectedRoute>
             }
           />

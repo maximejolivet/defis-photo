@@ -131,6 +131,16 @@ body {
   opacity: 1;
 }
 
+/* ── Navbar responsive ── */
+@media (max-width: 640px) {
+  .nav-desktop {
+    display: none !important;
+  }
+  .nav-hamburger {
+    display: flex !important;
+  }
+}
+
 /* ── Touch devices: info always visible, disable hover lifts ── */
 @media (hover: none) {
   .photo-info {
