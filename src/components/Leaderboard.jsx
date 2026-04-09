@@ -1,8 +1,8 @@
 const LEVEL_COLORS = {
-  Novice: '#64748b',
-  Amateur: '#10b981',
-  Confirmé: '#6366f1',
-  Expert: '#f59e0b',
+  'Ophélie a honte 😬': '#64748b',
+  'Ophélie hausse les épaules 😐': '#10b981',
+  'Ophélie approuve 💪': '#6366f1',
+  'Ophélie est fière 🏆': '#f59e0b',
 };
 
 function rankIcon(index) {

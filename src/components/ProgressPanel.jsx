@@ -1,8 +1,8 @@
 const LEVEL_COLORS = {
-  Novice: '#64748b',
-  Amateur: '#10b981',
-  Confirmé: '#6366f1',
-  Expert: '#f59e0b',
+  'Ophélie a honte 😬': '#64748b',
+  'Ophélie hausse les épaules 😐': '#10b981',
+  'Ophélie approuve 💪': '#6366f1',
+  'Ophélie est fière 🏆': '#f59e0b',
 };
 
 export default function ProgressPanel({ me, myChallenges, allChallenges }) {
@@ -52,16 +52,7 @@ export default function ProgressPanel({ me, myChallenges, allChallenges }) {
         }} />
       </div>
 
-      {/* Points */}
-      <div style={{ marginBottom: '20px' }}>
-        <span style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text)' }}>{points}</span>
-        <span style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginLeft: '6px' }}>points</span>
-        {me.next_level && (
-          <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-            encore {me.next_level.at - points} pts pour {me.next_level.name}
-          </div>
-        )}
-      </div>
+
     </div>
   );
 }

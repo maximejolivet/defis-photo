@@ -5,7 +5,8 @@ export default function ChallengeSelector({ challenges, selected, onSelect }) {
         Choisissez votre défi
       </h2>
       <p style={{ color: 'var(--text-muted)', marginBottom: '32px', fontSize: '0.95rem' }}>
-        Sélectionnez le défi photo auquel vous allez envoyer votre photo ou vidéo.
+        Sélectionnez le défi photo auquel vous allez envoyer votre photo ou vidéo.{' '}
+        <span style={{ fontWeight: 600, color: 'var(--text)' }}>{challenges.length} défi{challenges.length !== 1 ? 's' : ''} restant{challenges.length !== 1 ? 's' : ''}</span>
       </p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {challenges.map((challenge) => {

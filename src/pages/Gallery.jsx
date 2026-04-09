@@ -3,15 +3,24 @@ import { useAuth } from '../context/AuthContext';
 import { Grid, User as UserIcon, Trash2, X, Play } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import ProgressPanel from '../components/ProgressPanel';
+import Leaderboard from '../components/Leaderboard';
 const Gallery = () => {
     const [photos, setPhotos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [lightbox, setLightbox] = useState(null);
+    const [stats, setStats] = useState(null);
     const { user } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchPhotos();
+        if (user) {
+            fetch(`https://photo.jolivetmaxime.fr/api/gamification/stats.php?user_id=${user.id}`)
+                .then(r => r.ok ? r.json() : null)
+                .then(data => data && setStats(data))
+                .catch(() => {});
+        }
     }, []);
 
     const fetchPhotos = async () => {
@@ -65,6 +74,13 @@ const Gallery = () => {
                         Réalise un défi
                     </Link>
                 </header>
+
+                {stats && (
+                    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '32px' }}>
+                        <ProgressPanel me={stats} myChallenges={stats.my_challenges} allChallenges={[]} />
+                        <Leaderboard entries={stats.leaderboard} currentUserId={user.id} />
+                    </div>
+                )}
 
                 <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '6px' }}>Mes photos, vidéos réalisées</h2>
                 {
