@@ -119,7 +119,7 @@ const FreeUpload = () => {
                                 <div style={{ padding: '40px 0' }}>
                                     <UploadIcon size={48} style={{ color: 'var(--primary)', marginBottom: '16px' }} />
                                     <p style={{ fontWeight: '600' }}>Cliquez pour sélectionner un fichier</p>
-                                    <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '4px' }}>Images (JPEG, PNG, HEIC…) ou vidéos (MP4, MOV…) · Max 250MB</p>
+                                    <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '4px' }}>Images (JPEG, PNG, HEIC…) ou vidéos (MP4, MOV…) · Max 50MB</p>
                                 </div>
                             )}
                             <input id="free-file-upload" type="file" accept="image/*,video/*" onChange={handleFileChange} style={{ display: 'none' }} />
