@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Grid, User as UserIcon, Trash2, X } from 'lucide-react';
+import { Grid, User as UserIcon, Trash2, X, Play } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 const Gallery = () => {
@@ -95,7 +95,14 @@ const Gallery = () => {
                                                 <Trash2 size={14} />
                                             </button>
                                             {isVideo ? (
-                                                <video src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`} controls style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px 12px 0 0' }} onClick={(e) => e.stopPropagation()} />
+                                                <>
+                                                    <video src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`} preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+                                                        <div style={{ background: 'rgba(0,0,0,0.5)', borderRadius: '50%', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                            <Play size={24} fill="white" color="white" style={{ marginLeft: '3px' }} />
+                                                        </div>
+                                                    </div>
+                                                </>
                                             ) : (
                                                 <img src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`} alt="Défi photo" />
                                             )}

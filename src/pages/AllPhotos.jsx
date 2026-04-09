@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User as UserIcon, X, Images } from 'lucide-react';
+import { User as UserIcon, X, Images, Play } from 'lucide-react';
 import Navbar from '../components/Navbar';
 
 const AllPhotos = () => {
@@ -53,12 +53,14 @@ const AllPhotos = () => {
                                     onClick={() => setLightbox(photo)}
                                 >
                                     {isVideo ? (
-                                        <video
-                                            src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`}
-                                            controls
-                                            style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '12px 12px 0 0' }}
-                                            onClick={(e) => e.stopPropagation()}
-                                        />
+                                        <>
+                                            <video src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`} preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+                                                <div style={{ background: 'rgba(0,0,0,0.5)', borderRadius: '50%', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                    <Play size={24} fill="white" color="white" style={{ marginLeft: '3px' }} />
+                                                </div>
+                                            </div>
+                                        </>
                                     ) : (
                                         <img src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`} alt="Défi photo" />
                                     )}
