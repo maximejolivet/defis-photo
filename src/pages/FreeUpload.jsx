@@ -89,6 +89,7 @@ const FreeUpload = () => {
                                 animation: 'spin 0.8s linear infinite',
                             }} />
                             <p style={{ color: '#fff', fontWeight: 600, fontSize: '1rem', textAlign: 'center' }}>Envoi en cours… Ne pas fermer la page</p>
+                            <p style={{ color: '#fff', fontWeight: 600, fontSize: '1rem', textAlign: 'center' }}>Attendre le transfert qui se termine, <br></br>tu vas être redirigé vers la galerie.</p>
                             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
                         </div>
                     )}
