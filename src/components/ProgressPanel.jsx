@@ -38,7 +38,7 @@ export default function ProgressPanel({ me, myChallenges, allChallenges }) {
       {/* Progress bar */}
       <div style={{ marginBottom: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
         <span style={{ fontWeight: 600, color: 'var(--text)', fontSize: '0.9rem' }}>
-          {completed} / 9 défis complétés
+          {completed} / 8 défis complétés
         </span>
         <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>{progressPercent}%</span>
       </div>
