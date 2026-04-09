@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Camera, Images, Upload, LogOut, Menu, X } from 'lucide-react';
+import { Camera, Images, Upload, LogOut, Menu, X, Heart } from 'lucide-react';
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
@@ -18,6 +18,7 @@ const Navbar = () => {
         { to: '/gallery', label: 'Mes photos', icon: <Camera size={18} /> },
         { to: '/all-photos', label: 'Toutes les photos', icon: <Images size={18} /> },
         { to: '/upload', label: 'Réaliser un défi', icon: <Upload size={18} /> },
+        { to: '/photo-libre', label: 'Photo libre', icon: <Heart size={18} /> },
     ];
 
     return (

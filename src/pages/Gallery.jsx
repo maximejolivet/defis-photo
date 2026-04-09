@@ -132,6 +132,11 @@ const Gallery = () => {
                                                         {photo.challenge_icon} {photo.challenge_title}
                                                     </div>
                                                 )}
+                                                {photo.recipient_pseudo && (
+                                                    <div style={{ marginTop: '4px', fontSize: '0.78rem', color: 'var(--primary)' }}>
+                                                        💌 Pour {photo.recipient_pseudo}
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     );

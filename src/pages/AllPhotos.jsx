@@ -26,9 +26,16 @@ const AllPhotos = () => {
             <Navbar />
             <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
                 <div style={{ marginBottom: '24px' }}>
-                    <h1 style={{ fontSize: '2rem', fontWeight: '800' }}>📸 Toutes les photos</h1>
+                    <h1 style={{ fontSize: '2rem', fontWeight: '800' }}>📸 Toutes les photos des invités</h1>
                     <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>
-                        {photos.length > 0 ? `${photos.length} défi${photos.length > 1 ? 's' : ''} réalisé${photos.length > 1 ? 's' : ''} au total` : ''}
+                        {(() => {
+                            const defis = photos.filter(p => p.challenge_id).length;
+                            const libres = photos.filter(p => !p.challenge_id).length;
+                            const parts = [];
+                            if (defis > 0) parts.push(`${defis} défi${defis > 1 ? 's' : ''} réalisé${defis > 1 ? 's' : ''}`);
+                            if (libres > 0) parts.push(`${libres} photo${libres > 1 ? 's' : ''} libre${libres > 1 ? 's' : ''}`);
+                            return parts.join(' · ');
+                        })()}
                     </p>
                 </div>
 
@@ -72,6 +79,11 @@ const AllPhotos = () => {
                                         {photo.challenge_icon && (
                                             <div style={{ marginTop: '4px', fontSize: '0.78rem', color: 'rgba(255,255,255,0.7)' }}>
                                                 {photo.challenge_icon} {photo.challenge_title}
+                                            </div>
+                                        )}
+                                        {photo.recipient_pseudo && (
+                                            <div style={{ marginTop: '4px', fontSize: '0.78rem', color: 'var(--primary)' }}>
+                                                💌 Pour {photo.recipient_pseudo}
                                             </div>
                                         )}
                                     </div>

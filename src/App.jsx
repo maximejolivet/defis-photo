@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Gallery from './pages/Gallery';
 import Upload from './pages/Upload';
 import AllPhotos from './pages/AllPhotos';
+import FreeUpload from './pages/FreeUpload';
 import './index.css';
 
 const ProtectedRoute = ({ children }) => {
@@ -42,6 +43,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AllPhotos />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/photo-libre"
+            element={
+              <ProtectedRoute>
+                <FreeUpload />
               </ProtectedRoute>
             }
           />
