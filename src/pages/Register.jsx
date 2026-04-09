@@ -117,7 +117,7 @@ const Register = () => {
                 </form>
 
                 <p style={{ textAlign: 'center', marginTop: '24px', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                    Déjà un compte ? <Link to="/login" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: '600' }}>Se connecter</Link>
+                    Déjà un compte ? <Link to="/login" style={{ color: 'var(--primary)', textDecoration: 'underline', fontWeight: '600' }}>Se connecter</Link>
                 </p>
             </div>
         </div>

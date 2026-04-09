@@ -97,23 +97,23 @@ const Login = () => {
                 </form>
 
                 <p style={{ textAlign: 'center', marginTop: '24px', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                    Pas encore de compte ? <Link to="/register" style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: '600' }}>S'inscrire</Link>
+                    Pas encore de compte ? <Link to="/register" style={{ color: 'var(--primary)', textDecoration: 'underline', fontWeight: '600' }}>S'inscrire</Link>
                 </p>
             </div>
 
             <div style={{
-                background: 'rgba(212, 168, 67, 0.06)',
-                border: '1px solid rgba(212, 168, 67, 0.3)',
+                background: 'rgba(232, 99, 140, 0.08)',
+                border: '1px solid rgba(232, 99, 140, 0.28)',
                 borderRadius: '12px',
                 padding: '16px',
                 width: '100%',
                 maxWidth: '400px',
                 textAlign: 'left'
             }}>
-                <p style={{ fontWeight: '600', color: '#d4a843', marginBottom: '8px', fontSize: '0.95rem' }}>
+                <p style={{ fontWeight: '600', color: 'var(--primary)', marginBottom: '8px', fontSize: '0.95rem' }}>
                     ✨ Comment ça marche ?
                 </p>
-                <ul style={{ color: '#e8c4a0', fontSize: '0.85rem', lineHeight: '1.7', paddingLeft: '16px', margin: 0 }}>
+                <ul style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: '1.7', paddingLeft: '16px', margin: 0 }}>
                     <li>Crée ton compte avec un pseudo et un code PIN</li>
                     <li>Relève des défis photo tout au long de la soirée</li>
                     <li>Upload tes photos, tes vidéos et consultes celles des autres</li>
