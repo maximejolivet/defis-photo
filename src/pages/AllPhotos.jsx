@@ -54,10 +54,13 @@ const AllPhotos = () => {
                 {loading ? (
                     <div style={{ textAlign: 'center', padding: '100px' }}>Chargement de la galerie...</div>
                 ) : photos.length === 0 ? (
-                    <div className="glass-card" style={{ textAlign: 'center', padding: '80px' }}>
-                        <Images size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
+                    <div className="glass-card" style={{ textAlign: 'center', padding: '80px', marginTop: '24px' }}>
+                        <span style={{ fontSize: '4rem' }}>📸</span>
                         <h3>Aucune photo pour l'instant</h3>
-                        <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Soyez le premier à relever un défi !</p>
+                        <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Soyez le premier à relever le défi photo !</p>
+                        <Link to="/upload" className="btn-primary" style={{ marginTop: '24px' }}>
+                            Réalise un défi
+                        </Link>
                     </div>
                 ) : (
                     <>
