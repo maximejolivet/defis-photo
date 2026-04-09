@@ -83,7 +83,7 @@ const Upload = () => {
     return (
         <div style={{ maxWidth: step === 'challenge' ? '900px' : '600px', margin: '40px auto', padding: '0 20px', transition: 'max-width 0.3s' }}>
             <Link to="/gallery" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', textDecoration: 'none', marginBottom: '24px', fontWeight: '500' }}>
-                <ArrowLeft size={18} /> Retour à la galerie
+                <ArrowLeft size={18} /> Retour
             </Link>
 
             {step === 'challenge' ? (

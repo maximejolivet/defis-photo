@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Upload as UploadIcon, ArrowLeft, Heart } from 'lucide-react';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const FreeUpload = () => {
     const [file, setFile] = useState(null);
@@ -62,7 +63,7 @@ const FreeUpload = () => {
             <Navbar />
             <div style={{ maxWidth: '600px', margin: '40px auto', padding: '0 20px' }}>
                 <Link to="/gallery" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', textDecoration: 'none', marginBottom: '24px', fontWeight: '500' }}>
-                    <ArrowLeft size={18} /> Retour à la galerie
+                    <ArrowLeft size={18} /> Retour
                 </Link>
 
                 <div style={{ padding: '32px', background: 'var(--card-bg)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid var(--glass-border)', borderRadius: '24px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.37)' }}>
