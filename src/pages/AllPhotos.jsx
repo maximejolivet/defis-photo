@@ -3,7 +3,7 @@ import { User as UserIcon, X, Images, Play, ChevronLeft, ChevronRight } from 'lu
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-const PER_PAGE = 3;
+const PER_PAGE = 8;
 
 const AllPhotos = () => {
     const [photos, setPhotos] = useState([]);
