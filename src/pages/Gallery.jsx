@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { Grid, User as UserIcon, Trash2, X, Play } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import ProgressPanel from '../components/ProgressPanel';
 import Leaderboard from '../components/Leaderboard';
 const Gallery = () => {
@@ -160,6 +161,7 @@ const Gallery = () => {
                     )
                 }
             </div >
+            <Footer />
         </>
     );
 };

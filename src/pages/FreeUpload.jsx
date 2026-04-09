@@ -134,6 +134,7 @@ const FreeUpload = () => {
                     </form>
                 </div>
             </div>
+            <Footer />
         </>
     );
 };

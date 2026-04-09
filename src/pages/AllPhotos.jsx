@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { User as UserIcon, X, Images, Play } from 'lucide-react';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const AllPhotos = () => {
     const [photos, setPhotos] = useState([]);
@@ -112,6 +113,7 @@ const AllPhotos = () => {
                     </div>
                 )}
             </div>
+            <Footer />
         </>
     );
 };

@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Upload as UploadIcon, ArrowLeft } from 'lucide-react';
 import ChallengeSelector from '../components/ChallengeSelector';
+import Footer from '../components/Footer';
 
 const Upload = () => {
     const [step, setStep] = useState('challenge'); // 'challenge' | 'file'
@@ -81,6 +82,7 @@ const Upload = () => {
     }
 
     return (
+        <>
         <div style={{ maxWidth: step === 'challenge' ? '900px' : '600px', margin: '40px auto', padding: '0 20px', transition: 'max-width 0.3s' }}>
             <Link to="/gallery" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', textDecoration: 'none', marginBottom: '24px', fontWeight: '500' }}>
                 <ArrowLeft size={18} /> Retour
@@ -202,6 +204,8 @@ const Upload = () => {
             )
             }
         </div >
+        <Footer />
+        </>
     );
 };
 
