@@ -1,29 +1,29 @@
 import React, { useEffect, useRef } from 'react';
 
-const COLORS = ['#e8638c','#f59e0b','#a855f7','#10b981','#3b82f6','#f97316','#ec4899','#d4a843','#84cc16','#ef4444','#06b6d4'];
-const SHAPES = ['circle','rect','ribbon','rect','circle'];
-const EMOJIS = ['🎈','🎁','📷','🎀','🎊','🎉','🎈','🎁','📸','🎈'];
+const COLORS = ['#e8638c', '#f59e0b', '#a855f7', '#10b981', '#3b82f6', '#f97316', '#ec4899', '#d4a843', '#84cc16', '#ef4444', '#06b6d4'];
+const SHAPES = ['circle', 'rect', 'ribbon', 'rect', 'circle'];
+const EMOJIS = ['🎈', '🎁', '📷', '🎀', '🎊', '🎉', '🎈', '🎁', '📸', '🎈'];
 const EMOJI_COUNT = 20;
 const SLOT = 100 / EMOJI_COUNT;
 
 const confettiData = Array.from({ length: 70 }, (_, i) => ({
-  left:     (i * 1.45 + (i % 8) * 2.9) % 100,
-  color:    COLORS[i % COLORS.length],
-  shape:    SHAPES[i % SHAPES.length],
-  size:     5 + (i % 6) * 2.2,
-  delay:    (i * 0.19) % 5,
+  left: (i * 1.45 + (i % 8) * 2.9) % 100,
+  color: COLORS[i % COLORS.length],
+  shape: SHAPES[i % SHAPES.length],
+  size: 5 + (i % 6) * 2.2,
+  delay: (i * 0.19) % 5,
   duration: 12 + (i % 7) * 2,
-  drift:    ((i % 11) - 5) * 28,
-  startY:   -((i % 7) * 16 + 8),
+  drift: ((i % 11) - 5) * 28,
+  startY: -((i % 7) * 16 + 8),
 }));
 
 const emojiData = Array.from({ length: EMOJI_COUNT }, (_, i) => ({
-  emoji:     EMOJIS[i % EMOJIS.length],
-  left:      i * SLOT + SLOT / 2 + (i % 3 - 1) * 1.2,
-  size:      20 + (i % 4) * 7,
-  delay:     (i * 0.6) % 8,
-  duration:  10 + (i % 5) * 1.8,
-  drift:     ((i % 3) - 1) * (SLOT * 0.35),
+  emoji: EMOJIS[i % EMOJIS.length],
+  left: i * SLOT + SLOT / 2 + (i % 3 - 1) * 1.2,
+  size: 20 + (i % 4) * 7,
+  delay: (i * 0.6) % 8,
+  duration: 10 + (i % 5) * 1.8,
+  drift: ((i % 3) - 1) * (SLOT * 0.35),
   isBalloon: i % EMOJIS.length === 0 || i % EMOJIS.length === 7,
 }));
 
@@ -370,6 +370,9 @@ export default function Diaporama() {
 
             <div className="dia-qr-desc">
               <p>Inscris-toi, prends tes photos<br />et rejoins la galerie en direct&nbsp;!</p>
+              <p style={{ marginTop: '12px', color: '#d4a843', fontWeight: 600 }}>
+                Le premier à faire tous les défis<br /> sans tricher aura un cadeau&nbsp;! 🎁
+              </p>
             </div>
           </div>
 
