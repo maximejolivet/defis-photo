@@ -3,14 +3,20 @@ import { motion } from 'framer-motion';
 // ── Emojis ──────────────────────────────────────────────────────────────────
 const EMOJIS = ['🎈', '🎁', '📷', '🎀', '🎊', '🎉', '🎈', '🎁', '📸', '🎈'];
 
-const EMOJI_PIECES = Array.from({ length: 30 }, (_, i) => ({
+// 20 colonnes régulières espacées de 5% — garantit qu'ils ne se chevauchent pas
+const EMOJI_COUNT = 20;
+const SLOT = 100 / EMOJI_COUNT; // 5% par slot
+
+const EMOJI_PIECES = Array.from({ length: EMOJI_COUNT }, (_, i) => ({
   id: i,
   emoji: EMOJIS[i % EMOJIS.length],
-  left: (i * 3.47 + (i % 6) * 5.3) % 100,
-  size: 20 + (i % 5) * 8,
-  delay: (i * 0.41) % 7,
-  duration: 9 + (i % 7) * 1.5,
-  drift: ((i % 9) - 4) * 35,
+  // Centre du slot + léger décalage fixe pour ne pas être trop régulier
+  left: i * SLOT + SLOT / 2 + (i % 3 - 1) * 1.2,
+  size: 20 + (i % 4) * 7,
+  delay: (i * 0.6) % 8,
+  duration: 10 + (i % 5) * 1.8,
+  // Dérive max = la moitié d'un slot pour ne jamais empiéter sur le voisin
+  drift: ((i % 3) - 1) * (SLOT * 0.35),
   isBalloon: i % EMOJIS.length === 0 || i % EMOJIS.length === 7,
 }));
 
