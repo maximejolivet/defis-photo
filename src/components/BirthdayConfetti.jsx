@@ -31,7 +31,7 @@ const CONFETTI_PIECES = Array.from({ length: 70 }, (_, i) => ({
   shape: SHAPES[i % SHAPES.length],
   size: 5 + (i % 6) * 2.2,
   delay: (i * 0.19) % 5,
-  duration: 5 + (i % 7) * 0.9,
+  duration: 12 + (i % 7) * 2,
   drift: ((i % 11) - 5) * 28,
   startY: -((i % 7) * 16 + 8),
 }));

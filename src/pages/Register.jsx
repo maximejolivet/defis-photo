@@ -11,10 +11,22 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    const normalizePseudo = (value) =>
+        value
+            .toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // supprime les accents
+            .replace(/[^a-z0-9_-]/g, '');                     // retire espaces et caractères spéciaux
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
+
+        if (!/^[a-z0-9_-]+$/.test(pseudo)) {
+            setError("Le pseudo ne peut contenir que des lettres minuscules, chiffres, - et _");
+            setLoading(false);
+            return;
+        }
 
         if (pin !== pinConfirm) {
             setError("Les codes PIN ne correspondent pas.");
@@ -65,7 +77,7 @@ const Register = () => {
                                 placeholder="Votre pseudo"
                                 style={{ paddingLeft: '40px' }}
                                 value={pseudo}
-                                onChange={(e) => setPseudo(e.target.value)}
+                                onChange={(e) => setPseudo(normalizePseudo(e.target.value))}
                                 required
                             />
                         </div>
