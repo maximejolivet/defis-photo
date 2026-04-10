@@ -7,6 +7,7 @@ import Gallery from './pages/Gallery';
 import Upload from './pages/Upload';
 import AllPhotos from './pages/AllPhotos';
 import FreeUpload from './pages/FreeUpload';
+import Diaporama from './pages/Diaporama';
 import './index.css';
 import BirthdayConfetti from './components/BirthdayConfetti';
 
@@ -56,6 +57,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/diaporama" element={<Diaporama />} />
           <Route path="/" element={<Navigate to="/gallery" replace />} />
         </Routes>
       </Router>
