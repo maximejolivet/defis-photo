@@ -8,6 +8,7 @@ import Upload from './pages/Upload';
 import AllPhotos from './pages/AllPhotos';
 import FreeUpload from './pages/FreeUpload';
 import './index.css';
+import BirthdayConfetti from './components/BirthdayConfetti';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -18,6 +19,7 @@ const ProtectedRoute = ({ children }) => {
 function App() {
   return (
     <AuthProvider>
+      <BirthdayConfetti />
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
