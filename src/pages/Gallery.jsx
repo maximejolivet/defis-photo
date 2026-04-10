@@ -6,16 +6,22 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProgressPanel from '../components/ProgressPanel';
 import Leaderboard from '../components/Leaderboard';
+import WinnerBanner from '../components/WinnerBanner';
 const Gallery = () => {
     const [photos, setPhotos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [lightbox, setLightbox] = useState(null);
     const [stats, setStats] = useState(null);
+    const [winner, setWinner] = useState(null);
     const { user } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchPhotos();
+        fetch('https://photo.jolivetmaxime.fr/api/gamification/winner.php')
+            .then(r => r.ok ? r.json() : null)
+            .then(data => data?.winner && setWinner(data.winner))
+            .catch(() => {});
         if (user) {
             fetch(`https://photo.jolivetmaxime.fr/api/gamification/stats.php?user_id=${user.id}`)
                 .then(r => r.ok ? r.json() : null)
@@ -68,6 +74,8 @@ const Gallery = () => {
         <>
             <Navbar />
             <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
+                <WinnerBanner winner={winner} />
+
                 <header style={{ marginBottom: '24px' }}>
                     <h1 style={{ fontSize: '2.2rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--champagne)' }}>🎂 30 ans d'Ophélie</h1>
                     <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Partagez vos plus beaux souvenirs de la soirée !</p>

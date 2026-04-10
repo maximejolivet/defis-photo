@@ -10,7 +10,7 @@ export default function ProgressPanel({ me, myChallenges, allChallenges }) {
   const points = Number(me.total_points);
   const completed = Number(me.challenges_completed);
   const levelColor = LEVEL_COLORS[me.level] ?? '#6366f1';
-  const progressPercent = Math.round((completed / 10) * 100);
+  const progressPercent = Math.round((completed / 8) * 100);
 
   return (
     <div className="glass-card" style={{ flex: 1, minWidth: 280, padding: '28px 24px' }}>
