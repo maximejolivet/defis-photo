@@ -1,16 +1,45 @@
-# React + Vite
+# Défis Photo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application web (React + Vite) de défis photo entre participants : inscription, upload de photos, galerie, classement et diaporama.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React 19](https://react.dev/) + [Vite 7](https://vite.dev/)
+- [React Router v7](https://reactrouter.com/) pour la navigation
+- [Framer Motion](https://www.framer.com/motion/) pour les animations
+- [Lucide React](https://lucide.dev/) pour les icônes
+- [heic2any](https://github.com/alexcorvi/heic2any) pour convertir les photos HEIC (iPhone) côté client
 
-## React Compiler
+Pas de TypeScript — projet en JavaScript/JSX pur.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Fonctionnement
 
-## Expanding the ESLint configuration
+L'application est une SPA 100% front-end : toutes les données (authentification, photos, classement, uploads) proviennent d'une API PHP externe hébergée séparément. Il n'y a pas de backend dans ce dépôt et pas de variables d'environnement — les URLs de l'API sont codées en dur dans les pages.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+L'authentification est simple : l'utilisateur est stocké dans le `localStorage` du navigateur (voir `src/context/AuthContext.jsx`), sans token ni session côté serveur.
+
+## Structure
+
+```
+src/
+  pages/        # Login, Register, Gallery, Upload, AllPhotos, FreeUpload, Diaporama
+  components/   # Navbar, Footer, Leaderboard, ProgressPanel, ChallengeSelector, WinnerBanner, BirthdayConfetti
+  context/      # AuthContext (session utilisateur en localStorage)
+  App.jsx       # Déclaration des routes
+public/
+  diaporama.html  # Diaporama HTML statique (indépendant de src/pages/Diaporama.jsx)
+```
+
+## Développement
+
+```bash
+npm install     # installer les dépendances
+npm run dev     # lancer le serveur de dev (http://localhost:5173)
+npm run lint    # vérifier le code avec ESLint
+npm run build   # build de production
+npm run preview # prévisualiser le build
+```
+
+## Déploiement
+
+Déployé sur [Vercel](https://vercel.com/). `vercel.json` redirige toutes les routes vers `/index.html` pour le routage côté client (SPA).
