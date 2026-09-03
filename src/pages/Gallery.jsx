@@ -7,6 +7,8 @@ import Footer from '../components/Footer';
 import ProgressPanel from '../components/ProgressPanel';
 import Leaderboard from '../components/Leaderboard';
 import WinnerBanner from '../components/WinnerBanner';
+import { apiFetch } from '../api/client';
+import { API_BASE_URL } from '../config';
 const Gallery = () => {
     const [photos, setPhotos] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -18,12 +20,12 @@ const Gallery = () => {
 
     useEffect(() => {
         fetchPhotos();
-        fetch('https://photo.jolivetmaxime.fr/api/gamification/winner.php')
+        apiFetch('/api/gamification/winner')
             .then(r => r.ok ? r.json() : null)
             .then(data => data?.winner && setWinner(data.winner))
             .catch(() => {});
         if (user) {
-            fetch(`https://photo.jolivetmaxime.fr/api/gamification/stats.php?user_id=${user.id}`)
+            apiFetch('/api/gamification/stats')
                 .then(r => r.ok ? r.json() : null)
                 .then(data => data && setStats(data))
                 .catch(() => {});
@@ -32,7 +34,7 @@ const Gallery = () => {
 
     const fetchPhotos = async () => {
         try {
-            const response = await fetch('https://photo.jolivetmaxime.fr/api/photos/gallery.php');
+            const response = await apiFetch('/api/photos/gallery');
             const data = await response.json();
             setPhotos(data);
         } catch {
@@ -45,11 +47,10 @@ const Gallery = () => {
     const handleDelete = async (photoId) => {
         if (!confirm('Supprimer cette photo ?')) return;
         try {
-            const response = await fetch('https://photo.jolivetmaxime.fr/api/photos/delete.php', {
-                method: 'DELETE',
-                credentials: 'include',
+            const response = await apiFetch('/api/photos/delete', {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ photo_id: photoId, user_id: user.id }),
+                body: JSON.stringify({ photo_id: photoId }),
             });
             if (response.ok) {
                 setPhotos(prev => prev.filter(p => p.id !== photoId));
@@ -121,7 +122,7 @@ const Gallery = () => {
                                             </button>
                                             {isVideo ? (
                                                 <>
-                                                    <video src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`} preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                    <video src={`${API_BASE_URL}/uploads/${photo.image_path}`} preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                     <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
                                                         <div style={{ background: 'rgba(0,0,0,0.5)', borderRadius: '50%', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                             <Play size={24} fill="white" color="white" style={{ marginLeft: '3px' }} />
@@ -129,7 +130,7 @@ const Gallery = () => {
                                                     </div>
                                                 </>
                                             ) : (
-                                                <img src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`} alt="Défi photo" />
+                                                <img src={`${API_BASE_URL}/uploads/${photo.image_path}`} alt="Défi photo" />
                                             )}
                                             <div className="photo-info">
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -161,9 +162,9 @@ const Gallery = () => {
                                 <X size={20} />
                             </button>
                             {['mp4', 'mov', 'webm', 'avi', 'mpeg', '3gp'].includes(lightbox.image_path.split('.').pop().toLowerCase()) ? (
-                                <video src={`https://photo.jolivetmaxime.fr/uploads/${lightbox.image_path}`} controls onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: '12px' }} />
+                                <video src={`${API_BASE_URL}/uploads/${lightbox.image_path}`} controls onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: '12px' }} />
                             ) : (
-                                <img src={`https://photo.jolivetmaxime.fr/uploads/${lightbox.image_path}`} alt="Défi photo" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '12px' }} />
+                                <img src={`${API_BASE_URL}/uploads/${lightbox.image_path}`} alt="Défi photo" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '12px' }} />
                             )}
                         </div>
                     )

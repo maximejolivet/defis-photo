@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { apiFetch } from '../api/client';
 import { Upload as UploadIcon, ArrowLeft } from 'lucide-react';
 import ChallengeSelector from '../components/ChallengeSelector';
 import Footer from '../components/Footer';
@@ -21,12 +22,12 @@ const Upload = () => {
     const selectedChallenge = challenges.find(c => c.id === challengeId);
 
     useEffect(() => {
-        fetch('https://photo.jolivetmaxime.fr/api/challenges/list.php')
+        apiFetch('/api/challenges/list')
             .then(r => r.json())
             .then(setChallenges)
             .catch(() => { });
 
-        fetch(`https://photo.jolivetmaxime.fr/api/gamification/stats.php?user_id=${user.id}`)
+        apiFetch('/api/gamification/stats')
             .then(r => r.ok ? r.json() : null)
             .then(data => data && setDoneChallengeIds(data.my_challenges))
             .catch(() => { });
@@ -56,9 +57,8 @@ const Upload = () => {
         formData.append('challenge_id', challengeId);
 
         try {
-            const response = await fetch(`https://photo.jolivetmaxime.fr/api/photos/upload.php?user_id=${user.id}`, {
+            const response = await apiFetch('/api/photos/upload', {
                 method: 'POST',
-                credentials: 'include',
                 body: formData
             });
 

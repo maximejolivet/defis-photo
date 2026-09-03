@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { apiFetch } from '../api/client';
 import { Upload as UploadIcon, ArrowLeft, Heart } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -33,9 +34,8 @@ const FreeUpload = () => {
         formData.append('photo', file);
 
         try {
-            const response = await fetch(`https://photo.jolivetmaxime.fr/api/photos/upload.php?user_id=${user.id}`, {
+            const response = await apiFetch('/api/photos/upload', {
                 method: 'POST',
-                credentials: 'include',
                 body: formData,
             });
 

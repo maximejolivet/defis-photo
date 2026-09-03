@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { User as UserIcon, X, Images, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { apiFetch } from '../api/client';
+import { API_BASE_URL } from '../config';
 
 const PER_PAGE = 8;
 
@@ -12,7 +14,7 @@ const AllPhotos = () => {
     const [page, setPage] = useState(1);
 
     useEffect(() => {
-        fetch('https://photo.jolivetmaxime.fr/api/photos/gallery.php')
+        apiFetch('/api/photos/gallery')
             .then(r => r.json())
             .then(data => setPhotos(data))
             .catch(() => { })
@@ -74,7 +76,7 @@ const AllPhotos = () => {
                                     >
                                         {isVideo ? (
                                             <>
-                                                <video src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`} preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                <video src={`${API_BASE_URL}/uploads/${photo.image_path}`} preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
                                                     <div style={{ background: 'rgba(0,0,0,0.5)', borderRadius: '50%', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                         <Play size={24} fill="white" color="white" style={{ marginLeft: '3px' }} />
@@ -82,7 +84,7 @@ const AllPhotos = () => {
                                                 </div>
                                             </>
                                         ) : (
-                                            <img src={`https://photo.jolivetmaxime.fr/uploads/${photo.image_path}`} alt="Défi photo" />
+                                            <img src={`${API_BASE_URL}/uploads/${photo.image_path}`} alt="Défi photo" />
                                         )}
                                         <div className="photo-info">
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -169,9 +171,9 @@ const AllPhotos = () => {
                             <X size={20} />
                         </button>
                         {['mp4', 'mov', 'webm', 'avi', 'mpeg', '3gp'].includes(lightbox.image_path.split('.').pop().toLowerCase()) ? (
-                            <video src={`https://photo.jolivetmaxime.fr/uploads/${lightbox.image_path}`} controls onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: '12px' }} />
+                            <video src={`${API_BASE_URL}/uploads/${lightbox.image_path}`} controls onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: '12px' }} />
                         ) : (
-                            <img src={`https://photo.jolivetmaxime.fr/uploads/${lightbox.image_path}`} alt="Défi photo" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '12px' }} />
+                            <img src={`${API_BASE_URL}/uploads/${lightbox.image_path}`} alt="Défi photo" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '12px' }} />
                         )}
                     </div>
                 )}

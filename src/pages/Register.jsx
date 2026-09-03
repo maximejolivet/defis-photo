@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { apiFetch } from '../api/client';
 import { UserPlus, Lock, User as UserIcon } from 'lucide-react';
 
 const Register = () => {
@@ -35,7 +36,7 @@ const Register = () => {
         }
 
         try {
-            const response = await fetch('https://photo.jolivetmaxime.fr/api/auth/register.php', {
+            const response = await apiFetch('/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ pseudo, pin })

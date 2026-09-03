@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { apiFetch } from '../api/client';
 import { LogIn, User as UserIcon, Lock } from 'lucide-react';
 
 const Login = () => {
@@ -17,17 +18,16 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await fetch('https://photo.jolivetmaxime.fr/api/auth/login.php', {
+            const response = await apiFetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
                 body: JSON.stringify({ pseudo, pin })
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                login(data.user);
+                login({ ...data.user, token: data.token });
                 navigate('/gallery');
             } else {
                 setError(data.message || "Identifiants incorrects");
