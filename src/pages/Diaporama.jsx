@@ -333,15 +333,15 @@ export default function Diaporama() {
             <div className="dia-photo-ring">
               <div className="dia-photo-inner">
                 <img
-                  src="/ophelie.jpg"
-                  alt="Ophélie"
+                  src="https://placehold.co/400x400"
+                  alt="Photo"
                   onError={e => { e.currentTarget.parentElement.style.background = 'linear-gradient(135deg,#3d0a28,#1a0510)'; }}
                 />
               </div>
             </div>
 
             <div className="dia-title-block">
-              <h1 className="dia-title">Les défis photo<br />d'<em>Ophélie</em></h1>
+              <h1 className="dia-title">Les défis photo<br />d'<em>{{ nom }}</em></h1>
               <p className="dia-subtitle">30 ans !</p>
             </div>
 

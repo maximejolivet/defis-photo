@@ -77,7 +77,7 @@ const Gallery = () => {
                 <WinnerBanner winner={winner} />
 
                 <header style={{ marginBottom: '24px' }}>
-                    <h1 style={{ fontSize: '2.2rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--champagne)' }}>🎂 30 ans d'Ophélie</h1>
+                    <h1 style={{ fontSize: '2.2rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--champagne)' }}>🎂 30 ans d'{{ nom }}</h1>
                     <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Partagez vos plus beaux souvenirs de la soirée !</p>
                     <Link to="/upload" className="btn-primary" style={{ marginTop: '16px', display: 'inline-flex' }}>
                         Réalise un défi

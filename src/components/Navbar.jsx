@@ -37,7 +37,7 @@ const Navbar = () => {
                     <span style={{ fontSize: '1.4rem' }}>📸</span>
                     <span style={{ fontWeight: '800', fontSize: '1rem', color: 'var(--text)', lineHeight: 1 }}>
                         Défis photo<br />
-                        <span style={{ fontSize: '0.7rem', fontWeight: '500', color: 'var(--text-muted)' }}>30ans d'Ophélie</span>
+                        <span style={{ fontSize: '0.7rem', fontWeight: '500', color: 'var(--text-muted)' }}>30ans d'{{ nom }}</span>
                     </span>
                 </Link>
 

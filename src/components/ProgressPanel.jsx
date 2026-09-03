@@ -1,8 +1,8 @@
 const LEVEL_COLORS = {
-  'Ophélie a honte 😬': '#64748b',
-  'Ophélie hausse les épaules 😐': '#10b981',
-  'Ophélie approuve 💪': '#6366f1',
-  'Ophélie est fière 🏆': '#f59e0b',
+  '{{ nom }} a honte 😬': '#64748b',
+  '{{ nom }} hausse les épaules 😐': '#10b981',
+  '{{ nom }} approuve 💪': '#6366f1',
+  '{{ nom }} est fière 🏆': '#f59e0b',
 };
 
 export default function ProgressPanel({ me, myChallenges, allChallenges }) {

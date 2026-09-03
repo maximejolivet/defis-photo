@@ -46,7 +46,7 @@ const Login = () => {
 
 
                     <div style={{ position: 'relative', width: '100px', margin: '0 auto 16px' }}>
-                        <img src="/ophelie.jpg" alt="Ophélie" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', display: 'block', border: '3px solid var(--primary)' }} />
+                        <img src="https://placehold.co/400x400" alt="Photo" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', display: 'block', border: '3px solid var(--primary)' }} />
                         <div style={{ position: 'absolute', top: 0, left: 0, width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary)', border: '2px solid var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}>🎂</div>
                     </div>
                     <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Bienvenue à la soirée d'Ophélie</p>
@@ -120,7 +120,7 @@ const Login = () => {
                 </ul>
                 <p style={{ fontWeight: '500', color: 'var(--text-muted)', marginTop: '8px', fontSize: '0.75rem' }}>
                     <span style={{ fontSize: '1.5rem' }}>
-                        📸  </span>   En souvenir, toutes les photos et vidéos seront transmises à Ophélie</p>
+                        📸  </span>   En souvenir, toutes les photos et vidéos seront transmises à la personne concernée.</p>
             </div>
         </div>
     );
