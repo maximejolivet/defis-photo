@@ -1,18 +1,19 @@
 # Défis Photo
 
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)
-![React Router](https://img.shields.io/badge/React%20Router-7-CA4245?logo=reactrouter&logoColor=white)
-![Framer Motion](https://img.shields.io/badge/Framer%20Motion-12-0055FF?logo=framer&logoColor=white)
+[![Deploy to Vercel](https://github.com/maximejolivet/defis-photo/actions/workflows/deploy.yml/badge.svg)](https://github.com/maximejolivet/defis-photo/actions/workflows/deploy.yml)
+![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![React Router](https://img.shields.io/badge/React%20Router-7.18-CA4245?logo=reactrouter&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer%20Motion-13-0055FF?logo=framer&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ESNext-F7DF1E?logo=javascript&logoColor=white)
-![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3?logo=eslint&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-10-4B32C3?logo=eslint&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?logo=vercel&logoColor=white)
 
 Application web (React + Vite) de défis photo entre participants : inscription, upload de photos, galerie, classement et diaporama.
 
 ## Stack
 
-- [React 19](https://react.dev/) + [Vite 7](https://vite.dev/)
+- [React 19](https://react.dev/) + [Vite 8](https://vite.dev/)
 - [React Router v7](https://reactrouter.com/) pour la navigation
 - [Framer Motion](https://www.framer.com/motion/) pour les animations
 - [Lucide React](https://lucide.dev/) pour les icônes
@@ -51,3 +52,5 @@ npm run preview # prévisualiser le build
 ## Déploiement
 
 Déployé sur [Vercel](https://vercel.com/). `vercel.json` redirige toutes les routes vers `/index.html` pour le routage côté client (SPA).
+
+Le déploiement en production se fait via GitHub Actions (`.github/workflows/deploy.yml`) : chaque push sur `master` build et déploie avec le CLI Vercel, ce qui donne un historique de déploiement consultable dans l'onglet Actions du repo. Le workflow a besoin de trois secrets GitHub : `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.

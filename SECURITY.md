@@ -1,6 +1,6 @@
 # Sécurité
 
-![npm audit](https://img.shields.io/badge/npm%20audit-13%20vulnerabilities-red)
+![npm audit](https://img.shields.io/badge/npm%20audit-0%20vulnerabilities-brightgreen)
 [![Security Policy](https://img.shields.io/badge/security%20policy-see%20below-informational)](#signalement-dune-vulnérabilité)
 
 ## Signalement d'une vulnérabilité
@@ -13,10 +13,10 @@
 ### Frontend (`npm audit`)
 
 ```
-13 vulnerabilities (2 low, 1 moderate, 10 high)
+found 0 vulnerabilities
 ```
 
-Les avis concernent `react-router`/`react-router-dom` (SSR/RSC, CSRF, DoS — modes non utilisés par cette SPA 100% client) et `vite` (essentiellement le serveur de dev, non embarqué dans le build de production). Correctifs disponibles via `npm audit fix`, pas encore appliqués.
+Les dépendances (`react`, `react-router-dom`, `vite`, `eslint`...) sont à jour ; les avis précédemment ouverts sur `react-router`/`react-router-dom` et `vite` sont résolus.
 
 ## Authentification
 
@@ -24,4 +24,6 @@ Il n'y a pas de backend dans ce dépôt : toutes les données transitent par une
 
 ## Secrets
 
-Aucun secret dans ce dépôt : pas de variables d'environnement, pas de clé d'API. Les URLs de l'API externe (`https://photo.jolivetmaxime.fr/...`) sont des endpoints publics codés en dur, pas des identifiants.
+Aucun secret dans le code de ce dépôt : pas de variables d'environnement, pas de clé d'API. Les URLs de l'API externe (`https://photo.jolivetmaxime.fr/...`) sont des endpoints publics codés en dur, pas des identifiants.
+
+Le déploiement (`.github/workflows/deploy.yml`) utilise trois secrets GitHub Actions — `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` — stockés côté GitHub, jamais versionnés.
