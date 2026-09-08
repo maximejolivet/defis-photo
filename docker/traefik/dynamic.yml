@@ -1,0 +1,43 @@
+# Config Traefik statique (provider "file") : les services Docker Compose
+# sont résolus par leur nom via le DNS interne du réseau Compose, pas besoin
+# du provider Docker (qui négocie une version d'API trop ancienne face à des
+# versions récentes du daemon Docker).
+http:
+  routers:
+    frontend:
+      rule: Host(`frontend.localhost`)
+      service: frontend
+    api-express:
+      rule: Host(`api-express.localhost`)
+      service: api-express
+    api-nest:
+      rule: Host(`api-nest.localhost`)
+      service: api-nest
+    api-laravel:
+      rule: Host(`api-laravel.localhost`)
+      service: api-laravel
+    api-symfony:
+      rule: Host(`api-symfony.localhost`)
+      service: api-symfony
+
+  services:
+    frontend:
+      loadBalancer:
+        servers:
+          - url: http://frontend:5173
+    api-express:
+      loadBalancer:
+        servers:
+          - url: http://api-express:3001
+    api-nest:
+      loadBalancer:
+        servers:
+          - url: http://api-nest:3002
+    api-laravel:
+      loadBalancer:
+        servers:
+          - url: http://api-laravel:8001
+    api-symfony:
+      loadBalancer:
+        servers:
+          - url: http://api-symfony:8002

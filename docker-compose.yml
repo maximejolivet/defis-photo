@@ -1,0 +1,114 @@
+name: defis-photo
+
+x-cors-origins: &cors-origins http://frontend.localhost:8088,http://localhost:5173
+
+services:
+  traefik:
+    image: traefik:v3.5
+    command:
+      - --providers.file.directory=/etc/traefik/dynamic
+      - --providers.file.watch=true
+      - --entrypoints.web.address=:80
+      - --api.dashboard=true
+      - --api.insecure=true
+    ports:
+      - "8088:80"   # port 80 déjà pris par le Traefik d'un autre projet local
+      - "8081:8080" # Dashboard Traefik : http://localhost:8081
+    volumes:
+      - ./docker/traefik/dynamic.yml:/etc/traefik/dynamic/dynamic.yml:ro
+
+  mysql:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: defis_photo
+      MARIADB_USER: defis_photo
+      MARIADB_PASSWORD: defis_photo
+      MARIADB_ROOT_PASSWORD: root
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "3306:3306" # pratique pour s'y connecter avec un client SQL en local
+
+  frontend:
+    build: .
+    environment:
+      VITE_API_BASE_URL: http://api-express.localhost:8088
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  api-express:
+    build: ./api-express
+    environment:
+      PORT: 3001
+      DB_HOST: mysql
+      DB_NAME: defis_photo
+      DB_USER: defis_photo
+      DB_PASS: defis_photo
+      JWT_SECRET: local-dev-secret-express-do-not-use-in-prod
+      JWT_EXPIRES_IN: 30d
+      CORS_ORIGINS: *cors-origins
+    volumes:
+      - ./api-express:/app
+      - /app/node_modules
+      - api_express_uploads:/app/uploads
+    depends_on:
+      - mysql
+
+  api-nest:
+    build: ./api-nest
+    environment:
+      PORT: 3002
+      DB_HOST: mysql
+      DB_NAME: defis_photo
+      DB_USER: defis_photo
+      DB_PASS: defis_photo
+      JWT_SECRET: local-dev-secret-nest-do-not-use-in-prod
+      JWT_EXPIRES_IN: 30d
+      CORS_ORIGINS: *cors-origins
+    volumes:
+      - api_nest_uploads:/app/uploads
+    depends_on:
+      - mysql
+
+  api-laravel:
+    build: ./api-laravel
+    environment:
+      APP_ENV: production
+      APP_KEY: base64:m6H4HNMDhGs+URVFeyAJ49ISaBI9TBKhOuv8Bp1XG+Q=
+      SESSION_DRIVER: file
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: defis_photo
+      DB_USER: defis_photo
+      DB_PASS: defis_photo
+      JWT_SECRET: local-dev-secret-laravel-do-not-use-in-prod
+      JWT_TTL: 43200
+      CORS_ORIGINS: *cors-origins
+    volumes:
+      - api_laravel_uploads:/app/public/uploads
+    depends_on:
+      - mysql
+
+  api-symfony:
+    build: ./api-symfony
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: defis_photo
+      DB_USER: defis_photo
+      DB_PASS: defis_photo
+      CORS_ALLOW_ORIGIN: '^http://frontend\.localhost:8088$$|^http://localhost:5173$$'
+    volumes:
+      - api_symfony_uploads:/app/uploads
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_data:
+  api_express_uploads:
+  api_nest_uploads:
+  api_laravel_uploads:
+  api_symfony_uploads:
