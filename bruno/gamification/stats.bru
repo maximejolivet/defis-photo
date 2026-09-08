@@ -1,0 +1,14 @@
+meta {
+  name: My stats
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/gamification/stats
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}

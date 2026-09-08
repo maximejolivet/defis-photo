@@ -1,0 +1,26 @@
+meta {
+  name: Upload
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/photos/upload
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:multipart-form {
+  photo: @file()
+  challenge_id: 1
+}
+
+docs {
+  Sélectionne un fichier local pour le champ `photo` avant d'envoyer (clique sur
+  la valeur `@file()` dans l'onglet Body pour parcourir). `challenge_id` est
+  optionnel (uploads "libres" si omis).
+}
