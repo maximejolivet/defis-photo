@@ -11,7 +11,7 @@
 
 Application web (React + Vite) de défis photo entre participants : inscription, upload de photos, galerie, classement et diaporama.
 
-## Stack
+## Stack frontend
 
 - [React 19](https://react.dev/) + [Vite 8](https://vite.dev/)
 - [React Router v7](https://reactrouter.com/) pour la navigation
@@ -54,3 +54,27 @@ npm run preview # prévisualiser le build
 Déployé sur [Vercel](https://vercel.com/). `vercel.json` redirige toutes les routes vers `/index.html` pour le routage côté client (SPA).
 
 Le déploiement en production se fait via GitHub Actions (`.github/workflows/deploy.yml`) : chaque push sur `master` build et déploie avec le CLI Vercel, ce qui donne un historique de déploiement consultable dans l'onglet Actions du repo. Le workflow a besoin de trois secrets GitHub : `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`.
+
+## Stack backend (comparaison, local, hors production)
+
+![Express](https://img.shields.io/badge/Express-5.2-000000?logo=express&logoColor=white)
+![NestJS](https://img.shields.io/badge/NestJS-12.0-E0234E?logo=nestjs&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-13.17-FF2D20?logo=laravel&logoColor=white)
+![Symfony](https://img.shields.io/badge/Symfony-8.1-000000?logo=symfony&logoColor=white)
+
+Le repo contient aussi, indépendamment de l'app ci-dessus, quatre réécritures de la même API REST — Express (`api-express/`), NestJS (`api-nest/`), Laravel (`api-laravel/`), Symfony (`api-symfony/`) — dans un but d'apprentissage/comparaison entre technos backend. Elles partagent une seule base MariaDB et tournent en local derrière Traefik (routage par domaine), pilotées par `docker-compose.yml`.
+
+```bash
+make up       # build + démarre tout le stack (Traefik, 4 API, frontend, MySQL)
+make infos    # liste toutes les URLs et commandes disponibles
+make down     # arrête le stack
+```
+
+Nécessite [Colima](https://github.com/abiosoft/colima) (`colima start`) ou tout runtime Docker compatible.
+
+Trois outils pour explorer/comparer les 4 API :
+- **[Bruno](https://www.usebruno.com/)** (`make bruno`) : collection de requêtes (`bruno/`), un environnement par backend — pour tester une requête en détail ou un scénario à plusieurs étapes (register → login → upload).
+- **Comparateur navigateur** (`make compare`) : `public/api-compare.html`, envoie la même requête aux 4 API en parallèle et affiche les réponses côte à côte — pour repérer une divergence de comportement rapidement.
+- **Docs API / Swagger UI** (`make docs`) : `public/api-docs.html`, génère une doc interactive à partir de `public/openapi.yaml` (spec écrite à la main — aucun des 4 backends ne génère de Swagger) avec un sélecteur de serveur et un bouton "Try it out".
+
+Voir `CLAUDE.md` pour les gotchas connus de ce stack (migrations Laravel, driver de session, init du schéma MySQL).
