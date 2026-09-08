@@ -1,0 +1,268 @@
+openapi: 3.0.3
+info:
+  title: Défis Photo API
+  version: "1.0"
+  description: >
+    Contrat REST partagé par les 4 réécritures backend (Express, NestJS,
+    Laravel, Symfony) du stack de comparaison local. Choisis un serveur
+    dans le menu déroulant pour pointer vers l'implémentation de ton choix —
+    les réponses peuvent légèrement diverger d'un backend à l'autre (voir
+    CLAUDE.md et bruno/README.md pour les écarts connus).
+
+servers:
+  - url: http://api-express.localhost:8088
+    description: Express
+  - url: http://api-nest.localhost:8088
+    description: NestJS
+  - url: http://api-laravel.localhost:8088
+    description: Laravel
+  - url: http://api-symfony.localhost:8088
+    description: Symfony
+
+tags:
+  - name: auth
+  - name: challenges
+  - name: users
+  - name: photos
+  - name: gamification
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        pseudo: { type: string, example: "compare-user" }
+
+    Challenge:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        title: { type: string, example: "L'heure dorée" }
+        description:
+          type: string
+          example: "Une photo prise pendant le golden hour (1h après le lever ou avant le coucher du soleil)."
+        icon: { type: string, example: "🌅" }
+
+    Photo:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        user_id: { type: integer, example: 1 }
+        image_path: { type: string, example: "uploads/1-1699999999.jpg" }
+        challenge_id: { type: integer, nullable: true, example: 1 }
+        recipient_user_id: { type: integer, nullable: true, example: null }
+        created_at: { type: string, format: date-time }
+
+    LeaderboardEntry:
+      type: object
+      properties:
+        user_id: { type: integer }
+        pseudo: { type: string }
+        total_points: { type: integer }
+        level: { type: string, example: "🐣" }
+
+    GamificationStats:
+      type: object
+      properties:
+        my_challenges:
+          type: array
+          items: { type: integer }
+        level: { type: string, example: "🐣" }
+        total_points: { type: integer, example: 0 }
+        photo_count: { type: integer, example: 0 }
+        challenges_completed: { type: integer, example: 0 }
+        next_level:
+          type: object
+          properties:
+            name: { type: string, example: "Amateur" }
+            at: { type: integer, example: 50 }
+        leaderboard:
+          type: array
+          items: { $ref: "#/components/schemas/LeaderboardEntry" }
+
+    Message:
+      type: object
+      properties:
+        message: { type: string }
+
+paths:
+  /api/auth/register:
+    post:
+      tags: [auth]
+      summary: Créer un utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [pseudo, pin]
+              properties:
+                pseudo: { type: string, example: "compare-user" }
+                pin: { type: string, example: "1234", description: "4 chiffres" }
+      responses:
+        "200":
+          description: Utilisateur créé
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Message" }
+        "409":
+          description: Pseudo déjà utilisé (Express/NestJS/Symfony)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Message" }
+
+  /api/auth/login:
+    post:
+      tags: [auth]
+      summary: Se connecter, récupère un token JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [pseudo, pin]
+              properties:
+                pseudo: { type: string, example: "compare-user" }
+                pin: { type: string, example: "1234" }
+      responses:
+        "200":
+          description: Connexion réussie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: { type: string, example: "Connexion réussie." }
+                  token: { type: string }
+                  user: { $ref: "#/components/schemas/User" }
+
+  /api/challenges/list:
+    get:
+      tags: [challenges]
+      summary: Liste des défis
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Challenge" }
+
+  /api/users/list:
+    get:
+      tags: [users]
+      summary: Liste des utilisateurs
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/User" }
+
+  /api/photos/gallery:
+    get:
+      tags: [photos]
+      summary: Toutes les photos
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Photo" }
+
+  /api/photos/upload:
+    post:
+      tags: [photos]
+      summary: Upload d'une photo
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [photo]
+              properties:
+                photo: { type: string, format: binary }
+                challenge_id:
+                  type: integer
+                  description: Optionnel — omis pour un upload "libre"
+                recipient_user_id:
+                  type: integer
+                  description: Optionnel
+      responses:
+        "200":
+          description: Photo enregistrée
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Photo" }
+        "401":
+          description: Non authentifié
+
+  /api/photos/delete:
+    post:
+      tags: [photos]
+      summary: Supprime une photo de l'utilisateur authentifié
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [photo_id]
+              properties:
+                photo_id: { type: integer, example: 1 }
+      responses:
+        "200":
+          description: Photo supprimée
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Message" }
+        "401":
+          description: Non authentifié
+
+  /api/gamification/stats:
+    get:
+      tags: [gamification]
+      summary: Stats de l'utilisateur authentifié + top 10
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/GamificationStats" }
+        "401":
+          description: Non authentifié
+
+  /api/gamification/winner:
+    get:
+      tags: [gamification]
+      summary: Premier utilisateur à avoir complété 8 défis
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  winner:
+                    nullable: true
+                    allOf:
+                      - $ref: "#/components/schemas/User"

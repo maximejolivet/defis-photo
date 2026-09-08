@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparateur API — Défis Photo</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #171a21;
+    --border: #2a2e38;
+    --text: #e6e8ec;
+    --muted: #8b90a0;
+    --accent: #6ea8fe;
+    --ok: #3ecf8e;
+    --err: #ff6b6b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px;
+  }
+  h1 { margin: 0 0 4px; font-size: 20px; }
+  p.sub { margin: 0 0 20px; color: var(--muted); font-size: 13px; }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 14px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    align-items: center;
+  }
+  .toolbar .group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding-right: 12px;
+    border-right: 1px solid var(--border);
+  }
+  .toolbar .group:last-child { border-right: none; }
+  .toolbar input {
+    background: #0f1115;
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 13px;
+    width: 90px;
+  }
+  button {
+    background: #23262f;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  button:hover { background: #2b2f3a; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #0f1115; font-weight: 600; }
+  button.primary:hover { filter: brightness(1.08); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 160px;
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    background: #1b1e27;
+  }
+  .card-head .name { font-weight: 600; font-size: 14px; }
+  .card-head .meta { font-size: 11px; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+  .status { padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+  .status.ok { background: rgba(62,207,142,.15); color: var(--ok); }
+  .status.err { background: rgba(255,107,107,.15); color: var(--err); }
+  .status.pending { background: rgba(139,144,160,.15); color: var(--muted); }
+
+  .token-line {
+    font-size: 11px;
+    color: var(--muted);
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  .token-line .val { font-family: ui-monospace, monospace; color: var(--accent); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px; }
+
+  pre {
+    margin: 0;
+    padding: 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow: auto;
+    flex: 1;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .card.err pre { color: var(--err); }
+
+  .endpoints {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .endpoints button { font-size: 12px; }
+  .endpoints button.active { background: var(--accent); border-color: var(--accent); color: #0f1115; }
+</style>
+</head>
+<body>
+
+<h1>Comparateur API — Défis Photo</h1>
+<p class="sub">Envoie la même requête aux 4 implémentations (Express, NestJS, Laravel, Symfony) via Traefik et affiche les réponses côte à côte.</p>
+
+<div class="toolbar">
+  <div class="group">
+    <input id="pseudo" placeholder="pseudo" value="compare-user">
+    <input id="pin" placeholder="pin (4 chiffres)" value="1234">
+    <button id="btn-register">Register (4 API)</button>
+    <button id="btn-login">Login (4 API)</button>
+  </div>
+  <div class="group">
+    <span id="token-status" style="font-size:12px;color:var(--muted)">Aucun token</span>
+  </div>
+</div>
+
+<div class="endpoints">
+  <button data-ep="challenges" class="active">GET challenges/list</button>
+  <button data-ep="users">GET users/list</button>
+  <button data-ep="gallery">GET photos/gallery</button>
+  <button data-ep="winner">GET gamification/winner</button>
+  <button data-ep="stats">GET gamification/stats 🔒</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const APIS = [
+  { key: "express", label: "Express", baseUrl: "http://api-express.localhost:8088" },
+  { key: "nest",    label: "NestJS",   baseUrl: "http://api-nest.localhost:8088" },
+  { key: "laravel", label: "Laravel",  baseUrl: "http://api-laravel.localhost:8088" },
+  { key: "symfony", label: "Symfony",  baseUrl: "http://api-symfony.localhost:8088" },
+];
+
+const ENDPOINTS = {
+  challenges: { method: "GET", path: "/api/challenges/list", auth: false },
+  users:      { method: "GET", path: "/api/users/list", auth: false },
+  gallery:    { method: "GET", path: "/api/photos/gallery", auth: false },
+  winner:     { method: "GET", path: "/api/gamification/winner", auth: false },
+  stats:      { method: "GET", path: "/api/gamification/stats", auth: true },
+};
+
+const tokens = {};
+let currentEndpoint = "challenges";
+
+const grid = document.getElementById("grid");
+const tokenStatus = document.getElementById("token-status");
+
+function renderCards() {
+  grid.innerHTML = APIS.map(api => `
+    <div class="card" id="card-${api.key}">
+      <div class="card-head">
+        <span class="name">${api.label}</span>
+        <span class="meta">
+          <span class="status pending" id="status-${api.key}">—</span>
+          <span id="time-${api.key}"></span>
+        </span>
+      </div>
+      <div class="token-line">
+        <span>token</span>
+        <span class="val" id="tokenval-${api.key}">—</span>
+      </div>
+      <pre id="body-${api.key}">Choisis une action ci-dessus.</pre>
+    </div>
+  `).join("");
+}
+
+function updateTokenDisplays() {
+  APIS.forEach(api => {
+    const el = document.getElementById(`tokenval-${api.key}`);
+    if (el) el.textContent = tokens[api.key] ? tokens[api.key].slice(0, 16) + "…" : "—";
+  });
+  const count = Object.values(tokens).filter(Boolean).length;
+  tokenStatus.textContent = count ? `${count}/4 authentifié(s)` : "Aucun token";
+}
+
+async function callOne(api, { method, path, auth, body }) {
+  const statusEl = document.getElementById(`status-${api.key}`);
+  const timeEl = document.getElementById(`time-${api.key}`);
+  const bodyEl = document.getElementById(`body-${api.key}`);
+  const cardEl = document.getElementById(`card-${api.key}`);
+
+  statusEl.className = "status pending";
+  statusEl.textContent = "…";
+  timeEl.textContent = "";
+  bodyEl.textContent = "chargement…";
+  cardEl.classList.remove("err");
+
+  const headers = { "Content-Type": "application/json" };
+  if (auth) {
+    if (!tokens[api.key]) {
+      statusEl.className = "status err";
+      statusEl.textContent = "no token";
+      bodyEl.textContent = "Pas de token pour cette API — fais Login d'abord.";
+      cardEl.classList.add("err");
+      return;
+    }
+    headers["Authorization"] = `Bearer ${tokens[api.key]}`;
+  }
+
+  const started = performance.now();
+  try {
+    const res = await fetch(api.baseUrl + path, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    const elapsed = Math.round(performance.now() - started);
+    const text = await res.text();
+    let parsed;
+    try { parsed = JSON.parse(text); } catch { parsed = text; }
+
+    statusEl.className = "status " + (res.ok ? "ok" : "err");
+    statusEl.textContent = res.status;
+    timeEl.textContent = `${elapsed}ms`;
+    bodyEl.textContent = typeof parsed === "string" ? parsed : JSON.stringify(parsed, null, 2);
+    if (!res.ok) cardEl.classList.add("err");
+    return { ok: res.ok, data: parsed };
+  } catch (e) {
+    const elapsed = Math.round(performance.now() - started);
+    statusEl.className = "status err";
+    statusEl.textContent = "fail";
+    timeEl.textContent = `${elapsed}ms`;
+    bodyEl.textContent = "Erreur réseau : " + e.message + "\n\n(CORS ? conteneur down ? vérifie `docker compose ps`)";
+    cardEl.classList.add("err");
+    return { ok: false, error: e.message };
+  }
+}
+
+function runEndpoint(key) {
+  currentEndpoint = key;
+  document.querySelectorAll(".endpoints button").forEach(b => b.classList.toggle("active", b.dataset.ep === key));
+  const ep = ENDPOINTS[key];
+  APIS.forEach(api => callOne(api, ep));
+}
+
+document.querySelectorAll(".endpoints button").forEach(btn => {
+  btn.addEventListener("click", () => runEndpoint(btn.dataset.ep));
+});
+
+document.getElementById("btn-register").addEventListener("click", async () => {
+  const pseudo = document.getElementById("pseudo").value.trim();
+  const pin = document.getElementById("pin").value.trim();
+  await Promise.all(APIS.map(api => callOne(api, {
+    method: "POST", path: "/api/auth/register", auth: false, body: { pseudo, pin },
+  })));
+});
+
+document.getElementById("btn-login").addEventListener("click", async () => {
+  const pseudo = document.getElementById("pseudo").value.trim();
+  const pin = document.getElementById("pin").value.trim();
+  const results = await Promise.all(APIS.map(api => callOne(api, {
+    method: "POST", path: "/api/auth/login", auth: false, body: { pseudo, pin },
+  })));
+  results.forEach((r, i) => {
+    if (r && r.ok && r.data && r.data.token) tokens[APIS[i].key] = r.data.token;
+  });
+  updateTokenDisplays();
+});
+
+renderCards();
+updateTokenDisplays();
+</script>
+</body>
+</html>
