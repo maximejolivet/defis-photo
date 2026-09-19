@@ -25,6 +25,3 @@ CLAUDE.local.md
 *.sw?
 .vercel
 .env*
-api-nestjs/
-api-laravel/
-api-symfony/
