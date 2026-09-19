@@ -1,15 +1,17 @@
-const LEVEL_COLORS = {
-  '{{ nom }} a honte 😬': '#64748b',
-  '{{ nom }} hausse les épaules 😐': '#10b981',
-  '{{ nom }} approuve 💪': '#6366f1',
-  '{{ nom }} est fière 🏆': '#f59e0b',
-};
+// Le libellé du niveau commence par un prénom variable : on repère la couleur
+// par la fin du texte plutôt que par la chaîne exacte.
+const LEVEL_COLORS = [
+  ['a honte', '#64748b'],
+  ['hausse les épaules', '#10b981'],
+  ['approuve', '#2f9e44'],
+  ['est fière', '#f59e0b'],
+];
 
 export default function ProgressPanel({ me, myChallenges, allChallenges }) {
   const completedSet = new Set(myChallenges.map(Number));
   const points = Number(me.total_points);
   const completed = Number(me.challenges_completed);
-  const levelColor = LEVEL_COLORS[me.level] ?? '#6366f1';
+  const levelColor = LEVEL_COLORS.find(([keyword]) => me.level?.includes(keyword))?.[1] ?? '#2f9e44';
   const progressPercent = Math.round((completed / 8) * 100);
 
   return (

@@ -341,7 +341,7 @@ export default function Diaporama() {
             </div>
 
             <div className="dia-title-block">
-              <h1 className="dia-title">Les défis photo<br />d'<em>{{ nom }}</em></h1>
+              <h1 className="dia-title">Les défis photo<br />de la <em>soirée</em></h1>
               <p className="dia-subtitle">30 ans !</p>
             </div>
 
