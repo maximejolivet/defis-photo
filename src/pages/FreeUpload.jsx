@@ -105,7 +105,7 @@ const FreeUpload = () => {
                                 cursor: 'pointer',
                                 position: 'relative',
                                 overflow: 'hidden',
-                                backgroundColor: 'rgba(255,255,255,0.02)',
+                                backgroundColor: 'var(--surface)',
                                 marginBottom: '24px',
                             }}
                             onClick={() => document.getElementById('free-file-upload').click()}
@@ -126,7 +126,7 @@ const FreeUpload = () => {
                             <input id="free-file-upload" type="file" accept="image/*,video/*" onChange={handleFileChange} style={{ display: 'none' }} />
                         </div>
 
-                        {error && <p style={{ color: 'var(--accent)', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
+                        {error && <p style={{ color: 'var(--danger)', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
 
                         <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loading || !file}>
                             <Heart size={16} /> Envoyer la photo

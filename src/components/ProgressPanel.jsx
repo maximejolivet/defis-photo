@@ -42,7 +42,7 @@ export default function ProgressPanel({ me }) {
         </span>
         <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>{progressPercent}%</span>
       </div>
-      <div style={{ height: 8, background: 'rgba(255,255,255,0.08)', borderRadius: 999, overflow: 'hidden', marginBottom: '20px' }}>
+      <div style={{ height: 8, background: 'var(--surface)', borderRadius: 999, overflow: 'hidden', marginBottom: '20px' }}>
         <div style={{
           height: '100%',
           width: `${progressPercent}%`,

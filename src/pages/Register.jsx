@@ -121,7 +121,7 @@ const Register = () => {
                         </div>
                     </div>
 
-                    {error && <p style={{ color: 'var(--accent)', fontSize: '0.9rem', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
+                    {error && <p style={{ color: 'var(--danger)', fontSize: '0.9rem', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
 
                     <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loading}>
                         {loading ? 'Création...' : "S'inscrire"}

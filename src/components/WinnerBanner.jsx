@@ -22,7 +22,7 @@ export default function WinnerBanner({ winner }) {
         borderRadius: '16px',
         padding: '28px 32px',
         marginBottom: '28px',
-        background: 'linear-gradient(135deg, rgba(245,158,11,0.18) 0%, rgba(99,102,241,0.18) 100%)',
+        background: 'linear-gradient(135deg, rgba(245,158,11,0.18) 0%, rgba(47, 158, 68,0.18) 100%)',
         border: '1px solid rgba(245,158,11,0.4)',
         boxShadow: '0 0 40px rgba(245,158,11,0.12)',
         textAlign: 'center',
@@ -43,7 +43,7 @@ export default function WinnerBanner({ winner }) {
         fontSize: '0.75rem',
         textTransform: 'uppercase',
         letterSpacing: '0.1em',
-        color: '#f59e0b',
+        color: '#d9480f',
         fontWeight: 700,
         marginBottom: '8px',
       }}>
@@ -54,7 +54,7 @@ export default function WinnerBanner({ winner }) {
         fontSize: '1.8rem',
         fontWeight: 800,
         fontFamily: 'var(--font-display)',
-        color: 'var(--champagne)',
+        color: 'var(--text-strong)',
         marginBottom: '6px',
       }}>
         {winner.pseudo}
@@ -71,7 +71,7 @@ function Confettis() {
   const pieces = Array.from({ length: 18 }, (_, i) => ({
     id: i,
     left: `${(i * 5.8) % 100}%`,
-    color: ['#f59e0b', '#6366f1', '#10b981', '#ec4899', '#f97316'][i % 5],
+    color: ['#f59e0b', '#2f9e44', '#10b981', '#14b8a6', '#f97316'][i % 5],
     delay: (i * 0.12).toFixed(2),
     duration: (1.8 + (i % 4) * 0.3).toFixed(2),
     size: 6 + (i % 3) * 3,

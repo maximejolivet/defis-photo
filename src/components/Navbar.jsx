@@ -26,10 +26,10 @@ const Navbar = () => {
             position: 'sticky',
             top: 0,
             zIndex: 100,
-            background: 'rgba(15, 8, 22, 0.85)',
+            background: 'rgba(255, 248, 236, 0.88)',
             backdropFilter: 'blur(16px)',
             WebkitBackdropFilter: 'blur(16px)',
-            borderBottom: '1px solid rgba(244, 114, 182, 0.18)',
+            borderBottom: '1px solid rgba(232, 89, 12, 0.18)',
         }}>
             <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '60px' }}>
                 {/* Logo */}
@@ -52,7 +52,7 @@ const Navbar = () => {
                                 padding: '8px 14px', borderRadius: '10px', textDecoration: 'none',
                                 fontSize: '0.9rem', fontWeight: '500',
                                 color: location.pathname === to ? 'white' : 'var(--text-muted)',
-                                background: location.pathname === to ? 'linear-gradient(135deg, var(--primary), #c084fc)' : 'transparent',
+                                background: location.pathname === to ? 'linear-gradient(135deg, var(--primary), #f76707)' : 'transparent',
                                 transition: 'all 0.2s',
                             }}
                         >
@@ -85,7 +85,7 @@ const Navbar = () => {
             {/* Mobile menu */}
             {open && (
                 <div className="nav-mobile" style={{
-                    borderTop: '1px solid rgba(244, 114, 182, 0.18)',
+                    borderTop: '1px solid rgba(232, 89, 12, 0.18)',
                     padding: '12px 20px 16px',
                     display: 'flex', flexDirection: 'column', gap: '4px',
                 }}>
@@ -99,7 +99,7 @@ const Navbar = () => {
                                 padding: '12px 16px', borderRadius: '10px', textDecoration: 'none',
                                 fontSize: '0.95rem', fontWeight: '500',
                                 color: location.pathname === to ? 'white' : 'var(--text-muted)',
-                                background: location.pathname === to ? 'linear-gradient(135deg, var(--primary), #c084fc)' : 'rgba(255,255,255,0.04)',
+                                background: location.pathname === to ? 'linear-gradient(135deg, var(--primary), #f76707)' : 'var(--surface)',
                             }}
                         >
                             {icon}{label}
@@ -110,7 +110,7 @@ const Navbar = () => {
                             display: 'flex', alignItems: 'center', gap: '10px',
                             padding: '12px 16px', borderRadius: '10px', cursor: 'pointer',
                             fontSize: '0.95rem', fontWeight: '500', color: 'var(--text-muted)',
-                            background: 'rgba(255,255,255,0.04)', border: 'none', textAlign: 'left',
+                            background: 'var(--surface)', border: 'none', textAlign: 'left',
                         }}>
                             <LogOut size={18} />Déconnexion
                         </button>

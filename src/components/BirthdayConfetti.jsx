@@ -21,7 +21,7 @@ const EMOJI_PIECES = Array.from({ length: EMOJI_COUNT }, (_, i) => ({
 }));
 
 // ── Confettis ────────────────────────────────────────────────────────────────
-const COLORS = ['#e8638c', '#f59e0b', '#a855f7', '#10b981', '#3b82f6', '#f97316', '#ec4899', '#d4a843', '#84cc16', '#ef4444', '#06b6d4'];
+const COLORS = ['#f76707', '#f59e0b', '#a855f7', '#10b981', '#3b82f6', '#f97316', '#14b8a6', '#d4a843', '#84cc16', '#ef4444', '#06b6d4'];
 const SHAPES = ['circle', 'rect', 'ribbon', 'rect', 'circle']; // rect + circle plus fréquents
 
 const CONFETTI_PIECES = Array.from({ length: 70 }, (_, i) => ({

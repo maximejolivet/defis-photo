@@ -89,7 +89,7 @@ const Login = () => {
                         </div>
                     </div>
 
-                    {error && <p style={{ color: 'var(--accent)', fontSize: '0.9rem', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
+                    {error && <p style={{ color: 'var(--danger)', fontSize: '0.9rem', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
 
                     <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loading}>
                         {loading ? 'Connexion...' : 'Se connecter'}
@@ -102,8 +102,8 @@ const Login = () => {
             </div>
 
             <div style={{
-                background: 'rgba(232, 99, 140, 0.08)',
-                border: '1px solid rgba(232, 99, 140, 0.28)',
+                background: 'rgba(232, 89, 12, 0.08)',
+                border: '1px solid rgba(232, 89, 12, 0.28)',
                 borderRadius: '12px',
                 padding: '16px',
                 width: '100%',

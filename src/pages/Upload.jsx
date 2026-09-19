@@ -103,7 +103,7 @@ const Upload = () => {
                         <button
                             onClick={() => setStep('challenge')}
                             style={{
-                                background: 'rgba(255,255,255,0.06)',
+                                background: 'var(--surface)',
                                 border: '1px solid var(--glass-border)',
                                 color: 'var(--text-muted)',
                                 borderRadius: '8px',
@@ -122,8 +122,8 @@ const Upload = () => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '8px',
-                                background: 'rgba(99,102,241,0.15)',
-                                border: '1px solid rgba(99,102,241,0.4)',
+                                background: 'rgba(47, 158, 68,0.15)',
+                                border: '1px solid rgba(47, 158, 68,0.4)',
                                 borderRadius: '8px',
                                 padding: '6px 14px',
                                 fontSize: '0.88rem',
@@ -173,7 +173,7 @@ const Upload = () => {
                                 cursor: 'pointer',
                                 position: 'relative',
                                 overflow: 'hidden',
-                                backgroundColor: 'rgba(255,255,255,0.02)',
+                                backgroundColor: 'var(--surface)',
                                 marginBottom: '32px'
                             }}
                             onClick={() => document.getElementById('file-upload').click()}
@@ -194,7 +194,7 @@ const Upload = () => {
                             <input id="file-upload" type="file" accept="image/*,video/*" onChange={handleFileChange} style={{ display: 'none' }} />
                         </div>
 
-                        {error && <p style={{ color: 'var(--accent)', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
+                        {error && <p style={{ color: 'var(--danger)', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
 
                         <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loading || !file}>
                             Publier mon fichier

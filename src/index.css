@@ -1,20 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap');
 
 :root {
-  --primary: #e8638c;
-  --primary-hover: #d4426e;
-  --bg: #1a0510;
-  --card-bg: rgba(58, 10, 38, 0.82);
-  --text: #fde8f0;
-  --text-muted: #e8a0b8;
-  --accent: #f7b3cc;
-  --gold: #d4a843;
-  --gold-light: #f0d080;
-  --rose: #e8638c;
-  --champagne: #fde8f0;
-  --glass-border: rgba(232, 99, 140, 0.28);
-  --font-main: 'Outfit', sans-serif;
-  --font-display: 'Playfair Display', serif;
+  --primary: #e8590c;
+  --primary-hover: #c2410c;
+  --bg: #fff8ec;
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --text: #2d1b0e;
+  --text-muted: #7a6450;
+  --text-strong: #1f1208;
+  --accent: #2f9e44;
+  --gold: #f59f00;
+  --gold-light: #ffd43b;
+  --danger: #e03131;
+  --surface: rgba(122, 74, 20, 0.06);
+  --glass-border: rgba(232, 89, 12, 0.22);
+  --font-main: 'Nunito', sans-serif;
+  --font-display: 'Fredoka', sans-serif;
 }
 
 * {
@@ -30,10 +31,10 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background-image:
-    radial-gradient(at 0% 0%,    #3d0a28 0, transparent 50%),
-    radial-gradient(at 50% 0%,   #2a0518 0, transparent 55%),
-    radial-gradient(at 100% 0%,  #35082a 0, transparent 50%),
-    radial-gradient(at 50% 100%, #150310 0, transparent 60%);
+    radial-gradient(at 0% 0%,    #ffe2bd 0, transparent 50%),
+    radial-gradient(at 100% 0%,  #fff0b0 0, transparent 50%),
+    radial-gradient(at 0% 100%,  #dff5d8 0, transparent 50%),
+    radial-gradient(at 100% 100%, #d6ecff 0, transparent 50%);
 }
 
 /* Confettis décoratifs en fond */
@@ -42,16 +43,16 @@ body::before {
   position: fixed;
   inset: 0;
   background-image:
-    radial-gradient(circle 1.5px at 10% 20%, rgba(232, 99, 140, 0.5) 0%, transparent 100%),
-    radial-gradient(circle 1px at 25% 60%, rgba(212, 168, 67, 0.4) 0%, transparent 100%),
-    radial-gradient(circle 1.5px at 40% 15%, rgba(232, 99, 140, 0.3) 0%, transparent 100%),
-    radial-gradient(circle 1px at 55% 75%, rgba(212, 168, 67, 0.35) 0%, transparent 100%),
-    radial-gradient(circle 2px at 70% 35%, rgba(247, 179, 204, 0.5) 0%, transparent 100%),
-    radial-gradient(circle 1px at 80% 80%, rgba(212, 168, 67, 0.4) 0%, transparent 100%),
-    radial-gradient(circle 1.5px at 90% 10%, rgba(232, 99, 140, 0.5) 0%, transparent 100%),
-    radial-gradient(circle 1px at 15% 90%, rgba(212, 168, 67, 0.3) 0%, transparent 100%),
-    radial-gradient(circle 2px at 60% 50%, rgba(247, 179, 204, 0.35) 0%, transparent 100%),
-    radial-gradient(circle 1px at 35% 40%, rgba(232, 99, 140, 0.35) 0%, transparent 100%);
+    radial-gradient(circle 4px at 10% 20%, rgba(232, 89, 12, 0.35) 0%, transparent 100%),
+    radial-gradient(circle 3px at 25% 60%, rgba(245, 159, 0, 0.45) 0%, transparent 100%),
+    radial-gradient(circle 4px at 40% 15%, rgba(47, 158, 68, 0.3) 0%, transparent 100%),
+    radial-gradient(circle 3px at 55% 75%, rgba(34, 139, 230, 0.3) 0%, transparent 100%),
+    radial-gradient(circle 5px at 70% 35%, rgba(245, 159, 0, 0.4) 0%, transparent 100%),
+    radial-gradient(circle 3px at 80% 80%, rgba(232, 89, 12, 0.35) 0%, transparent 100%),
+    radial-gradient(circle 4px at 90% 10%, rgba(47, 158, 68, 0.3) 0%, transparent 100%),
+    radial-gradient(circle 3px at 15% 90%, rgba(34, 139, 230, 0.3) 0%, transparent 100%),
+    radial-gradient(circle 5px at 60% 50%, rgba(232, 89, 12, 0.25) 0%, transparent 100%),
+    radial-gradient(circle 3px at 35% 40%, rgba(245, 159, 0, 0.4) 0%, transparent 100%);
   pointer-events: none;
   z-index: 0;
 }
@@ -68,23 +69,23 @@ body > * {
   border: 1px solid var(--glass-border);
   border-radius: 24px;
   box-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.45),
-    0 0 0 1px rgba(232, 99, 140, 0.08),
-    inset 0 1px 0 rgba(253, 232, 240, 0.08);
+    0 8px 32px 0 rgba(122, 74, 20, 0.14),
+    0 0 0 1px rgba(232, 89, 12, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
   transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .glass-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(232, 99, 140, 0.4);
+  border-color: rgba(232, 89, 12, 0.4);
   box-shadow:
-    0 16px 48px 0 rgba(0, 0, 0, 0.5),
-    0 0 24px rgba(232, 99, 140, 0.15),
-    inset 0 1px 0 rgba(253, 232, 240, 0.12);
+    0 16px 48px 0 rgba(122, 74, 20, 0.2),
+    0 0 24px rgba(232, 89, 12, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--gold) 50%, var(--primary) 100%);
+  background: linear-gradient(135deg, #e8590c 0%, #f76707 100%);
   color: #ffffff;
   border: none;
   padding: 12px 28px;
@@ -100,7 +101,7 @@ body > * {
   min-height: 44px;
   font-size: 1rem;
   letter-spacing: 0.02em;
-  box-shadow: 0 4px 20px rgba(232, 99, 140, 0.35);
+  box-shadow: 0 4px 20px rgba(232, 89, 12, 0.35);
   position: relative;
   overflow: hidden;
 }
@@ -115,7 +116,7 @@ body > * {
 
 .btn-primary:hover {
   filter: brightness(1.08);
-  box-shadow: 0 6px 30px rgba(232, 99, 140, 0.5);
+  box-shadow: 0 6px 30px rgba(232, 89, 12, 0.5);
   transform: scale(1.02);
 }
 
@@ -136,8 +137,8 @@ body > * {
 .input-field {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(232, 99, 140, 0.25);
+  background: #ffffff;
+  border: 1px solid rgba(122, 74, 20, 0.25);
   border-radius: 12px;
   color: var(--text);
   outline: none;
@@ -148,12 +149,12 @@ body > * {
 }
 
 .input-field::placeholder {
-  color: rgba(200, 200, 210, 0.5);
+  color: rgba(122, 100, 80, 0.55);
 }
 
 .input-field:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(232, 99, 140, 0.1);
+  box-shadow: 0 0 0 3px rgba(232, 89, 12, 0.18);
 }
 
 .gallery-grid {
@@ -168,8 +169,8 @@ body > * {
   overflow: hidden;
   border-radius: 20px;
   aspect-ratio: 1;
-  border: 1px solid rgba(232, 99, 140, 0.2);
-  box-shadow: 0 4px 20px rgba(232, 99, 140, 0.12);
+  border: 1px solid rgba(232, 89, 12, 0.2);
+  box-shadow: 0 4px 20px rgba(232, 89, 12, 0.12);
 }
 
 .photo-card::after {
@@ -177,7 +178,7 @@ body > * {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgba(232, 99, 140, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(232, 89, 12, 0.06);
   pointer-events: none;
 }
 
@@ -198,8 +199,8 @@ body > * {
   left: 0;
   right: 0;
   padding: 20px;
-  background: linear-gradient(transparent, rgba(74, 16, 48, 0.85));
-  color: var(--champagne);
+  background: linear-gradient(transparent, rgba(30, 15, 5, 0.82));
+  color: #fff;
   opacity: 1;
 }
 

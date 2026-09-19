@@ -115,7 +115,7 @@ const AllPhotos = () => {
                                     style={{
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                                         width: '36px', height: '36px', borderRadius: '10px',
-                                        border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.05)',
+                                        border: '1px solid var(--glass-border)', background: 'var(--surface)',
                                         color: page === 1 ? 'var(--text-muted)' : 'var(--text)',
                                         cursor: page === 1 ? 'default' : 'pointer',
                                         opacity: page === 1 ? 0.4 : 1,
@@ -131,7 +131,7 @@ const AllPhotos = () => {
                                         style={{
                                             width: '36px', height: '36px', borderRadius: '10px',
                                             border: '1px solid var(--glass-border)',
-                                            background: p === page ? 'linear-gradient(135deg, var(--primary), #c084fc)' : 'rgba(255,255,255,0.05)',
+                                            background: p === page ? 'linear-gradient(135deg, var(--primary), #f76707)' : 'var(--surface)',
                                             color: 'white', fontWeight: p === page ? '700' : '500',
                                             cursor: 'pointer', fontSize: '0.9rem',
                                         }}
@@ -146,7 +146,7 @@ const AllPhotos = () => {
                                     style={{
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                                         width: '36px', height: '36px', borderRadius: '10px',
-                                        border: '1px solid var(--glass-border)', background: 'rgba(255,255,255,0.05)',
+                                        border: '1px solid var(--glass-border)', background: 'var(--surface)',
                                         color: page === totalPages ? 'var(--text-muted)' : 'var(--text)',
                                         cursor: page === totalPages ? 'default' : 'pointer',
                                         opacity: page === totalPages ? 0.4 : 1,

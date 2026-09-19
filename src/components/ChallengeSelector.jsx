@@ -24,7 +24,7 @@ export default function ChallengeSelector({ challenges, selected, onSelect }) {
                 alignItems: 'center',
                 gap: '14px',
                 transition: 'border-color 0.2s',
-                boxShadow: isSelected ? '0 4px 16px rgba(99,102,241,0.3)' : undefined,
+                boxShadow: isSelected ? '0 4px 16px rgba(47, 158, 68,0.3)' : undefined,
               }}
             >
               <div style={{ fontSize: '1.6rem', flexShrink: 0 }}>{challenge.icon}</div>
