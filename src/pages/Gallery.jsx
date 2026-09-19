@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProgressPanel from '../components/ProgressPanel';
-import Leaderboard from '../components/Leaderboard';
 import WinnerBanner from '../components/WinnerBanner';
 import { apiFetch } from '../api/client';
 import { API_BASE_URL } from '../config';
@@ -18,20 +17,6 @@ const Gallery = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        fetchPhotos();
-        apiFetch('/api/gamification/winner')
-            .then(r => r.ok ? r.json() : null)
-            .then(data => data?.winner && setWinner(data.winner))
-            .catch(() => {});
-        if (user) {
-            apiFetch('/api/gamification/stats')
-                .then(r => r.ok ? r.json() : null)
-                .then(data => data && setStats(data))
-                .catch(() => {});
-        }
-    }, []);
-
     const fetchPhotos = async () => {
         try {
             const response = await apiFetch('/api/photos/gallery');
@@ -43,6 +28,23 @@ const Gallery = () => {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        // Chargement initial : les setState ont lieu après un await, pas de rendu en cascade
+        // (la règle ne voit pas à travers fetchPhotos, réutilisée aussi par handleDelete).
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        fetchPhotos();
+        apiFetch('/api/gamification/winner')
+            .then(r => r.ok ? r.json() : null)
+            .then(data => data?.winner && setWinner(data.winner))
+            .catch(() => {});
+        if (user) {
+            apiFetch('/api/gamification/stats')
+                .then(r => r.ok ? r.json() : null)
+                .then(data => data && setStats(data))
+                .catch(() => {});
+        }
+    }, [user]);
 
     const handleDelete = async (photoId) => {
         if (!confirm('Supprimer cette photo ?')) return;
@@ -87,8 +89,7 @@ const Gallery = () => {
 
                 {stats && (
                     <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '32px' }}>
-                        <ProgressPanel me={stats} myChallenges={stats.my_challenges} allChallenges={[]} />
-                        <Leaderboard entries={stats.leaderboard} currentUserId={user.id} />
+                        <ProgressPanel me={stats} />
                     </div>
                 )}
 

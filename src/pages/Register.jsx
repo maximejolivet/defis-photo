@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { apiFetch } from '../api/client';
 import { UserPlus, Lock, User as UserIcon } from 'lucide-react';
 
@@ -49,7 +48,7 @@ const Register = () => {
             } else {
                 setError(data.message || "Erreur lors de l'inscription");
             }
-        } catch (err) {
+        } catch {
             setError("Impossible de contacter le serveur.");
         } finally {
             setLoading(false);

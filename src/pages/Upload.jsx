@@ -69,7 +69,7 @@ const Upload = () => {
             } else {
                 setError(data.message || "Erreur lors de l'envoi.");
             }
-        } catch (err) {
+        } catch {
             setError("Impossible de contacter le serveur.");
         } finally {
             setLoading(false);

@@ -7,9 +7,7 @@ const LEVEL_COLORS = [
   ['est fière', '#f59e0b'],
 ];
 
-export default function ProgressPanel({ me, myChallenges, allChallenges }) {
-  const completedSet = new Set(myChallenges.map(Number));
-  const points = Number(me.total_points);
+export default function ProgressPanel({ me }) {
   const completed = Number(me.challenges_completed);
   const levelColor = LEVEL_COLORS.find(([keyword]) => me.level?.includes(keyword))?.[1] ?? '#2f9e44';
   const progressPercent = Math.round((completed / 8) * 100);
