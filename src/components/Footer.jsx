@@ -9,7 +9,7 @@ const Footer = () => (
         fontSize: '0.85rem',
         borderTop: '1px solid rgba(244, 114, 182, 0.1)',
     }}>
-        Créé avec ❤️ par Maxime Jolivet
+        Créé avec ❤️ par <a href="https://maxime.bzh" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>Maxime Jolivet</a>
     </footer>
 );
 
