@@ -4,6 +4,7 @@ infos:
 	@echo "Stack Docker (Traefik, routage par domaine) :"
 	@echo "  Frontend       : http://frontend.localhost:8088"
 	@echo "  API Express    : http://api-express.localhost:8088"
+	@echo "  Back office (AdminJS) : http://api-express.localhost:8088/admin (admin@local.dev / admin)"
 	@echo "  API NestJS     : http://api-nest.localhost:8088"
 	@echo "  API Laravel    : http://api-laravel.localhost:8088"
 	@echo "  API Symfony    : http://api-symfony.localhost:8088"

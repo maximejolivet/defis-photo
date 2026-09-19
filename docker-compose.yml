@@ -48,6 +48,9 @@ services:
       DB_PASS: defis_photo
       JWT_SECRET: local-dev-secret-express-do-not-use-in-prod
       JWT_EXPIRES_IN: 30d
+      ADMIN_EMAIL: admin@local.dev
+      ADMIN_PASSWORD: admin
+      ADMIN_COOKIE_SECRET: local-dev-admin-cookie-secret-at-least-32-chars
       CORS_ORIGINS: *cors-origins
     volumes:
       - ./api-express:/app
