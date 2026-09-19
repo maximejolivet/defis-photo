@@ -11,7 +11,7 @@ React 19 + Vite 7, TypeScript (`strict`, `.ts`/`.tsx` only — no JS/JSX left). 
 - `npm run dev` — start Vite dev server
 - `npm run build` — type-check (`tsc -b`) then production build; a type error fails the build, hence the Vercel deploy
 - `npx tsc -b` — type-check only (Vite/esbuild strips types without checking them, so `npm run dev` never reports type errors)
-- `npm run lint` — ESLint (flat config in `eslint.config.js`)
+- `npm run lint` — ESLint (flat config in `eslint.config.ts`)
 - `npm run preview` — preview the production build
 
 There is no test suite in this repo.
