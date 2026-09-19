@@ -30,7 +30,7 @@ This is a client-only SPA ("Défis photo", a birthday photo-challenge app) deplo
 
 Confirm which one is meant before editing "the diaporama."
 
-## Local backend comparison stack (api-express / api-nest / api-laravel / api-symfony)
+## Local backend comparison stack (api-express / api-nestjs / api-laravel / api-symfony)
 
 The deployed app above uses the external PHP API — that hasn't changed. Separately, this repo also contains a **local-only, learning/comparison stack**: four rewrites of the same REST API (Node/Express, NestJS, Laravel, Symfony) sharing one MariaDB database, meant to compare backend techs, not to replace the production PHP API.
 

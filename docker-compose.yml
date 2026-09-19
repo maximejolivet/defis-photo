@@ -57,7 +57,7 @@ services:
       - mysql
 
   api-nest:
-    build: ./api-nest
+    build: ./api-nestjs
     environment:
       PORT: 3002
       DB_HOST: mysql

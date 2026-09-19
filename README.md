@@ -62,7 +62,7 @@ Le déploiement en production se fait via GitHub Actions (`.github/workflows/dep
 ![Laravel](https://img.shields.io/badge/Laravel-13.17-FF2D20?logo=laravel&logoColor=white)
 ![Symfony](https://img.shields.io/badge/Symfony-8.1-000000?logo=symfony&logoColor=white)
 
-Le repo contient aussi, indépendamment de l'app ci-dessus, quatre réécritures de la même API REST — Express (`api-express/`), NestJS (`api-nest/`), Laravel (`api-laravel/`), Symfony (`api-symfony/`) — dans un but d'apprentissage/comparaison entre technos backend. Elles partagent une seule base MariaDB et tournent en local derrière Traefik (routage par domaine), pilotées par `docker-compose.yml`.
+Le repo contient aussi, indépendamment de l'app ci-dessus, quatre réécritures de la même API REST — Express (`api-express/`), NestJS (`api-nestjs/`), Laravel (`api-laravel/`), Symfony (`api-symfony/`) — dans un but d'apprentissage/comparaison entre technos backend. Elles partagent une seule base MariaDB et tournent en local derrière Traefik (routage par domaine), pilotées par `docker-compose.yml`.
 
 ```bash
 make up       # build + démarre tout le stack (Traefik, 4 API, frontend, MySQL)
