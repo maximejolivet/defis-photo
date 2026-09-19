@@ -2,11 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Model implements JWTSubject
+// Le guard `jwt` (config/auth.php) résout l'utilisateur via le provider Eloquent puis appelle
+// getAuthIdentifierName() : sans l'interface Authenticatable, toute route `auth:api` plantait.
+class User extends Model implements AuthenticatableContract, JWTSubject
 {
+    use Authenticatable;
+
     public $timestamps = false;
 
     protected $table = 'users';
@@ -14,11 +20,6 @@ class User extends Model implements JWTSubject
     protected $fillable = ['pseudo', 'password'];
 
     protected $hidden = ['password'];
-
-    public function getAuthPassword()
-    {
-        return $this->password;
-    }
 
     public function getJWTIdentifier()
     {
