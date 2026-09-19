@@ -10,7 +10,7 @@ import AllPhotos from './pages/AllPhotos';
 import FreeUpload from './pages/FreeUpload';
 import Diaporama from './pages/Diaporama';
 import './index.css';
-import BirthdayConfetti from './components/BirthdayConfetti';
+import ViewfinderBackground from './components/ViewfinderBackground';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -21,8 +21,8 @@ const ProtectedRoute = ({ children }) => {
 function App() {
   return (
     <AuthProvider>
-      <BirthdayConfetti />
       <Router>
+        <ViewfinderBackground />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

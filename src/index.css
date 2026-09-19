@@ -281,6 +281,100 @@ a {
   }
 }
 
+/* ── Fond « viseur » : formes de mise au point qui dérivent et verrouillent ── */
+.vf-layer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* Derrière le contenu (#root crée son propre contexte d'empilement) : un cadre ne doit jamais
+     passer devant un texte ou une carte. */
+  z-index: -1;
+}
+
+.vf {
+  --w: clamp(56px, calc(var(--s) * 1vmin), 260px);
+  --c: clamp(12px, calc(var(--w) * 0.24), 30px);
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: calc(var(--w) * var(--r));
+  animation: vf-drift var(--drift) ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.vf-box {
+  position: absolute;
+  inset: 0;
+  color: rgba(255, 255, 255, 0.2);
+  animation: vf-lock var(--lock) ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+/* Cadre de visée : seulement les quatre coins */
+.vf-frame .vf-box {
+  background:
+    linear-gradient(currentColor, currentColor) left top / var(--c) 3px,
+    linear-gradient(currentColor, currentColor) left top / 3px var(--c),
+    linear-gradient(currentColor, currentColor) right top / var(--c) 3px,
+    linear-gradient(currentColor, currentColor) right top / 3px var(--c),
+    linear-gradient(currentColor, currentColor) left bottom / var(--c) 3px,
+    linear-gradient(currentColor, currentColor) left bottom / 3px var(--c),
+    linear-gradient(currentColor, currentColor) right bottom / var(--c) 3px,
+    linear-gradient(currentColor, currentColor) right bottom / 3px var(--c);
+  background-repeat: no-repeat;
+}
+
+/* Point de mise au point : un anneau et son centre */
+.vf-ring .vf-box {
+  border: 3px solid currentColor;
+  border-radius: 50%;
+}
+
+.vf-ring .vf-box::after {
+  content: '';
+  position: absolute;
+  inset: 41%;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+@keyframes vf-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(var(--dx), var(--dy), 0);
+  }
+}
+
+@keyframes vf-lock {
+  0%, 70% {
+    transform: scale(1);
+    color: rgba(255, 255, 255, 0.2);
+  }
+  78% {
+    transform: scale(1.12);
+    color: rgba(255, 255, 255, 0.34);
+  }
+  86%, 93% {
+    transform: scale(1);
+    color: rgba(255, 233, 74, 0.9);
+  }
+  100% {
+    transform: scale(1);
+    color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vf,
+  .vf-box {
+    animation: none;
+  }
+}
+
 /* ── Galerie : chaque photo est un tirage avec sa légende ── */
 .gallery-grid {
   display: grid;
