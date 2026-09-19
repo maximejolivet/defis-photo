@@ -6,6 +6,7 @@ infos:
 	@echo "  API Express    : http://api-express.localhost:8088"
 	@echo "  Back office (AdminJS) : http://api-express.localhost:8088/admin (admin@local.dev / admin)"
 	@echo "  API NestJS     : http://api-nest.localhost:8088"
+	@echo "  Back office NestJS (AdminJS) : http://api-nest.localhost:8088/admin (admin@local.dev / admin)"
 	@echo "  API Laravel    : http://api-laravel.localhost:8088"
 	@echo "  API Symfony    : http://api-symfony.localhost:8088"
 	@echo "  Dashboard Traefik : http://localhost:8081"
