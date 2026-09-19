@@ -25,6 +25,12 @@ const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5173')
   .map((s) => s.trim())
   .filter(Boolean)
 
+// Aucune ressource de l'API (photos de /uploads et back office /admin compris) ne doit être indexée.
+app.use((_req, res, next) => {
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive')
+  next()
+})
+
 app.use(cors({ origin: allowedOrigins, credentials: true }))
 // AdminJS doit passer avant express.json() : il parse lui-même ses requêtes (formidable).
 if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD && process.env.ADMIN_COOKIE_SECRET) {

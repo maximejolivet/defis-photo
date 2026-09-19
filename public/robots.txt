@@ -1,0 +1,6 @@
+# Le site est en noindex (meta robots + en-tête X-Robots-Tag).
+# Pas de "Disallow" ici, volontairement : un robot qui n'a pas le droit de crawler
+# une page ne voit jamais son noindex, et Google peut alors garder l'URL dans ses
+# résultats (sans description) si un lien externe pointe vers elle.
+User-agent: *
+Allow: /
