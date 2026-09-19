@@ -1,15 +1,9 @@
-import React from 'react';
-
+// Bord de pellicule : la fin du rouleau, avec la signature comme un marquage de film.
 const Footer = () => (
-    <footer style={{
-        textAlign: 'center',
-        padding: '32px 20px',
-        marginTop: '40px',
-        color: 'var(--text-muted)',
-        fontSize: '0.85rem',
-        borderTop: '1px solid rgba(232, 89, 12, 0.1)',
-    }}>
-        Créé avec ❤️ par <a href="https://maxime.bzh" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>Maxime Jolivet</a>
+    <footer className="film-edge">
+        <div className="film-edge-inner">
+            <a href="https://maxime.bzh" target="_blank" rel="noopener noreferrer">maxime.bzh</a>
+        </div>
     </footer>
 );
 

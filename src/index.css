@@ -375,6 +375,39 @@ a {
   }
 }
 
+/* ── Pied de page : le bord de la pellicule, avec ses perforations et son « marquage » ── */
+.film-edge {
+  --hole: var(--ground);
+  --hole-inset: 0px;
+  position: relative;
+  margin-top: 56px;
+  padding: 30px 0;
+  background: var(--ink);
+  color: #fff;
+}
+
+.film-edge-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px; /* même gouttière que <main> : le texte s'aligne sur le contenu */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2px 24px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.film-edge a {
+  color: var(--flash);
+  font-weight: 800;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 2px;
+  padding: 10px 0;
+}
+
 /* ── Galerie : chaque photo est un tirage avec sa légende ── */
 .gallery-grid {
   display: grid;
