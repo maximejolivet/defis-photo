@@ -23,17 +23,20 @@ Pas de TypeScript — projet en JavaScript/JSX pur.
 
 ## Fonctionnement
 
-L'application est une SPA 100% front-end : toutes les données (authentification, photos, classement, uploads) proviennent d'une API PHP externe hébergée séparément. Il n'y a pas de backend dans ce dépôt et pas de variables d'environnement — les URLs de l'API sont codées en dur dans les pages.
+L'application est une SPA 100% front-end : toutes les données (authentification, photos, classement, uploads) proviennent d'une API REST, appelée via `apiFetch` (`src/api/client.js`) qui préfixe l'URL avec `API_BASE_URL` (`src/config.js`).
 
-L'authentification est simple : l'utilisateur est stocké dans le `localStorage` du navigateur (voir `src/context/AuthContext.jsx`), sans token ni session côté serveur.
+- `API_BASE_URL` vaut `VITE_API_BASE_URL` si la variable est définie, sinon l'API PHP de production (`https://photo.jolivetmaxime.fr`). Vite l'injecte au démarrage du serveur / au build.
+- L'authentification est par **JWT** : `login` / `register` renvoient `{ user, token }`, stockés ensemble dans le `localStorage` (voir `src/context/AuthContext.jsx`), et `apiFetch` envoie le token en `Authorization: Bearer`. Les routes protégées du front vérifient seulement la présence d'un utilisateur ; le contrôle réel des droits est fait par l'API à chaque requête.
 
 ## Structure
 
 ```
 src/
   pages/        # Login, Register, Gallery, Upload, AllPhotos, FreeUpload, Diaporama
-  components/   # Navbar, Footer, Leaderboard, ProgressPanel, ChallengeSelector, WinnerBanner, BirthdayConfetti
-  context/      # AuthContext (session utilisateur en localStorage)
+  components/   # Navbar, Footer, ProgressPanel, ChallengeSelector, WinnerBanner, BirthdayConfetti
+  context/      # AuthContext (provider), authState (objet contexte), useAuth (hook)
+  api/          # client.js : apiFetch (base URL + token JWT)
+  config.js     # API_BASE_URL
   App.jsx       # Déclaration des routes
 public/
   diaporama.html  # Diaporama HTML statique (indépendant de src/pages/Diaporama.jsx)
@@ -48,6 +51,8 @@ npm run lint    # vérifier le code avec ESLint
 npm run build   # build de production
 npm run preview # prévisualiser le build
 ```
+
+Pour pointer le serveur de dev vers une autre API, définir `VITE_API_BASE_URL` (par exemple dans `.env.development.local`, ignoré par git : `VITE_API_BASE_URL=http://api-express.localhost:8088`), puis relancer `npm run dev`.
 
 ## Déploiement
 
@@ -67,14 +72,17 @@ Le repo contient aussi, indépendamment de l'app ci-dessus, quatre réécritures
 ```bash
 make up       # build + démarre tout le stack (Traefik, 4 API, frontend, MySQL)
 make infos    # liste toutes les URLs et commandes disponibles
+make db-init  # (ré)applique le schéma et le seed de docker/mysql/init.sql
 make down     # arrête le stack
 ```
 
-Nécessite [Colima](https://github.com/abiosoft/colima) (`colima start`) ou tout runtime Docker compatible.
+Nécessite [Colima](https://github.com/abiosoft/colima) (`colima start`) ou tout runtime Docker compatible. Les ports publiés (Traefik `8088`, dashboard `8081`, MariaDB `3306`) ne sont liés qu'à `127.0.0.1`. Le frontend du stack Docker est branché sur l'API Express (`VITE_API_BASE_URL` dans `docker-compose.yml`).
+
+**Back office AdminJS** : Express (http://api-express.localhost:8088/admin) et NestJS (http://api-nest.localhost:8088/admin) exposent chacun un back office pour gérer utilisateurs, défis et photos. Connexion : `admin@local.dev` / `admin` (identifiants de dev, définis dans `docker-compose.yml`). Comme la base est partagée, les deux voient les mêmes données.
 
 Trois outils pour explorer/comparer les 4 API :
-- **[Bruno](https://www.usebruno.com/)** (`make bruno`) : collection de requêtes (`bruno/`), un environnement par backend — pour tester une requête en détail ou un scénario à plusieurs étapes (register → login → upload).
+- **[Bruno](https://www.usebruno.com/)** (`make bruno`) : collection de requêtes (`bruno/`), un environnement par backend — pour tester une requête en détail ou un scénario à plusieurs étapes (register → login → upload). Le comportement connu de chaque backend est résumé dans `bruno/README.md`.
 - **Comparateur navigateur** (`make compare`) : `public/api-compare.html`, envoie la même requête aux 4 API en parallèle et affiche les réponses côte à côte — pour repérer une divergence de comportement rapidement.
 - **Docs API / Swagger UI** (`make docs`) : `public/api-docs.html`, génère une doc interactive à partir de `public/openapi.yaml` (spec écrite à la main — aucun des 4 backends ne génère de Swagger) avec un sélecteur de serveur et un bouton "Try it out".
 
-Voir `CLAUDE.md` pour les gotchas connus de ce stack (migrations Laravel, driver de session, init du schéma MySQL).
+Voir `CLAUDE.md` pour les gotchas connus de ce stack (migrations Laravel, driver de session, init du schéma MySQL) et `SECURITY.md` pour l'état de la sécurité.
