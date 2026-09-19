@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { apiFetch } from '../api/client';
 import { LogIn, User as UserIcon, Lock } from 'lucide-react';
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import { apiFetch } from '../api/client';
 import { Upload as UploadIcon, ArrowLeft } from 'lucide-react';
 import ChallengeSelector from '../components/ChallengeSelector';
