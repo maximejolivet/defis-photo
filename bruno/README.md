@@ -6,8 +6,8 @@ Une seule collection de requêtes, réutilisable contre les 4 implémentations d
 
 1. Lance le stack Docker (`make up`) ou les serveurs en natif.
 2. Choisis un environnement (ex. `express`).
-3. Lance **Auth / Register** une fois pour créer un utilisateur de test, puis **Auth / Login** — le token JWT est automatiquement stocké dans la variable d'environnement `token` et réutilisé par les requêtes protégées (`photos/upload`, `photos/delete`, `gamification/stats`).
-4. Les autres requêtes (`challenges/list`, `users/list`, `photos/gallery`, `gamification/winner`) sont publiques, pas besoin de token.
+3. Lance **Auth / Register** une fois pour créer un utilisateur de test, puis **Auth / Login** — le token JWT est automatiquement stocké dans la variable d'environnement `token` et réutilisé par les requêtes protégées (`photos/upload`, `photos/delete`, `gamification/stats`, et `users/list` côté Express).
+4. Les autres requêtes (`challenges/list`, `photos/gallery`, `gamification/winner`) sont publiques, pas besoin de token.
 
 Changer d'environnement permet de rejouer exactement les mêmes requêtes contre une autre implémentation, pour comparer les réponses.
 

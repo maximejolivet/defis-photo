@@ -162,6 +162,7 @@ paths:
     get:
       tags: [users]
       summary: Liste des utilisateurs
+      description: "Express exige un token Bearer (401 sinon) ; les 3 autres backends la laissent publique."
       responses:
         "200":
           description: OK
