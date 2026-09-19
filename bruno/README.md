@@ -11,7 +11,7 @@ Une seule collection de requêtes, réutilisable contre les 4 implémentations d
 
 Changer d'environnement permet de rejouer exactement les mêmes requêtes contre une autre implémentation, pour comparer les réponses.
 
-⚠️ Les 4 backends partagent la même base MySQL (contrainte `UNIQUE` sur `pseudo`) : si tu enregistres le même pseudo dans plusieurs environnements, un seul `Register` réussira, les autres renverront un `409`. Les comptes créés dans un backend sont utilisables dans les autres (même table `users`), sauf sur Laravel — voir plus bas.
+⚠️ Les 4 backends partagent la même base MySQL (contrainte `UNIQUE` sur `pseudo`) : si tu enregistres le même pseudo dans plusieurs environnements, un seul `Register` réussira, les autres renverront un `409`. Les comptes créés dans un backend sont utilisables dans les autres (même table `users`).
 
 ⚠️ `photos/delete` envoie `photo_id: 1` : la suppression n'est acceptée que pour tes propres photos, mets l'id d'une photo que tu as uploadée (sinon tu obtiens un 403/404).
 
@@ -29,21 +29,19 @@ npx @usebruno/cli run auth/register.bru auth/login.bru challenges/list.bru users
 
 ## Comportement vérifié (19/09/2026)
 
-Mêmes requêtes, un compte créé par environnement :
+Mêmes requêtes, un compte créé par environnement (Laravel et Symfony corrigés le même jour : voir `api-laravel/config/hashing.php`, `api-laravel/app/Models/User.php` et `symfony/mime` dans `api-symfony/composer.json`) :
 
 | Requête | express | nest | laravel | symfony |
 |---|---|---|---|---|
-| `register` (doublon → 409) | 200 | **201** | 200 | 200 |
-| `login` | 200 | **201** | 200¹ | 200 |
-| `challenges/list`, `users/list`², `gallery`, `winner` | 200 | 200 | 200 | 200 |
-| `gamification/stats` (avec token) | 200 | 200 | **500**³ | 200 |
-| `photos/upload` (PNG + `challenge_id`) | 200 | 200 | **500**³ | **500**⁴ |
-| `photos/delete` (id inexistant → 404) | 404 | 404 | **500**³ | 404 |
+| `register` (première fois) | 200 | **201** | 200 | 200 |
+| `register` (pseudo déjà pris) | 409 | 409 | 409 | 409 |
+| `login` (y compris un compte créé par un autre backend) | 200 | **201** | 200 | 200 |
+| `challenges/list`, `users/list`¹, `gallery`, `winner` | 200 | 200 | 200 | 200 |
+| `gamification/stats` (avec token) | 200 | 200 | 200 | 200 |
+| `photos/upload` (PNG + `challenge_id`) | 200 | 200 | 200 | 200 |
+| `photos/delete` (id inexistant → 404) | 404 | 404 | 404 | 404 |
 
-¹ Laravel refuse les hash bcrypt produits par `bcryptjs` (préfixe `$2a$`/`$2b$` au lieu de `$2y$`) : `login` renvoie un `500` (« This password does not use the Bcrypt algorithm ») pour un compte créé par Express ou NestJS. Un compte créé par Laravel se connecte partout.
-² Express exige un token sur `users/list` ; les autres backends la laissent publique.
-³ Route authentifiée sur Laravel : d'abord la table `cache` absente (`CACHE_STORE` vaut `database` par défaut — même piège que `SESSION_DRIVER`), puis `App\Models\User` qui n'implémente pas l'interface d'authentification attendue par le guard JWT. À corriger dans `api-laravel`.
-⁴ Symfony ne devine pas le type MIME du fichier : `symfony/mime` n'est pas installé (`composer require symfony/mime`).
+¹ Express exige un token sur `users/list` ; les autres backends la laissent publique.
 
 NestJS renvoie le code `201` par défaut sur les `POST` (`register`, `login`, `delete`) au lieu de `200` : un écart de contrat, sans incidence pour le frontend qui teste `response.ok`.
 
