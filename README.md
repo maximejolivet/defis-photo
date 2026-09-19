@@ -11,6 +11,13 @@
 
 Application web (React + Vite) de défis photo entre participants : inscription, upload de photos, galerie, classement et diaporama.
 
+<p align="center">
+  <a href="https://github.com/maximejolivet"><img src="docs/maxime.svg" width="96" height="96" alt="Maxime Jolivet"></a>
+</p>
+<p align="center">
+  Contribué par <a href="https://github.com/maximejolivet"><strong>Maxime</strong></a> · orchestré avec <a href="https://claude.com/claude-code"><strong>Claude Code</strong></a>
+</p>
+
 ## Stack frontend
 
 - [React 19](https://react.dev/) + [Vite 8](https://vite.dev/)
