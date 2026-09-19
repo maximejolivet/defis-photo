@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const COLORS = ['#ff922b', '#f59e0b', '#a855f7', '#10b981', '#3b82f6', '#f97316', '#14b8a6', '#d4a843', '#84cc16', '#ef4444', '#06b6d4'];
+const COLORS = ['#ffe94a', '#ffffff', '#ff6a5a', '#8f86ff', '#ffe94a', '#ffffff', '#ff6a5a', '#8f86ff', '#ffe94a', '#ffffff', '#ff6a5a'];
 const SHAPES = ['circle', 'rect', 'ribbon', 'rect', 'circle'];
 const EMOJIS = ['🎈', '🎁', '📷', '🎀', '🎊', '🎉', '🎈', '🎁', '📸', '🎈'];
 const EMOJI_COUNT = 20;
@@ -99,24 +99,24 @@ export default function Diaporama() {
     <>
       <style>{`
         .dia-body {
-          background: #0f0803;
+          background: #0a0730;
           display: flex;
           justify-content: center;
           align-items: center;
           min-height: 100vh;
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Instrument Sans', sans-serif;
           overflow: hidden;
         }
 
         .dia-slide {
           width: 1920px;
           height: 1080px;
-          background: #1a0f06;
+          background: #0e0b3d;
           background-image:
-            radial-gradient(at 0%   0%,   #4a2408 0, transparent 50%),
-            radial-gradient(at 100% 0%,   #3d1f08 0, transparent 45%),
-            radial-gradient(at 50%  100%, #120a04 0, transparent 55%),
-            radial-gradient(at 100% 100%, #33190a 0, transparent 45%);
+            radial-gradient(at 0%   0%,   #2a1fb8 0, transparent 50%),
+            radial-gradient(at 100% 0%,   #3b2fe0 0, transparent 45%),
+            radial-gradient(at 50%  100%, #0a0730 0, transparent 55%),
+            radial-gradient(at 100% 100%, #241a9a 0, transparent 45%);
           position: relative;
           overflow: hidden;
           display: flex;
@@ -128,16 +128,16 @@ export default function Diaporama() {
           position: absolute;
           inset: 0;
           background-image:
-            radial-gradient(circle 2px   at 8%  15%, rgba(247, 103, 7,0.5)  0%, transparent 100%),
-            radial-gradient(circle 1.5px at 22% 65%, rgba(212,168,67,0.4)  0%, transparent 100%),
-            radial-gradient(circle 3px   at 78% 20%, rgba(255, 212, 59,0.4) 0%, transparent 100%),
-            radial-gradient(circle 1.5px at 88% 80%, rgba(212,168,67,0.4)  0%, transparent 100%),
-            radial-gradient(circle 2px   at 95% 10%, rgba(247, 103, 7,0.5)  0%, transparent 100%),
-            radial-gradient(circle 1.5px at 15% 90%, rgba(212,168,67,0.3)  0%, transparent 100%),
-            radial-gradient(circle 2.5px at 55% 45%, rgba(255, 212, 59,0.3) 0%, transparent 100%),
-            radial-gradient(circle 1.5px at 40% 78%, rgba(247, 103, 7,0.3)  0%, transparent 100%),
-            radial-gradient(circle 1px   at 65% 92%, rgba(212,168,67,0.35) 0%, transparent 100%),
-            radial-gradient(circle 2px   at 32% 30%, rgba(255, 212, 59,0.3) 0%, transparent 100%);
+            radial-gradient(circle 2px   at 8%  15%, rgba(255,233,74,0.5)  0%, transparent 100%),
+            radial-gradient(circle 1.5px at 22% 65%, rgba(255,255,255,0.4)  0%, transparent 100%),
+            radial-gradient(circle 3px   at 78% 20%, rgba(255,233,74,0.4) 0%, transparent 100%),
+            radial-gradient(circle 1.5px at 88% 80%, rgba(255,255,255,0.4)  0%, transparent 100%),
+            radial-gradient(circle 2px   at 95% 10%, rgba(255,233,74,0.5)  0%, transparent 100%),
+            radial-gradient(circle 1.5px at 15% 90%, rgba(255,255,255,0.3)  0%, transparent 100%),
+            radial-gradient(circle 2.5px at 55% 45%, rgba(255,233,74,0.3) 0%, transparent 100%),
+            radial-gradient(circle 1.5px at 40% 78%, rgba(255,233,74,0.3)  0%, transparent 100%),
+            radial-gradient(circle 1px   at 65% 92%, rgba(255,255,255,0.35) 0%, transparent 100%),
+            radial-gradient(circle 2px   at 32% 30%, rgba(255,233,74,0.3) 0%, transparent 100%);
           pointer-events: none;
           z-index: 0;
         }
@@ -150,12 +150,12 @@ export default function Diaporama() {
         .dia-deco-1 {
           width: 600px; height: 600px;
           top: -200px; right: -200px;
-          background: radial-gradient(circle, rgba(247, 103, 7,0.1) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(255,233,74,0.1) 0%, transparent 70%);
         }
         .dia-deco-2 {
           width: 480px; height: 480px;
           bottom: -160px; left: -160px;
-          background: radial-gradient(circle, rgba(212,168,67,0.08) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
         }
 
         .dia-confetti {
@@ -183,9 +183,9 @@ export default function Diaporama() {
           font-size: 1rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: #d4a843;
+          color: #ffe94a;
           font-weight: 700;
-          border: 1px solid rgba(212,168,67,0.4);
+          border: 1px solid rgba(255,255,255,0.4);
           border-radius: 999px;
           padding: 10px 28px;
         }
@@ -194,15 +194,15 @@ export default function Diaporama() {
           width: 190px; height: 190px;
           border-radius: 50%;
           padding: 4px;
-          background: linear-gradient(135deg, #ff922b, #ffd43b, #ff922b);
-          filter: drop-shadow(0 0 24px rgba(247, 103, 7,0.4));
+          background: linear-gradient(135deg, #ffe94a, #ffe94a, #ffe94a);
+          filter: drop-shadow(0 0 24px rgba(255,233,74,0.4));
           flex-shrink: 0;
         }
         .dia-photo-inner {
           width: 100%; height: 100%;
           border-radius: 50%;
           overflow: hidden;
-          background: #241408;
+          background: #0e0b3d;
         }
         .dia-photo-inner img {
           width: 100%; height: 100%;
@@ -212,19 +212,19 @@ export default function Diaporama() {
 
         .dia-title-block { text-align: center; }
         .dia-title {
-          font-family: 'Fredoka', sans-serif;
+          font-family: 'Bricolage Grotesque', sans-serif;
           font-size: 4.2rem;
           font-weight: 900;
-          color: #fff4e0;
+          color: #ffffff;
           line-height: 1.05;
           margin-bottom: 10px;
         }
-        .dia-title em { font-style: normal; color: #ff922b; }
+        .dia-title em { font-style: normal; color: #ffe94a; }
         .dia-subtitle {
-          font-family: 'Fredoka', sans-serif;
+          font-family: 'Bricolage Grotesque', sans-serif;
           font-size: 2.2rem;
           font-style: normal;
-          color: #d4a843;
+          color: #ffe94a;
           letter-spacing: 0.02em;
         }
 
@@ -235,8 +235,8 @@ export default function Diaporama() {
           width: 100%;
         }
         .dia-chip {
-          background: rgba(36, 20, 8,0.75);
-          border: 1px solid rgba(247, 103, 7,0.25);
+          background: rgba(10,7,48,0.75);
+          border: 1px solid rgba(255,233,74,0.25);
           border-radius: 10px;
           padding: 10px 8px;
           text-align: center;
@@ -247,7 +247,7 @@ export default function Diaporama() {
         /* ── Séparateur ── */
         .dia-sep {
           width: 1px;
-          background: linear-gradient(to bottom, transparent, rgba(212,168,67,0.5), transparent);
+          background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.5), transparent);
           align-self: stretch;
           margin: 60px 0;
           flex-shrink: 0;
@@ -271,7 +271,7 @@ export default function Diaporama() {
         .dia-qr-label {
           font-size: 1.6rem;
           font-weight: 700;
-          color: #fff4e0;
+          color: #ffffff;
           text-align: center;
         }
 
@@ -288,7 +288,7 @@ export default function Diaporama() {
         .dia-qr-desc { text-align: center; }
         .dia-qr-desc p {
           font-size: 1.1rem;
-          color: rgba(255, 244, 224,0.65);
+          color: rgba(255,255,255,0.65);
           line-height: 1.6;
           margin-bottom: 12px;
         }
@@ -309,13 +309,13 @@ export default function Diaporama() {
           content: '';
           flex: 1;
           height: 1px;
-          background: linear-gradient(to right, transparent, rgba(212,168,67,0.35), transparent);
+          background: linear-gradient(to right, transparent, rgba(255,255,255,0.35), transparent);
         }
         .dia-bottom span {
           font-size: 0.85rem;
           letter-spacing: 0.16em;
           text-transform: uppercase;
-          color: rgba(212,168,67,0.55);
+          color: rgba(255,255,255,0.55);
           white-space: nowrap;
         }
       `}</style>
@@ -335,14 +335,14 @@ export default function Diaporama() {
                 <img
                   src="https://placehold.co/400x400"
                   alt="Photo"
-                  onError={e => { e.currentTarget.parentElement.style.background = 'linear-gradient(135deg,#33190a,#1a0f06)'; }}
+                  onError={e => { e.currentTarget.parentElement.style.background = 'linear-gradient(135deg,#241a9a,#0e0b3d)'; }}
                 />
               </div>
             </div>
 
             <div className="dia-title-block">
               <h1 className="dia-title">Les défis photo<br />de la <em>soirée</em></h1>
-              <p className="dia-subtitle">30 ans !</p>
+              <p className="dia-subtitle">Anniversaire !</p>
             </div>
 
             <div className="dia-grid">
@@ -370,7 +370,7 @@ export default function Diaporama() {
 
             <div className="dia-qr-desc">
               <p>Inscris-toi, prends tes photos<br />et rejoins la galerie en direct&nbsp;!</p>
-              <p style={{ marginTop: '12px', color: '#d4a843', fontWeight: 600 }}>
+              <p style={{ marginTop: '12px', color: '#ffe94a', fontWeight: 600 }}>
                 Le premier à faire tous les défis<br /> sans tricher aura un cadeau&nbsp;! 🎁
               </p>
             </div>

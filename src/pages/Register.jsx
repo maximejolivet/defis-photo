@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { apiFetch } from '../api/client';
-import { UserPlus, Lock, User as UserIcon } from 'lucide-react';
+import { Lock, User as UserIcon } from 'lucide-react';
+import FilmStrip from '../components/FilmStrip';
 
 const Register = () => {
     const [pseudo, setPseudo] = useState('');
@@ -56,25 +57,26 @@ const Register = () => {
     };
 
     return (
-        <div className="auth-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-            <div className="glass-card" style={{ padding: '40px', width: '100%', maxWidth: '400px' }}>
-                <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-                    <div style={{ fontSize: '3rem', background: 'var(--primary)', width: '64px', height: '64px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-                        🎂
-                    </div>
-                    <h2 style={{ fontSize: '1.8rem', fontWeight: '700' }}>Créer un compte</h2>
-                    <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Créez votre compte pour participer 🎉</p>
-                </div>
+        <div className="auth-container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '80vh', gap: '24px', padding: '32px 20px' }}>
+            <header style={{ width: '100%', maxWidth: '440px' }}>
+                <FilmStrip preview develop />
+                <h1 style={{ fontSize: 'clamp(2.4rem, 10vw, 3.4rem)', marginTop: '24px' }}>Créer un compte</h1>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', marginTop: '12px' }}>Un pseudo et un code PIN à 4 chiffres suffisent pour participer.</p>
+            </header>
+
+            <div className="glass-card" style={{ padding: '28px', width: '100%', maxWidth: '440px' }}>
 
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
-                        <label>Pseudo</label>
+                        <label htmlFor="reg-pseudo">Pseudo</label>
                         <div style={{ position: 'relative' }}>
                             <UserIcon size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                             <input
+                                id="reg-pseudo"
                                 className="input-field"
                                 type="text"
-                                placeholder="Votre pseudo"
+                                autoComplete="username"
+                                placeholder="Ton pseudo"
                                 style={{ paddingLeft: '40px' }}
                                 value={pseudo}
                                 onChange={(e) => setPseudo(normalizePseudo(e.target.value))}
@@ -84,10 +86,11 @@ const Register = () => {
                     </div>
 
                     <div className="input-group">
-                        <label>Code PIN</label>
+                        <label htmlFor="reg-pin">Code PIN</label>
                         <div style={{ position: 'relative' }}>
                             <Lock size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                             <input
+                                id="reg-pin"
                                 className="input-field"
                                 type="text"
                                 inputMode="numeric"
@@ -103,10 +106,11 @@ const Register = () => {
                     </div>
 
                     <div className="input-group">
-                        <label>Confirmer le code PIN</label>
+                        <label htmlFor="reg-pin2">Confirmer le code PIN</label>
                         <div style={{ position: 'relative' }}>
                             <Lock size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                             <input
+                                id="reg-pin2"
                                 className="input-field"
                                 type="text"
                                 inputMode="numeric"
@@ -121,15 +125,15 @@ const Register = () => {
                         </div>
                     </div>
 
-                    {error && <p style={{ color: 'var(--danger)', fontSize: '0.9rem', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
+                    {error && <p role="alert" style={{ color: 'var(--danger)', fontWeight: 600, fontSize: '0.95rem', marginBottom: '16px' }}>{error}</p>}
 
-                    <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loading}>
-                        {loading ? 'Création...' : "S'inscrire"}
+                    <button className="btn-primary" style={{ width: '100%' }} disabled={loading}>
+                        {loading ? 'Création…' : 'Créer mon compte'}
                     </button>
                 </form>
 
-                <p style={{ textAlign: 'center', marginTop: '24px', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                    Déjà un compte ? <Link to="/login" style={{ color: 'var(--primary)', textDecoration: 'underline', fontWeight: '600' }}>Se connecter</Link>
+                <p style={{ marginTop: '20px', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+                    Déjà un compte ? <Link to="/login" style={{ color: 'var(--ink)', fontWeight: 700 }}>Se connecter</Link>
                 </p>
             </div>
         </div>

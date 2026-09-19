@@ -19,49 +19,36 @@ export default function WinnerBanner({ winner }) {
       style={{
         position: 'relative',
         overflow: 'hidden',
-        borderRadius: '16px',
-        padding: '28px 32px',
+        borderRadius: 'var(--radius-panel)',
+        padding: '24px 24px',
         marginBottom: '28px',
-        background: 'linear-gradient(135deg, rgba(245,158,11,0.18) 0%, rgba(47, 158, 68,0.18) 100%)',
-        border: '1px solid rgba(245,158,11,0.4)',
-        boxShadow: '0 0 40px rgba(245,158,11,0.12)',
-        textAlign: 'center',
+        background: 'var(--flash)',
+        color: 'var(--ink)',
+        textAlign: 'left',
       }}
     >
       {/* Confettis CSS */}
       <Confettis />
 
-      <motion.div
-        animate={{ rotate: [0, -8, 8, -6, 6, 0], scale: [1, 1.15, 1] }}
-        transition={{ duration: 1.2, delay: 0.4, ease: 'easeInOut' }}
-        style={{ fontSize: '3rem', lineHeight: 1, marginBottom: '12px' }}
-      >
-        🏆
-      </motion.div>
-
-      <div style={{
-        fontSize: '0.75rem',
-        textTransform: 'uppercase',
-        letterSpacing: '0.1em',
-        color: '#d9480f',
-        fontWeight: 700,
-        marginBottom: '8px',
-      }}>
-        Gagnant(e) — 8 défis réalisés 🎁
+      <div style={{ position: 'relative', fontSize: '0.95rem', fontWeight: 600, marginBottom: '4px' }}>
+        Premier(e) à avoir relevé les 8 défis 🏆
       </div>
 
       <div style={{
-        fontSize: '1.8rem',
+        position: 'relative',
+        fontSize: 'clamp(2rem, 8vw, 3rem)',
         fontWeight: 800,
         fontFamily: 'var(--font-display)',
-        color: 'var(--text-strong)',
-        marginBottom: '6px',
+        letterSpacing: '-0.03em',
+        lineHeight: 1,
+        color: 'var(--ink)',
+        marginBottom: '8px',
       }}>
         {winner.pseudo}
       </div>
 
-      <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-        Tous les défis le {formatDate(winner.win_at)}
+      <div style={{ position: 'relative', fontSize: '0.9rem' }}>
+        Terminé le {formatDate(winner.win_at)}
       </div>
     </motion.div>
   );
@@ -71,7 +58,7 @@ function Confettis() {
   const pieces = Array.from({ length: 18 }, (_, i) => ({
     id: i,
     left: `${(i * 5.8) % 100}%`,
-    color: ['#f59e0b', '#2f9e44', '#10b981', '#14b8a6', '#f97316'][i % 5],
+    color: ['#3b2fe0', '#ffffff', '#c62a1a', '#0e0b3d', '#3b2fe0'][i % 5],
     delay: (i * 0.12).toFixed(2),
     duration: (1.8 + (i % 4) * 0.3).toFixed(2),
     size: 6 + (i % 3) * 3,
@@ -93,7 +80,7 @@ function Confettis() {
             height: p.size,
             borderRadius: p.id % 2 === 0 ? '50%' : '2px',
             background: p.color,
-            opacity: 0.7,
+            opacity: 0.55,
           }}
         />
       ))}

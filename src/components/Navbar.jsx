@@ -26,18 +26,15 @@ const Navbar = () => {
             position: 'sticky',
             top: 0,
             zIndex: 100,
-            background: 'rgba(255, 248, 236, 0.88)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            borderBottom: '1px solid rgba(232, 89, 12, 0.18)',
+            background: 'var(--ground)',
+            borderBottom: '1px solid var(--glass-border)',
         }}>
             <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '60px' }}>
                 {/* Logo */}
                 <Link to="/gallery" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <span style={{ fontSize: '1.4rem' }}>📸</span>
-                    <span style={{ fontWeight: '800', fontSize: '1rem', color: 'var(--text)', lineHeight: 1 }}>
+                    <span style={{ fontFamily: 'var(--font-display)', fontWeight: '800', fontSize: '1.25rem', letterSpacing: '-0.02em', color: 'var(--text)', lineHeight: 1 }}>
                         Défis photo<br />
-                        <span style={{ fontSize: '0.7rem', fontWeight: '500', color: 'var(--text-muted)' }}>Soirée des 30 ans</span>
+                        <span style={{ fontFamily: 'var(--font-main)', fontSize: '0.75rem', fontWeight: '500', letterSpacing: 0, color: 'var(--text-muted)' }}>Soirée d'anniversaire</span>
                     </span>
                 </Link>
 
@@ -51,8 +48,8 @@ const Navbar = () => {
                                 display: 'flex', alignItems: 'center', gap: '6px',
                                 padding: '8px 14px', borderRadius: '10px', textDecoration: 'none',
                                 fontSize: '0.9rem', fontWeight: '500',
-                                color: location.pathname === to ? 'white' : 'var(--text-muted)',
-                                background: location.pathname === to ? 'linear-gradient(135deg, var(--primary), #f76707)' : 'transparent',
+                                color: location.pathname === to ? 'var(--ink)' : 'var(--text)',
+                                background: location.pathname === to ? 'var(--flash)' : 'transparent',
                                 transition: 'all 0.2s',
                             }}
                         >
@@ -63,7 +60,7 @@ const Navbar = () => {
                         <button onClick={handleLogout} style={{
                             display: 'flex', alignItems: 'center', gap: '6px',
                             padding: '8px 14px', borderRadius: '10px', cursor: 'pointer',
-                            fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-muted)',
+                            fontSize: '0.9rem', fontWeight: '500', color: 'var(--text)',
                             background: 'transparent', border: 'none',
                             transition: 'all 0.2s',
                         }}>
@@ -85,7 +82,7 @@ const Navbar = () => {
             {/* Mobile menu */}
             {open && (
                 <div className="nav-mobile" style={{
-                    borderTop: '1px solid rgba(232, 89, 12, 0.18)',
+                    borderTop: '1px solid var(--glass-border)',
                     padding: '12px 20px 16px',
                     display: 'flex', flexDirection: 'column', gap: '4px',
                 }}>
@@ -98,8 +95,8 @@ const Navbar = () => {
                                 display: 'flex', alignItems: 'center', gap: '10px',
                                 padding: '12px 16px', borderRadius: '10px', textDecoration: 'none',
                                 fontSize: '0.95rem', fontWeight: '500',
-                                color: location.pathname === to ? 'white' : 'var(--text-muted)',
-                                background: location.pathname === to ? 'linear-gradient(135deg, var(--primary), #f76707)' : 'var(--surface)',
+                                color: location.pathname === to ? 'var(--ink)' : 'var(--text)',
+                                background: location.pathname === to ? 'var(--flash)' : 'var(--surface)',
                             }}
                         >
                             {icon}{label}
@@ -109,7 +106,7 @@ const Navbar = () => {
                         <button onClick={handleLogout} style={{
                             display: 'flex', alignItems: 'center', gap: '10px',
                             padding: '12px 16px', borderRadius: '10px', cursor: 'pointer',
-                            fontSize: '0.95rem', fontWeight: '500', color: 'var(--text-muted)',
+                            fontSize: '0.95rem', fontWeight: '500', color: 'var(--text)',
                             background: 'var(--surface)', border: 'none', textAlign: 'left',
                         }}>
                             <LogOut size={18} />Déconnexion

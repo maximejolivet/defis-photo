@@ -23,6 +23,10 @@ This is a client-only SPA ("Défis photo", a birthday photo-challenge app) deplo
 - Auth is JWT-based: login/register hit `/api/auth/...` on whichever backend `API_BASE_URL` points to, and the returned `{ user, token }` is stored together in `localStorage` via `AuthContext`; `apiFetch` reads the token back out and sends it as `Authorization: Bearer`. Protected routes still just check truthiness of the stored user client-side — there's no real session validation beyond what the backend enforces per-request.
 - `src/App.jsx` defines the router and protected routes: `/login`, `/register`, `/gallery`, `/upload`, `/all-photos`, `/photo-libre`, `/diaporama`, with `/` redirecting to `/gallery`.
 
+## Theme ("la pellicule")
+
+Styling lives in `src/index.css` (custom properties on `:root`) plus lots of inline styles that reference those variables. Non-obvious rule: `--text`, `--text-muted`, `--text-strong`, `--primary`, `--surface` and `--glass-border` describe text on the **blue page background**; the `.glass-card` class (a white "paper" panel, also used by `.photo-card`) redefines them locally to dark ink. So inline `var(--text)` is correct in both contexts — don't hardcode colors, and put light surfaces in `.glass-card` rather than styling a `div` with `var(--card-bg)`. `FilmStrip` (8 frames = the 8 challenges, each showing the challenge's emoji and number, loaded through the shared `src/api/challenges.js`; a frame is "done" when its challenge id is in `stats.my_challenges`) is the one signature element, and the footer (`.film-edge`) is the end of the roll. The animated page background is `ViewfinderBackground` (pure CSS: drifting autofocus frames/rings that briefly "lock" in yellow; mounted inside the Router in `App.jsx`, hidden on `/diaporama`, frozen under `prefers-reduced-motion`). Both diaporamas have their own hardcoded palette and fonts (keep them in sync by hand). Vite in Docker doesn't see file changes through the Colima bind mount: `docker compose restart frontend` after edits.
+
 ## Gotcha: two unrelated "diaporama" files
 
 - `src/pages/Diaporama.jsx` is a React page (part of the router).

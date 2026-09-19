@@ -61,23 +61,22 @@ const FreeUpload = () => {
     return (
         <>
             <Navbar />
-            <div style={{ maxWidth: '600px', margin: '40px auto', padding: '0 20px' }}>
-                <Link to="/gallery" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', textDecoration: 'none', marginBottom: '24px', fontWeight: '500' }}>
+            <main style={{ maxWidth: '600px', margin: '32px auto', padding: '0 20px' }}>
+                <Link to="/gallery" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text)', textDecoration: 'none', marginBottom: '24px', fontWeight: '600' }}>
                     <ArrowLeft size={18} /> Retour
                 </Link>
 
-                <div style={{ padding: '32px', background: 'var(--card-bg)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid var(--glass-border)', borderRadius: '24px', boxShadow: '0 8px 32px 0 rgba(0,0,0,0.37)' }}>
+                <div className="glass-card" style={{ padding: '32px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
                         <Heart size={24} style={{ color: 'var(--primary)' }} />
-                        <h2 style={{ fontSize: '1.8rem', fontWeight: '700', margin: 0 }}>Photo libre</h2>
+                        <h2 style={{ fontSize: '1.8rem', margin: 0 }}>Photo libre</h2>
                     </div>
-                    <p style={{ color: 'var(--text-muted)', marginBottom: '32px' }}>Envoyez une photo ou une vidéo d'un moment marquant de la soirée, sans défi imposé.</p>
+                    <p style={{ color: 'var(--text-muted)', marginBottom: '32px' }}>Envoie une photo ou une vidéo d'un moment marquant de la soirée, sans défi imposé.</p>
 
                     {loading && (
                         <div style={{
                             position: 'fixed', inset: 0,
-                            background: 'rgba(0,0,0,0.6)',
-                            backdropFilter: 'blur(4px)',
+                            background: 'rgba(14, 11, 61, 0.92)',
                             display: 'flex', flexDirection: 'column',
                             alignItems: 'center', justifyContent: 'center',
                             zIndex: 1000, gap: '20px',
@@ -85,12 +84,12 @@ const FreeUpload = () => {
                             <div style={{
                                 width: '52px', height: '52px',
                                 border: '4px solid rgba(255,255,255,0.15)',
-                                borderTop: '4px solid var(--primary)',
+                                borderTop: '4px solid var(--flash)',
                                 borderRadius: '50%',
                                 animation: 'spin 0.8s linear infinite',
                             }} />
-                            <p style={{ color: '#fff', fontWeight: 600, fontSize: '1rem', textAlign: 'center' }}>Envoi en cours… Ne pas fermer la page</p>
-                            <p style={{ color: '#fff', fontWeight: 600, fontSize: '1rem', textAlign: 'center' }}>Attendre le transfert qui se termine, <br></br>tu vas être redirigé vers la galerie.</p>
+                            <p role="status" style={{ color: '#fff', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1.4rem', textAlign: 'center' }}>Envoi en cours, ne ferme pas la page</p>
+                            <p style={{ color: 'var(--text-muted)', fontSize: '1rem', textAlign: 'center' }}>Tu seras redirigé vers la galerie<br />dès que le transfert est terminé.</p>
                             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
                         </div>
                     )}
@@ -98,8 +97,8 @@ const FreeUpload = () => {
                     <form onSubmit={handleSubmit}>
                         <div
                             style={{
-                                border: '2px dashed var(--glass-border)',
-                                borderRadius: '20px',
+                                border: '2px dashed var(--ink)',
+                                borderRadius: '10px',
                                 padding: '40px',
                                 textAlign: 'center',
                                 cursor: 'pointer',
@@ -119,21 +118,21 @@ const FreeUpload = () => {
                             ) : (
                                 <div style={{ padding: '40px 0' }}>
                                     <UploadIcon size={48} style={{ color: 'var(--primary)', marginBottom: '16px' }} />
-                                    <p style={{ fontWeight: '600' }}>Cliquez pour sélectionner un fichier</p>
+                                    <p style={{ fontWeight: '600' }}>Choisir un fichier</p>
                                     <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '4px' }}>Images (JPEG, PNG, HEIC…) ou vidéos (MP4, MOV…) · Max 50MB</p>
                                 </div>
                             )}
                             <input id="free-file-upload" type="file" accept="image/*,video/*" onChange={handleFileChange} style={{ display: 'none' }} />
                         </div>
 
-                        {error && <p style={{ color: 'var(--danger)', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
+                        {error && <p role="alert" style={{ color: 'var(--danger)', fontWeight: 600, marginBottom: '16px' }}>{error}</p>}
 
-                        <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loading || !file}>
+                        <button className="btn-primary" style={{ width: '100%' }} disabled={loading || !file}>
                             <Heart size={16} /> Envoyer la photo
                         </button>
                     </form>
                 </div>
-            </div>
+            </main>
             <Footer />
         </>
     );

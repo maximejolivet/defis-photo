@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User as UserIcon, X, Images, Play, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { apiFetch } from '../api/client';
@@ -38,9 +38,9 @@ const AllPhotos = () => {
     return (
         <>
             <Navbar />
-            <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
+            <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 20px' }}>
                 <div style={{ marginBottom: '24px' }}>
-                    <h1 style={{ fontSize: '2rem', fontWeight: '800' }}>📸 Toutes les photos des invités</h1>
+                    <h1 style={{ fontSize: 'clamp(2.2rem, 8vw, 3.4rem)' }}>Les photos des invités</h1>
                     <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>
                         {(() => {
                             const defis = photos.filter(p => p.challenge_id).length;
@@ -54,12 +54,11 @@ const AllPhotos = () => {
                 </div>
 
                 {loading ? (
-                    <div style={{ textAlign: 'center', padding: '100px' }}>Chargement de la galerie...</div>
+                    <p role="status" style={{ padding: '48px 0', color: 'var(--text-muted)' }}>Chargement de la galerie…</p>
                 ) : photos.length === 0 ? (
-                    <div className="glass-card" style={{ textAlign: 'center', padding: '80px' }}>
-                        <span style={{ fontSize: '4rem' }}>📸</span>
-                        <h3>Aucune photo pour l'instant</h3>
-                        <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Soyez le premier à relever le défi photo !</p>
+                    <div className="glass-card" style={{ padding: '28px', maxWidth: '520px' }}>
+                        <h3 style={{ fontSize: '1.4rem' }}>Aucune photo pour l'instant</h3>
+                        <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Sois le premier à relever un défi photo.</p>
                     </div>
                 ) : (
                     <>
@@ -71,14 +70,18 @@ const AllPhotos = () => {
                                     <div
                                         key={photo.id}
                                         className="photo-card glass-card"
-                                        style={{ position: 'relative', cursor: 'pointer' }}
+                                        style={{ cursor: 'pointer' }}
+                                        role="button"
+                                        tabIndex={0}
+                                        aria-label={`Agrandir la photo de ${photo.user_name}`}
                                         onClick={() => setLightbox(photo)}
+                                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightbox(photo); } }}
                                     >
                                         {isVideo ? (
                                             <>
                                                 <video src={`${API_BASE_URL}/uploads/${photo.image_path}`} preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
-                                                    <div style={{ background: 'rgba(0,0,0,0.5)', borderRadius: '50%', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                    <div style={{ background: 'var(--ink)', borderRadius: '50%', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                         <Play size={24} fill="white" color="white" style={{ marginLeft: '3px' }} />
                                                     </div>
                                                 </div>
@@ -87,18 +90,15 @@ const AllPhotos = () => {
                                             <img src={`${API_BASE_URL}/uploads/${photo.image_path}`} alt="Défi photo" />
                                         )}
                                         <div className="photo-info">
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                <UserIcon size={14} />
-                                                <span style={{ fontWeight: '600', fontSize: '0.9rem' }}>{photo.user_name}</span>
-                                            </div>
+                                            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.95rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{photo.user_name}</div>
                                             {photo.challenge_icon && (
-                                                <div style={{ marginTop: '4px', fontSize: '0.78rem', color: 'rgba(255,255,255,0.7)' }}>
+                                                <div style={{ color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                                     {photo.challenge_icon} {photo.challenge_title}
                                                 </div>
                                             )}
                                             {photo.recipient_pseudo && (
-                                                <div style={{ marginTop: '4px', fontSize: '0.78rem', color: 'var(--primary)' }}>
-                                                    💌 Pour {photo.recipient_pseudo}
+                                                <div style={{ color: 'var(--ink)', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                    Pour {photo.recipient_pseudo}
                                                 </div>
                                             )}
                                         </div>
@@ -112,11 +112,12 @@ const AllPhotos = () => {
                                 <button
                                     onClick={() => goTo(page - 1)}
                                     disabled={page === 1}
+                                    aria-label="Page précédente"
                                     style={{
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        width: '36px', height: '36px', borderRadius: '10px',
+                                        width: '40px', height: '40px', borderRadius: '10px',
                                         border: '1px solid var(--glass-border)', background: 'var(--surface)',
-                                        color: page === 1 ? 'var(--text-muted)' : 'var(--text)',
+                                        color: 'var(--text)',
                                         cursor: page === 1 ? 'default' : 'pointer',
                                         opacity: page === 1 ? 0.4 : 1,
                                     }}
@@ -128,11 +129,13 @@ const AllPhotos = () => {
                                     <button
                                         key={p}
                                         onClick={() => goTo(p)}
+                                        aria-label={`Page ${p}`}
+                                        aria-current={p === page ? 'page' : undefined}
                                         style={{
-                                            width: '36px', height: '36px', borderRadius: '10px',
+                                            width: '40px', height: '40px', borderRadius: '10px',
                                             border: '1px solid var(--glass-border)',
-                                            background: p === page ? 'linear-gradient(135deg, var(--primary), #f76707)' : 'var(--surface)',
-                                            color: 'white', fontWeight: p === page ? '700' : '500',
+                                            background: p === page ? 'var(--flash)' : 'var(--surface)',
+                                            color: p === page ? 'var(--ink)' : 'var(--text)', fontWeight: p === page ? '700' : '500',
                                             cursor: 'pointer', fontSize: '0.9rem',
                                         }}
                                     >
@@ -143,11 +146,12 @@ const AllPhotos = () => {
                                 <button
                                     onClick={() => goTo(page + 1)}
                                     disabled={page === totalPages}
+                                    aria-label="Page suivante"
                                     style={{
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        width: '36px', height: '36px', borderRadius: '10px',
+                                        width: '40px', height: '40px', borderRadius: '10px',
                                         border: '1px solid var(--glass-border)', background: 'var(--surface)',
-                                        color: page === totalPages ? 'var(--text-muted)' : 'var(--text)',
+                                        color: 'var(--text)',
                                         cursor: page === totalPages ? 'default' : 'pointer',
                                         opacity: page === totalPages ? 0.4 : 1,
                                     }}
@@ -162,11 +166,12 @@ const AllPhotos = () => {
                 {lightbox && (
                     <div
                         onClick={() => setLightbox(null)}
-                        style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}
+                        style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(14, 11, 61, 0.94)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}
                     >
                         <button
                             onClick={() => setLightbox(null)}
-                            style={{ position: 'absolute', top: '16px', right: '16px', background: 'rgba(255,255,255,0.1)', border: 'none', cursor: 'pointer', color: 'white', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            aria-label="Fermer"
+                            style={{ position: 'absolute', top: '16px', right: '16px', background: 'rgba(255,255,255,0.14)', border: 'none', cursor: 'pointer', color: 'white', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                         >
                             <X size={20} />
                         </button>
@@ -177,7 +182,7 @@ const AllPhotos = () => {
                         )}
                     </div>
                 )}
-            </div>
+            </main>
             <Footer />
         </>
     );

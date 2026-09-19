@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/useAuth';
-import { Grid, User as UserIcon, Trash2, X, Play } from 'lucide-react';
+import { Trash2, X, Play } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -76,14 +76,14 @@ const Gallery = () => {
     return (
         <>
             <Navbar />
-            <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
+            <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 20px' }}>
                 <WinnerBanner winner={winner} />
 
                 <header style={{ marginBottom: '24px' }}>
-                    <h1 style={{ fontSize: '2.2rem', fontWeight: '700', fontFamily: 'var(--font-display)', color: 'var(--text-strong)' }}>🎂 Soirée des 30 ans</h1>
-                    <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Partagez vos plus beaux souvenirs de la soirée !</p>
-                    <Link to="/upload" className="btn-primary" style={{ marginTop: '16px', display: 'inline-flex' }}>
-                        Réalise un défi
+                    <h1 style={{ fontSize: 'clamp(2.4rem, 9vw, 3.8rem)' }}>Soirée d'anniversaire</h1>
+                    <p style={{ color: 'var(--text-muted)', marginTop: '10px', fontSize: '1.05rem' }}>Partage tes plus beaux souvenirs de la soirée.</p>
+                    <Link to="/upload" className="btn-primary" style={{ marginTop: '18px' }}>
+                        Réaliser un défi
                     </Link>
                 </header>
 
@@ -93,17 +93,16 @@ const Gallery = () => {
                     </div>
                 )}
 
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '6px' }}>Mes photos, vidéos réalisées</h2>
+                <h2 style={{ fontSize: '1.6rem' }}>Mes photos et vidéos</h2>
                 {
                     loading ? (
-                        <div style={{ textAlign: 'center', padding: '100px' }}>Chargement de la galerie...</div>
+                        <p role="status" style={{ padding: '48px 0', color: 'var(--text-muted)' }}>Chargement de la galerie…</p>
                     ) : photos.filter(p => p.user_id === user.id).length === 0 ? (
-                        <div className="glass-card" style={{ textAlign: 'center', padding: '80px', marginTop: '24px' }}>
-                            <span style={{ fontSize: '4rem' }}>📸</span>
-                            <h3>Pas encore de photos</h3>
-                            <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Soyez le premier à relever le défi photo !</p>
-                            <Link to="/upload" className="btn-primary" style={{ marginTop: '24px' }}>
-                                Réalise un défi
+                        <div className="glass-card" style={{ padding: '28px', marginTop: '16px', maxWidth: '520px' }}>
+                            <h3 style={{ fontSize: '1.4rem' }}>Ta pellicule est vide</h3>
+                            <p style={{ color: 'var(--text-muted)', margin: '8px 0 20px' }}>Choisis un défi pour envoyer ta première photo ou vidéo.</p>
+                            <Link to="/upload" className="btn-primary">
+                                Réaliser un défi
                             </Link>
                         </div>
                     ) : (
@@ -113,19 +112,28 @@ const Gallery = () => {
                                     const ext = photo.image_path.split('.').pop().toLowerCase();
                                     const isVideo = ['mp4', 'mov', 'webm', 'avi', 'mpeg', '3gp'].includes(ext);
                                     return (
-                                        <div key={photo.id} className="photo-card glass-card" style={{ position: 'relative', cursor: 'pointer' }} onClick={() => setLightbox(photo)}>
+                                        <div
+                                            key={photo.id}
+                                            className="photo-card glass-card"
+                                            style={{ cursor: 'pointer' }}
+                                            role="button"
+                                            tabIndex={0}
+                                            aria-label={`Agrandir la photo de ${photo.user_name}`}
+                                            onClick={() => setLightbox(photo)}
+                                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightbox(photo); } }}
+                                        >
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); handleDelete(photo.id); }}
-                                                title="Supprimer"
-                                                style={{ position: 'absolute', top: '8px', right: '8px', zIndex: 10, background: '#e53e3e', border: 'none', cursor: 'pointer', color: 'white', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                                aria-label="Supprimer cette photo"
+                                                style={{ position: 'absolute', top: '14px', right: '14px', zIndex: 10, background: 'var(--danger)', border: '2px solid var(--paper)', cursor: 'pointer', color: 'white', width: '36px', height: '36px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                                             >
-                                                <Trash2 size={14} />
+                                                <Trash2 size={15} />
                                             </button>
                                             {isVideo ? (
                                                 <>
                                                     <video src={`${API_BASE_URL}/uploads/${photo.image_path}`} preload="metadata" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                     <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
-                                                        <div style={{ background: 'rgba(0,0,0,0.5)', borderRadius: '50%', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                        <div style={{ background: 'var(--ink)', borderRadius: '50%', width: '52px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                             <Play size={24} fill="white" color="white" style={{ marginLeft: '3px' }} />
                                                         </div>
                                                     </div>
@@ -134,18 +142,15 @@ const Gallery = () => {
                                                 <img src={`${API_BASE_URL}/uploads/${photo.image_path}`} alt="Défi photo" />
                                             )}
                                             <div className="photo-info">
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <UserIcon size={14} />
-                                                    <span style={{ fontWeight: '600', fontSize: '0.9rem' }}>{photo.user_name}</span>
-                                                </div>
+                                                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '0.95rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{photo.user_name}</div>
                                                 {photo.challenge_icon && (
-                                                    <div style={{ marginTop: '4px', fontSize: '0.78rem', color: 'rgba(255,255,255,0.7)' }}>
+                                                    <div style={{ color: 'var(--text-muted)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                                         {photo.challenge_icon} {photo.challenge_title}
                                                     </div>
                                                 )}
                                                 {photo.recipient_pseudo && (
-                                                    <div style={{ marginTop: '4px', fontSize: '0.78rem', color: 'var(--primary)' }}>
-                                                        💌 Pour {photo.recipient_pseudo}
+                                                    <div style={{ color: 'var(--ink)', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                        Pour {photo.recipient_pseudo}
                                                     </div>
                                                 )}
                                             </div>
@@ -158,8 +163,8 @@ const Gallery = () => {
                 }
                 {
                     lightbox && (
-                        <div onClick={() => setLightbox(null)} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(0,0,0,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
-                            <button onClick={() => setLightbox(null)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'rgba(255,255,255,0.1)', border: 'none', cursor: 'pointer', color: 'white', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div onClick={() => setLightbox(null)} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(14, 11, 61, 0.94)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+                            <button onClick={() => setLightbox(null)} aria-label="Fermer" style={{ position: 'absolute', top: '16px', right: '16px', background: 'rgba(255,255,255,0.14)', border: 'none', cursor: 'pointer', color: 'white', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <X size={20} />
                             </button>
                             {['mp4', 'mov', 'webm', 'avi', 'mpeg', '3gp'].includes(lightbox.image_path.split('.').pop().toLowerCase()) ? (
@@ -170,7 +175,7 @@ const Gallery = () => {
                         </div>
                     )
                 }
-            </div >
+            </main>
             <Footer />
         </>
     );

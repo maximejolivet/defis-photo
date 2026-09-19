@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { apiFetch } from '../api/client';
-import { LogIn, User as UserIcon, Lock } from 'lucide-react';
+import { User as UserIcon, Lock } from 'lucide-react';
+import FilmStrip from '../components/FilmStrip';
 
 const Login = () => {
     const [pseudo, setPseudo] = useState('');
@@ -40,28 +41,29 @@ const Login = () => {
     };
 
     return (
-        <div className="auth-container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '80vh', gap: '16px' }}>
-            <div className="glass-card" style={{ padding: '40px', width: '100%', maxWidth: '400px' }}>
-                <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <div className="auth-container" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '80vh', gap: '28px', padding: '32px 20px' }}>
+            <header style={{ width: '100%', maxWidth: '440px' }}>
+                <FilmStrip preview develop />
+                <h1 style={{ fontSize: 'clamp(2.8rem, 12vw, 4.2rem)', marginTop: '28px' }}>
+                    8 défis,<br />une soirée.
+                </h1>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1.05rem', marginTop: '14px', maxWidth: '34ch' }}>
+                    Connecte-toi pour relever les défis photo et partager tes souvenirs avec les autres invités.
+                </p>
+            </header>
 
-
-                    <div style={{ position: 'relative', width: '100px', margin: '0 auto 16px' }}>
-                        <img src="https://placehold.co/400x400" alt="Photo" style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover', display: 'block', border: '3px solid var(--primary)' }} />
-                        <div style={{ position: 'absolute', top: 0, left: 0, width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary)', border: '2px solid var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}>🎂</div>
-                    </div>
-                    <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Bienvenue à la soirée !</p>
-                    <p style={{ color: 'var(--text-muted)', marginTop: '8px' }}>Chaud pour le jeu des défis ?</p>
-                </div>
-
+            <div className="glass-card" style={{ padding: '28px', width: '100%', maxWidth: '440px' }}>
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
-                        <label>Pseudo</label>
+                        <label htmlFor="pseudo">Pseudo</label>
                         <div style={{ position: 'relative' }}>
-                            <UserIcon size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                            <UserIcon size={18} aria-hidden="true" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                             <input
+                                id="pseudo"
                                 className="input-field"
                                 type="text"
-                                placeholder="Votre pseudo"
+                                autoComplete="username"
+                                placeholder="Ton pseudo"
                                 style={{ paddingLeft: '40px' }}
                                 value={pseudo}
                                 onChange={(e) => setPseudo(e.target.value)}
@@ -71,13 +73,15 @@ const Login = () => {
                     </div>
 
                     <div className="input-group">
-                        <label>Code PIN</label>
+                        <label htmlFor="pin">Code PIN à 4 chiffres</label>
                         <div style={{ position: 'relative' }}>
-                            <Lock size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                            <Lock size={18} aria-hidden="true" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
                             <input
+                                id="pin"
                                 className="input-field"
                                 type="text"
                                 inputMode="numeric"
+                                autoComplete="current-password"
                                 placeholder="••••"
                                 maxLength={4}
                                 pattern="[0-9]{4}"
@@ -89,39 +93,29 @@ const Login = () => {
                         </div>
                     </div>
 
-                    {error && <p style={{ color: 'var(--danger)', fontSize: '0.9rem', marginBottom: '16px', textAlign: 'center' }}>{error}</p>}
+                    {error && <p role="alert" style={{ color: 'var(--danger)', fontWeight: 600, fontSize: '0.95rem', marginBottom: '16px' }}>{error}</p>}
 
-                    <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={loading}>
-                        {loading ? 'Connexion...' : 'Se connecter'}
+                    <button className="btn-primary" style={{ width: '100%' }} disabled={loading}>
+                        {loading ? 'Connexion…' : 'Se connecter'}
                     </button>
                 </form>
 
-                <p style={{ textAlign: 'center', marginTop: '24px', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                    Pas encore de compte ? <Link to="/register" style={{ color: 'var(--primary)', textDecoration: 'underline', fontWeight: '600' }}>S'inscrire</Link>
+                <p style={{ marginTop: '20px', color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+                    Pas encore de compte ? <Link to="/register" style={{ color: 'var(--ink)', fontWeight: 700 }}>Créer un compte</Link>
                 </p>
             </div>
 
-            <div style={{
-                background: 'rgba(232, 89, 12, 0.08)',
-                border: '1px solid rgba(232, 89, 12, 0.28)',
-                borderRadius: '12px',
-                padding: '16px',
-                width: '100%',
-                maxWidth: '400px',
-                textAlign: 'left'
-            }}>
-                <p style={{ fontWeight: '600', color: 'var(--primary)', marginBottom: '8px', fontSize: '0.95rem' }}>
-                    ✨ Comment ça marche ?
-                </p>
-                <ul style={{ color: 'var(--text-muted)', fontSize: '0.85rem', lineHeight: '1.7', paddingLeft: '16px', margin: 0 }}>
-                    <li>Crée ton compte avec un pseudo et un code PIN</li>
-                    <li>Relève des défis photo tout au long de la soirée</li>
-                    <li>Upload tes photos, tes vidéos et consultes celles des autres</li>
+            <section style={{ width: '100%', maxWidth: '440px' }} aria-labelledby="how-it-works">
+                <h2 id="how-it-works" style={{ fontSize: '1.3rem', marginBottom: '10px' }}>Comment ça marche</h2>
+                <ul style={{ color: 'var(--text-muted)', lineHeight: 1.6, paddingLeft: '18px' }}>
+                    <li>Crée ton compte avec un pseudo et un code PIN.</li>
+                    <li>Relève les défis photo tout au long de la soirée.</li>
+                    <li>Envoie tes photos et vidéos, et découvre celles des autres.</li>
                 </ul>
-                <p style={{ fontWeight: '500', color: 'var(--text-muted)', marginTop: '8px', fontSize: '0.75rem' }}>
-                    <span style={{ fontSize: '1.5rem' }}>
-                        📸  </span>   En souvenir, toutes les photos et vidéos seront transmises à la personne concernée.</p>
-            </div>
+                <p style={{ color: 'var(--text-muted)', marginTop: '12px', fontSize: '0.9rem' }}>
+                    En souvenir, toutes les photos et vidéos seront transmises à la personne fêtée.
+                </p>
+            </section>
         </div>
     );
 };
