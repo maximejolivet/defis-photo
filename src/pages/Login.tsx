@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { apiFetch } from '../api/client';
 import { User as UserIcon, Lock } from 'lucide-react';
 import FilmStrip from '../components/FilmStrip';
+import type { LoginResponse } from '../types';
 
 const Login = () => {
     const [pseudo, setPseudo] = useState('');
@@ -13,7 +14,7 @@ const Login = () => {
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         setError('');
@@ -25,7 +26,7 @@ const Login = () => {
                 body: JSON.stringify({ pseudo, pin })
             });
 
-            const data = await response.json();
+            const data: LoginResponse = await response.json();
 
             if (response.ok) {
                 login({ ...data.user, token: data.token });

@@ -1,9 +1,16 @@
+import type { CSSProperties } from 'react';
 import { useLocation } from 'react-router-dom';
+
+type Shape = [
+  kind: 'frame' | 'ring',
+  x: number, y: number, size: number, ratio: number,
+  dx: number, dy: number, drift: number, lock: number, delay: number,
+];
 
 // Fond « viseur » : des cadres de visée et des points de mise au point dérivent lentement,
 // comme un autofocus qui cherche son sujet, et « verrouillent » (flash jaune) chacun leur tour.
 // [forme, x %, y %, taille (vmin), ratio h/l, dérive x px, dérive y px, durée dérive s, cycle verrouillage s, décalage s]
-const SHAPES = [
+const SHAPES: Shape[] = [
   ['frame', 4, 10, 17, 1.33, 50, 36, 52, 16, -3],
   ['frame', 80, 6, 22, 1.33, -44, 40, 58, 19, -9],
   ['ring', 66, 30, 9, 1, 30, -26, 41, 13, -6],
@@ -38,7 +45,7 @@ export default function ViewfinderBackground() {
             '--drift': `${drift}s`,
             '--lock': `${lock}s`,
             '--delay': `${delay}s`,
-          }}
+          } as CSSProperties}
         >
           <div className="vf-box" />
         </div>

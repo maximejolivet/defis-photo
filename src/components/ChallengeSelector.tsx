@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom';
+import type { Challenge } from '../types';
 
-export default function ChallengeSelector({ challenges, selected, onSelect }) {
+interface ChallengeSelectorProps {
+  challenges: Challenge[];
+  selected: number | null;
+  onSelect: (id: number) => void;
+}
+
+export default function ChallengeSelector({ challenges, selected, onSelect }: ChallengeSelectorProps) {
   if (challenges.length === 0) {
     return (
       <div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../context/useAuth';
 import { Trash2, X, Play } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -8,12 +8,15 @@ import ProgressPanel from '../components/ProgressPanel';
 import WinnerBanner from '../components/WinnerBanner';
 import { apiFetch } from '../api/client';
 import { API_BASE_URL } from '../config';
+import { isVideoPath } from '../utils/media';
+import type { Photo, Stats, Winner } from '../types';
+
 const Gallery = () => {
-    const [photos, setPhotos] = useState([]);
+    const [photos, setPhotos] = useState<Photo[]>([]);
     const [loading, setLoading] = useState(true);
-    const [lightbox, setLightbox] = useState(null);
-    const [stats, setStats] = useState(null);
-    const [winner, setWinner] = useState(null);
+    const [lightbox, setLightbox] = useState<Photo | null>(null);
+    const [stats, setStats] = useState<Stats | null>(null);
+    const [winner, setWinner] = useState<Winner | null>(null);
     const { user } = useAuth();
     const navigate = useNavigate();
 
@@ -46,7 +49,7 @@ const Gallery = () => {
         }
     }, [user]);
 
-    const handleDelete = async (photoId) => {
+    const handleDelete = async (photoId: number) => {
         if (!confirm('Supprimer cette photo ?')) return;
         try {
             const response = await apiFetch('/api/photos/delete', {
@@ -63,7 +66,7 @@ const Gallery = () => {
     };
 
     useEffect(() => {
-        const onKey = (e) => { if (e.key === 'Escape') setLightbox(null); };
+        const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setLightbox(null); };
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
     }, []);
@@ -109,8 +112,7 @@ const Gallery = () => {
                         <div className="gallery-grid">
                             {
                                 photos.filter(p => p.user_id === user.id).map((photo) => {
-                                    const ext = photo.image_path.split('.').pop().toLowerCase();
-                                    const isVideo = ['mp4', 'mov', 'webm', 'avi', 'mpeg', '3gp'].includes(ext);
+                                    const isVideo = isVideoPath(photo.image_path);
                                     return (
                                         <div
                                             key={photo.id}
@@ -167,7 +169,7 @@ const Gallery = () => {
                             <button onClick={() => setLightbox(null)} aria-label="Fermer" style={{ position: 'absolute', top: '16px', right: '16px', background: 'rgba(255,255,255,0.14)', border: 'none', cursor: 'pointer', color: 'white', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <X size={20} />
                             </button>
-                            {['mp4', 'mov', 'webm', 'avi', 'mpeg', '3gp'].includes(lightbox.image_path.split('.').pop().toLowerCase()) ? (
+                            {isVideoPath(lightbox.image_path) ? (
                                 <video src={`${API_BASE_URL}/uploads/${lightbox.image_path}`} controls onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: '12px' }} />
                             ) : (
                                 <img src={`${API_BASE_URL}/uploads/${lightbox.image_path}`} alt="Défi photo" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '12px' }} />

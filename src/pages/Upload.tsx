@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { apiFetch } from '../api/client';
 import { Upload as UploadIcon, ArrowLeft } from 'lucide-react';
 import ChallengeSelector from '../components/ChallengeSelector';
 import Footer from '../components/Footer';
+import type { ApiMessage, Challenge } from '../types';
 
 const Upload = () => {
-    const [step, setStep] = useState('challenge'); // 'challenge' | 'file'
-    const [challenges, setChallenges] = useState([]);
-    const [doneChallengeIds, setDoneChallengeIds] = useState([]);
-    const [challengeId, setChallengeId] = useState(null);
-    const [file, setFile] = useState(null);
-    const [preview, setPreview] = useState(null);
+    const [step, setStep] = useState<'challenge' | 'file'>('challenge');
+    const [challenges, setChallenges] = useState<Challenge[]>([]);
+    const [doneChallengeIds, setDoneChallengeIds] = useState<number[]>([]);
+    const [challengeId, setChallengeId] = useState<number | null>(null);
+    const [file, setFile] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const { user } = useAuth();
@@ -33,13 +34,13 @@ const Upload = () => {
             .catch(() => { });
     }, []);
 
-    const handleChallengeSelect = (id) => {
+    const handleChallengeSelect = (id: number) => {
         setChallengeId(id);
         setStep('file');
     };
 
-    const handleFileChange = (e) => {
-        const selectedFile = e.target.files[0];
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = e.target.files?.[0];
         if (selectedFile) {
             setFile(selectedFile);
             setPreview(URL.createObjectURL(selectedFile));
@@ -47,14 +48,15 @@ const Upload = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (challengeId === null) return;
         if (!file) return setError('Veuillez sélectionner une image.');
 
         setLoading(true);
         const formData = new FormData();
         formData.append('photo', file);
-        formData.append('challenge_id', challengeId);
+        formData.append('challenge_id', String(challengeId));
 
         try {
             const response = await apiFetch('/api/photos/upload', {
@@ -62,7 +64,7 @@ const Upload = () => {
                 body: formData
             });
 
-            const data = await response.json();
+            const data: ApiMessage = await response.json();
 
             if (response.ok) {
                 navigate('/gallery');
@@ -176,8 +178,8 @@ const Upload = () => {
                             }}
                             role="button"
                             tabIndex={0}
-                            onClick={() => document.getElementById('file-upload').click()}
-                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.getElementById('file-upload').click(); } }}
+                            onClick={() => document.getElementById('file-upload')?.click()}
+                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.getElementById('file-upload')?.click(); } }}
                         >
                             {preview ? (
                                 isVideo ? (

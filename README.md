@@ -26,14 +26,14 @@ Application web (React + Vite) de défis photo entre participants : inscription,
 - [Lucide React](https://lucide.dev/) pour les icônes
 - [heic2any](https://github.com/alexcorvi/heic2any) pour convertir les photos HEIC (iPhone) côté client
 
-Pas de TypeScript — projet en JavaScript/JSX pur.
+Le projet est écrit en **TypeScript** (mode `strict`) : `.ts` / `.tsx` uniquement.
 
 ## Fonctionnement
 
-L'application est une SPA 100% front-end : toutes les données (authentification, photos, classement, uploads) proviennent d'une API REST, appelée via `apiFetch` (`src/api/client.js`) qui préfixe l'URL avec `API_BASE_URL` (`src/config.js`).
+L'application est une SPA 100% front-end : toutes les données (authentification, photos, classement, uploads) proviennent d'une API REST, appelée via `apiFetch` (`src/api/client.ts`) qui préfixe l'URL avec `API_BASE_URL` (`src/config.ts`).
 
 - `API_BASE_URL` vaut `VITE_API_BASE_URL` si la variable est définie, sinon l'API PHP de production (`https://photo.jolivetmaxime.fr`). Vite l'injecte au démarrage du serveur / au build.
-- L'authentification est par **JWT** : `login` / `register` renvoient `{ user, token }`, stockés ensemble dans le `localStorage` (voir `src/context/AuthContext.jsx`), et `apiFetch` envoie le token en `Authorization: Bearer`. Les routes protégées du front vérifient seulement la présence d'un utilisateur ; le contrôle réel des droits est fait par l'API à chaque requête.
+- L'authentification est par **JWT** : `login` / `register` renvoient `{ user, token }`, stockés ensemble dans le `localStorage` (voir `src/context/AuthContext.tsx`), et `apiFetch` envoie le token en `Authorization: Bearer`. Les routes protégées du front vérifient seulement la présence d'un utilisateur ; le contrôle réel des droits est fait par l'API à chaque requête.
 
 ## Structure
 
@@ -42,11 +42,12 @@ src/
   pages/        # Login, Register, Gallery, Upload, AllPhotos, FreeUpload, Diaporama
   components/   # Navbar, Footer, ProgressPanel, ChallengeSelector, WinnerBanner, BirthdayConfetti
   context/      # AuthContext (provider), authState (objet contexte), useAuth (hook)
-  api/          # client.js : apiFetch (base URL + token JWT)
-  config.js     # API_BASE_URL
-  App.jsx       # Déclaration des routes
+  api/          # client.ts : apiFetch (base URL + token JWT)
+  config.ts     # API_BASE_URL
+  types.ts      # Types des données de l'API (Photo, Challenge, Stats…)
+  App.tsx       # Déclaration des routes
 public/
-  diaporama.html  # Diaporama HTML statique (indépendant de src/pages/Diaporama.jsx)
+  diaporama.html  # Diaporama HTML statique (indépendant de src/pages/Diaporama.tsx)
 ```
 
 ## Développement
@@ -55,7 +56,7 @@ public/
 npm install     # installer les dépendances
 npm run dev     # lancer le serveur de dev (http://localhost:5173)
 npm run lint    # vérifier le code avec ESLint
-npm run build   # build de production
+npm run build   # vérification des types (tsc) puis build de production
 npm run preview # prévisualiser le build
 ```
 

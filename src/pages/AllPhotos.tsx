@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { apiFetch } from '../api/client';
 import { API_BASE_URL } from '../config';
+import { isVideoPath } from '../utils/media';
+import type { Photo } from '../types';
 
 const PER_PAGE = 8;
 
 const AllPhotos = () => {
-    const [photos, setPhotos] = useState([]);
+    const [photos, setPhotos] = useState<Photo[]>([]);
     const [loading, setLoading] = useState(true);
-    const [lightbox, setLightbox] = useState(null);
+    const [lightbox, setLightbox] = useState<Photo | null>(null);
     const [page, setPage] = useState(1);
 
     useEffect(() => {
@@ -22,7 +24,7 @@ const AllPhotos = () => {
     }, []);
 
     useEffect(() => {
-        const onKey = (e) => { if (e.key === 'Escape') setLightbox(null); };
+        const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setLightbox(null); };
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
     }, []);
@@ -30,7 +32,7 @@ const AllPhotos = () => {
     const totalPages = Math.ceil(photos.length / PER_PAGE);
     const paginated = photos.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 
-    const goTo = (p) => {
+    const goTo = (p: number) => {
         setPage(p);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -64,8 +66,7 @@ const AllPhotos = () => {
                     <>
                         <div className="gallery-grid">
                             {paginated.map((photo) => {
-                                const ext = photo.image_path.split('.').pop().toLowerCase();
-                                const isVideo = ['mp4', 'mov', 'webm', 'avi', 'mpeg', '3gp'].includes(ext);
+                                const isVideo = isVideoPath(photo.image_path);
                                 return (
                                     <div
                                         key={photo.id}
@@ -175,7 +176,7 @@ const AllPhotos = () => {
                         >
                             <X size={20} />
                         </button>
-                        {['mp4', 'mov', 'webm', 'avi', 'mpeg', '3gp'].includes(lightbox.image_path.split('.').pop().toLowerCase()) ? (
+                        {isVideoPath(lightbox.image_path) ? (
                             <video src={`${API_BASE_URL}/uploads/${lightbox.image_path}`} controls onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', borderRadius: '12px' }} />
                         ) : (
                             <img src={`${API_BASE_URL}/uploads/${lightbox.image_path}`} alt="Défi photo" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain', borderRadius: '12px' }} />

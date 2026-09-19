@@ -4,12 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Stack
 
-React 19 + Vite 7, plain JavaScript/JSX (no TypeScript — `@types/react*` are editor-support only). React Router v7 for routing. Also used: `framer-motion` (animations), `lucide-react` (icons), `heic2any` (HEIC→JPEG conversion for iPhone photo uploads).
+React 19 + Vite 7, TypeScript (`strict`, `.ts`/`.tsx` only — no JS/JSX left). React Router v7 for routing. Also used: `framer-motion` (animations), `lucide-react` (icons), `heic2any` (HEIC→JPEG conversion for iPhone photo uploads).
 
 ## Commands
 
 - `npm run dev` — start Vite dev server
-- `npm run build` — production build
+- `npm run build` — type-check (`tsc -b`) then production build; a type error fails the build, hence the Vercel deploy
+- `npx tsc -b` — type-check only (Vite/esbuild strips types without checking them, so `npm run dev` never reports type errors)
 - `npm run lint` — ESLint (flat config in `eslint.config.js`)
 - `npm run preview` — preview the production build
 
@@ -19,17 +20,19 @@ There is no test suite in this repo.
 
 This is a client-only SPA ("Défis photo", a birthday photo-challenge app) deployed to Vercel (`vercel.json` just rewrites everything to `/index.html` for client-side routing).
 
-- All data (auth, photos, gallery, leaderboard, uploads) comes from a backend API, called through `src/api/client.js` (`apiFetch`), which prepends `API_BASE_URL` (`src/config.js`) and attaches the JWT from `localStorage` as a `Bearer` token. `API_BASE_URL` reads `import.meta.env.VITE_API_BASE_URL`, falling back to the production PHP backend at `https://photo.jolivetmaxime.fr` when unset. Vite inlines this at dev-server start/build time from the launching process's env — `npm run dev` on the host has no `VITE_API_BASE_URL` set, so it hits the PHP backend; `docker-compose.yml` sets it to `http://api-express.localhost:8088` for the `frontend` container, so the dockerized stack talks to the local Express API instead.
+- All data (auth, photos, gallery, leaderboard, uploads) comes from a backend API, called through `src/api/client.ts` (`apiFetch`), which prepends `API_BASE_URL` (`src/config.ts`) and attaches the JWT from `localStorage` as a `Bearer` token. `API_BASE_URL` reads `import.meta.env.VITE_API_BASE_URL`, falling back to the production PHP backend at `https://photo.jolivetmaxime.fr` when unset. Vite inlines this at dev-server start/build time from the launching process's env — `npm run dev` on the host has no `VITE_API_BASE_URL` set, so it hits the PHP backend; `docker-compose.yml` sets it to `http://api-express.localhost:8088` for the `frontend` container, so the dockerized stack talks to the local Express API instead.
 - Auth is JWT-based: login/register hit `/api/auth/...` on whichever backend `API_BASE_URL` points to, and the returned `{ user, token }` is stored together in `localStorage` via `AuthContext`; `apiFetch` reads the token back out and sends it as `Authorization: Bearer`. Protected routes still just check truthiness of the stored user client-side — there's no real session validation beyond what the backend enforces per-request.
-- `src/App.jsx` defines the router and protected routes: `/login`, `/register`, `/gallery`, `/upload`, `/all-photos`, `/photo-libre`, `/diaporama`, with `/` redirecting to `/gallery`.
+- `src/App.tsx` defines the router and protected routes: `/login`, `/register`, `/gallery`, `/upload`, `/all-photos`, `/photo-libre`, `/diaporama`, with `/` redirecting to `/gallery`.
+- API response shapes live in `src/types.ts` (`Photo`, `Challenge`, `Stats`, …), inferred from how the front uses them — `public/openapi.yaml` is less complete. They're compile-time only: `response.json()` is `any` and nothing validates the payload at runtime, so keep them in sync by hand if the API changes.
+- TS config is split Vite-style: `tsconfig.app.json` (`src/`, browser types) and `tsconfig.node.json` (`vite.config.ts`), tied together by `tsconfig.json` project references.
 
 ## Theme ("la pellicule")
 
-Styling lives in `src/index.css` (custom properties on `:root`) plus lots of inline styles that reference those variables. Non-obvious rule: `--text`, `--text-muted`, `--text-strong`, `--primary`, `--surface` and `--glass-border` describe text on the **blue page background**; the `.glass-card` class (a white "paper" panel, also used by `.photo-card`) redefines them locally to dark ink. So inline `var(--text)` is correct in both contexts — don't hardcode colors, and put light surfaces in `.glass-card` rather than styling a `div` with `var(--card-bg)`. `FilmStrip` (8 frames = the 8 challenges, each showing the challenge's emoji and number, loaded through the shared `src/api/challenges.js`; a frame is "done" when its challenge id is in `stats.my_challenges`) is the one signature element, and the footer (`.film-edge`) is the end of the roll. The animated page background is `ViewfinderBackground` (pure CSS: drifting autofocus frames/rings that briefly "lock" in yellow; mounted inside the Router in `App.jsx`, hidden on `/diaporama`, frozen under `prefers-reduced-motion`). Both diaporamas have their own hardcoded palette and fonts (keep them in sync by hand). Vite in Docker doesn't see file changes through the Colima bind mount: `docker compose restart frontend` after edits.
+Styling lives in `src/index.css` (custom properties on `:root`) plus lots of inline styles that reference those variables. Non-obvious rule: `--text`, `--text-muted`, `--text-strong`, `--primary`, `--surface` and `--glass-border` describe text on the **blue page background**; the `.glass-card` class (a white "paper" panel, also used by `.photo-card`) redefines them locally to dark ink. So inline `var(--text)` is correct in both contexts — don't hardcode colors, and put light surfaces in `.glass-card` rather than styling a `div` with `var(--card-bg)`. `FilmStrip` (8 frames = the 8 challenges, each showing the challenge's emoji and number, loaded through the shared `src/api/challenges.ts`; a frame is "done" when its challenge id is in `stats.my_challenges`) is the one signature element, and the footer (`.film-edge`) is the end of the roll. The animated page background is `ViewfinderBackground` (pure CSS: drifting autofocus frames/rings that briefly "lock" in yellow; mounted inside the Router in `App.tsx`, hidden on `/diaporama`, frozen under `prefers-reduced-motion`). Both diaporamas have their own hardcoded palette and fonts (keep them in sync by hand). Vite in Docker doesn't see file changes through the Colima bind mount: `docker compose restart frontend` after edits.
 
 ## Gotcha: two unrelated "diaporama" files
 
-- `src/pages/Diaporama.jsx` is a React page (part of the router).
+- `src/pages/Diaporama.tsx` is a React page (part of the router).
 - `public/diaporama.html` is a separate static standalone HTML slideshow, not related to the React page.
 
 Confirm which one is meant before editing "the diaporama."

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import { apiFetch } from '../api/client';
 import { Upload as UploadIcon, ArrowLeft, Heart } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import type { ApiMessage } from '../types';
 
 const FreeUpload = () => {
-    const [file, setFile] = useState(null);
-    const [preview, setPreview] = useState(null);
+    const [file, setFile] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const { user } = useAuth();
@@ -16,8 +17,8 @@ const FreeUpload = () => {
 
     const isVideo = file && file.type.startsWith('video/');
 
-    const handleFileChange = (e) => {
-        const selectedFile = e.target.files[0];
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const selectedFile = e.target.files?.[0];
         if (selectedFile) {
             setFile(selectedFile);
             setPreview(URL.createObjectURL(selectedFile));
@@ -25,7 +26,7 @@ const FreeUpload = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!file) return setError('Veuillez sélectionner une image.');
 
@@ -39,7 +40,7 @@ const FreeUpload = () => {
                 body: formData,
             });
 
-            const data = await response.json();
+            const data: ApiMessage = await response.json();
 
             if (response.ok) {
                 navigate('/gallery');
@@ -107,7 +108,7 @@ const FreeUpload = () => {
                                 backgroundColor: 'var(--surface)',
                                 marginBottom: '24px',
                             }}
-                            onClick={() => document.getElementById('free-file-upload').click()}
+                            onClick={() => document.getElementById('free-file-upload')?.click()}
                         >
                             {preview ? (
                                 isVideo ? (

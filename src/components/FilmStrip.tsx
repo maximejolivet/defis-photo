@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { loadChallenges } from '../api/challenges';
+import type { Challenge } from '../types';
+
+interface FilmStripProps {
+  doneIds?: (number | string)[];
+  total?: number;
+  develop?: boolean;
+  preview?: boolean;
+}
 
 // Une pellicule de 8 vues : une vue par défi, avec son emoji et son numéro.
 // - doneIds : ids des défis réalisés (vues jaune flash)
 // - preview : vue d'ensemble décorative (connexion), emojis en couleur, rien de « réalisé »
-export default function FilmStrip({ doneIds = [], total = 8, develop = false, preview = false }) {
-  const [challenges, setChallenges] = useState([]);
+export default function FilmStrip({ doneIds = [], total = 8, develop = false, preview = false }: FilmStripProps) {
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
 
   useEffect(() => {
     let active = true;
@@ -18,7 +26,8 @@ export default function FilmStrip({ doneIds = [], total = 8, develop = false, pr
   }, []);
 
   const done = new Set(doneIds.map(Number));
-  const frames = Array.from({ length: total }, (_, i) => challenges[i]);
+  // challenges[i] est undefined tant que la liste n'est pas chargée (ou s'il y a moins de défis que de vues).
+  const frames = Array.from({ length: total }, (_, i): Challenge | undefined => challenges[i]);
   const doneCount = frames.filter((c) => c && done.has(Number(c.id))).length;
 
   const label = preview
@@ -35,7 +44,7 @@ export default function FilmStrip({ doneIds = [], total = 8, develop = false, pr
             data-done={(!preview && challenge && done.has(Number(challenge.id))) || undefined}
             data-preview={preview || undefined}
             title={challenge?.title}
-            style={{ '--i': i }}
+            style={{ '--i': i } as CSSProperties}
           >
             <span className="film-emoji">{challenge?.icon}</span>
             <span className="film-num">{i + 1}</span>

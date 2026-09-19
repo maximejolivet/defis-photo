@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { apiFetch } from '../api/client';
 import { Lock, User as UserIcon } from 'lucide-react';
 import FilmStrip from '../components/FilmStrip';
+import type { ApiMessage } from '../types';
 
 const Register = () => {
     const [pseudo, setPseudo] = useState('');
@@ -12,13 +13,13 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const normalizePseudo = (value) =>
+    const normalizePseudo = (value: string) =>
         value
             .toLowerCase()
             .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // supprime les accents
             .replace(/[^a-z0-9_-]/g, '');                     // retire espaces et caractères spéciaux
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         setError('');
@@ -42,7 +43,7 @@ const Register = () => {
                 body: JSON.stringify({ pseudo, pin })
             });
 
-            const data = await response.json();
+            const data: ApiMessage = await response.json();
 
             if (response.ok) {
                 navigate('/login');

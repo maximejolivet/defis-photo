@@ -1,8 +1,9 @@
 import FilmStrip from './FilmStrip';
+import type { Stats } from '../types';
 
 // Le libellé du niveau commence par un prénom variable : on repère la couleur
 // par la fin du texte plutôt que par la chaîne exacte.
-const LEVEL_COLORS = [
+const LEVEL_COLORS: [keyword: string, background: string, text: string][] = [
   ['a honte', '#6b6a95', '#ffffff'],
   ['hausse les épaules', '#3b2fe0', '#ffffff'],
   ['approuve', '#0e0b3d', '#ffffff'],
@@ -11,9 +12,9 @@ const LEVEL_COLORS = [
 
 const TOTAL = 8;
 
-export default function ProgressPanel({ me }) {
+export default function ProgressPanel({ me }: { me: Stats }) {
   const completed = Number(me.challenges_completed);
-  const [, levelBg, levelFg] = LEVEL_COLORS.find(([keyword]) => me.level?.includes(keyword)) ?? [null, '#0e0b3d', '#ffffff'];
+  const [, levelBg, levelFg] = LEVEL_COLORS.find(([keyword]) => me.level?.includes(keyword)) ?? ['', '#0e0b3d', '#ffffff'];
   const photoCount = Number(me.photo_count);
 
   return (

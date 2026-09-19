@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 const COLORS = ['#ffe94a', '#ffffff', '#ff6a5a', '#8f86ff', '#ffe94a', '#ffffff', '#ff6a5a', '#8f86ff', '#ffe94a', '#ffffff', '#ff6a5a'];
 const SHAPES = ['circle', 'rect', 'ribbon', 'rect', 'circle'];
@@ -28,7 +28,7 @@ const emojiData = Array.from({ length: EMOJI_COUNT }, (_, i) => ({
 }));
 
 export default function Diaporama() {
-  const confettiRef = useRef(null);
+  const confettiRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Inject keyframes
@@ -335,7 +335,10 @@ export default function Diaporama() {
                 <img
                   src="https://placehold.co/400x400"
                   alt="Photo"
-                  onError={e => { e.currentTarget.parentElement.style.background = 'linear-gradient(135deg,#241a9a,#0e0b3d)'; }}
+                  onError={e => {
+                    const ring = e.currentTarget.parentElement;
+                    if (ring) ring.style.background = 'linear-gradient(135deg,#241a9a,#0e0b3d)';
+                  }}
                 />
               </div>
             </div>

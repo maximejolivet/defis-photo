@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
+import type { Winner } from '../types';
 
-function formatDate(dateStr) {
+function formatDate(dateStr: string) {
   const d = new Date(dateStr);
   return d.toLocaleDateString('fr-FR', {
     day: 'numeric', month: 'long', year: 'numeric',
@@ -8,7 +9,7 @@ function formatDate(dateStr) {
   });
 }
 
-export default function WinnerBanner({ winner }) {
+export default function WinnerBanner({ winner }: { winner: Winner | null }) {
   if (!winner) return null;
 
   return (

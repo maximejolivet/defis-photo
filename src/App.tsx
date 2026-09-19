@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { useAuth } from './context/useAuth';
@@ -12,7 +12,7 @@ import Diaporama from './pages/Diaporama';
 import './index.css';
 import ViewfinderBackground from './components/ViewfinderBackground';
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
   return children;
