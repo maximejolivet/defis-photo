@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b2fe0"/>
+      <stop offset="1" stop-color="#2a1fb8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Fond bleu "ground" du thème (plein cadre, sans coins arrondis : iOS les arrondit) -->
+  <rect width="1024" height="1024" fill="url(#ground)"/>
+
+  <!-- Cadre d'autofocus : 4 coins jaunes -->
+  <g fill="none" stroke="#ffe94a" stroke-width="48" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M232 380 V232 H380"/>
+    <path d="M644 232 H792 V380"/>
+    <path d="M792 644 V792 H644"/>
+    <path d="M380 792 H232 V644"/>
+  </g>
+
+  <!-- Objectif -->
+  <circle cx="512" cy="512" r="176" fill="#ffffff"/>
+  <circle cx="512" cy="512" r="152" fill="#0e0b3d"/>
+  <circle cx="512" cy="512" r="96" fill="#3b2fe0" stroke="#ffe94a" stroke-width="22"/>
+  <ellipse cx="478" cy="476" rx="26" ry="18" fill="#ffffff" opacity="0.9" transform="rotate(-35 478 476)"/>
+</svg>

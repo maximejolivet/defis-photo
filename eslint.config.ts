@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'api-express', 'api-nestjs', 'api-laravel', 'api-symfony']),
+  globalIgnores(['dist', 'android', 'ios', 'api-express', 'api-nestjs', 'api-laravel', 'api-symfony']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

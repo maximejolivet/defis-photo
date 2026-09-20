@@ -1,4 +1,4 @@
-.PHONY: up down restart build-images logs ps sh-% lint build preview bruno compare docs db-init clean infos
+.PHONY: up down restart build-images logs ps sh-% lint build preview bruno compare docs db-init clean infos cap-sync cap-ios cap-android cap-run-ios cap-run-android cap-icons cap-doctor cap-ls
 
 infos:
 	@echo "Stack Docker (Traefik, routage par domaine) :"
@@ -29,6 +29,14 @@ infos:
 	@echo "  lint          Vérifier le code frontend avec ESLint (hors Docker)"
 	@echo "  build         Build de production du frontend (hors Docker)"
 	@echo "  preview       Prévisualiser le build frontend (hors Docker)"
+	@echo "  cap-sync         Build du frontend + copie dans android/ et ios/ (Capacitor)"
+	@echo "  cap-ios          Sync puis ouvrir le projet dans Xcode"
+	@echo "  cap-android      Sync puis ouvrir le projet dans Android Studio"
+	@echo "  cap-run-ios      Sync puis lancer l'app iOS (simulateur/appareil, choix en ligne de commande)"
+	@echo "  cap-run-android  Sync puis lancer l'app Android (émulateur/appareil)"
+	@echo "  cap-icons        Générer les icônes iOS/Android depuis resources/icon.svg"
+	@echo "  cap-doctor       Diagnostiquer l'installation Capacitor (iOS/Android)"
+	@echo "  cap-ls           Lister les plugins Capacitor installés"
 	@echo "  clean         Arrêter le stack et supprimer volumes + images du projet"
 	@echo "  infos         Afficher ces informations"
 
@@ -77,6 +85,34 @@ build:
 
 preview:
 	npm run preview
+
+# Capacitor (apps mobiles) : après un changement du code React, l'app native
+# garde l'ancienne version tant qu'on n'a pas relancé cap-sync.
+cap-sync:
+	npm run cap:sync
+
+cap-ios:
+	npm run cap:ios
+
+cap-android:
+	npm run cap:android
+
+cap-run-ios: cap-sync
+	npx cap run ios
+
+cap-run-android: cap-sync
+	npx cap run android
+
+# Génère toutes les tailles d'icônes à partir d'une seule image (resources/icon.svg ou .png).
+# --assetPath : @capacitor/assets cherche par défaut dans assets/, pas resources/.
+cap-icons:
+	npx @capacitor/assets generate --assetPath resources --iconBackgroundColor '#3b2fe0' --iconBackgroundColorDark '#2a1fb8'
+
+cap-doctor:
+	npx cap doctor
+
+cap-ls:
+	npx cap ls
 
 clean:
 	docker compose down -v --rmi local

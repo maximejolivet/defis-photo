@@ -50,6 +50,37 @@ public/
   diaporama.html  # Diaporama HTML statique (indépendant de src/pages/Diaporama.tsx)
 ```
 
+## Applications mobiles (Android / iOS)
+
+L'app web est empaquetée avec [Capacitor](https://capacitorjs.com/) : le build (`dist/`) tourne dans un
+WebView natif, le code React reste le même. Les projets natifs sont dans `android/` et `ios/`.
+
+```bash
+npm run cap:sync      # build web + copie dans android/ et ios/
+npm run cap:android   # sync, puis ouvre Android Studio (nécessite Android Studio + JDK)
+npm run cap:ios       # sync, puis ouvre Xcode (nécessite un Mac avec Xcode)
+```
+
+Les mêmes commandes existent en raccourcis `make` (voir `make infos`), plus quelques extras :
+
+```bash
+make cap-sync          # = npm run cap:sync
+make cap-ios           # = npm run cap:ios
+make cap-android       # = npm run cap:android
+make cap-run-ios       # sync, puis lance l'app iOS sans ouvrir Xcode (npx cap run ios)
+make cap-run-android   # sync, puis lance l'app Android sans ouvrir Android Studio
+make cap-icons         # génère les icônes iOS/Android depuis resources/icon.svg
+make cap-doctor        # diagnostique l'installation Capacitor
+make cap-ls            # liste les plugins Capacitor
+```
+
+L'icône source est `resources/icon.svg` (1024×1024, sans transparence).
+
+Tutoriel complet de test sur iOS et Android : [`docs/capacitor-mobile.md`](docs/capacitor-mobile.md).
+
+L'API doit autoriser les origines du WebView : ajoute `https://localhost` (Android) et
+`capacitor://localhost` (iOS) à `CORS_ORIGINS` (voir `api-express/.env.example`).
+
 ## Développement
 
 ```bash

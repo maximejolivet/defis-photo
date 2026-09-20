@@ -68,7 +68,8 @@ DB_PASS=<son mot de passe>
 JWT_SECRET=<chaîne aléatoire>
 JWT_EXPIRES_IN=30d
 
-CORS_ORIGINS=https://defis-photo.vercel.app
+# https://localhost et capacitor://localhost : origines des apps Android et iOS (Capacitor).
+CORS_ORIGINS=https://defis-photo.vercel.app,https://localhost,capacitor://localhost
 
 ADMIN_EMAIL=<ton email>
 ADMIN_PASSWORD=<mot de passe long, unique>
