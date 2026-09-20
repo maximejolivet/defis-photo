@@ -18,12 +18,12 @@ Changer d'environnement permet de rejouer exactement les mêmes requêtes contre
 ## Lancer la collection en ligne de commande
 
 ```bash
-cd bruno
+cd docs/bruno
 npx @usebruno/cli run auth/register.bru auth/login.bru challenges/list.bru users/list.bru \
   gamification/stats.bru gamification/winner.bru photos/gallery.bru --env express
 ```
 
-⚠️ Le script post-réponse de `Login` écrit le JWT dans `bruno/environments/<env>.bru` : après un `bru run`, annule avec `git checkout -- bruno/environments` pour ne pas committer un token.
+⚠️ Le script post-réponse de `Login` écrit le JWT dans `docs/bruno/environments/<env>.bru` : après un `bru run`, annule avec `git checkout -- docs/bruno/environments` pour ne pas committer un token.
 
 `photos/upload` (fichier à choisir dans l'interface) et `photos/delete` (id à adapter) restent manuels. Les requêtes n'ont **aucune assertion** : Bruno affiche « PASS » même sur un `500`. Lis les codes de statut, ou ajoute des blocs `assert` pour un vrai contrôle automatique.
 

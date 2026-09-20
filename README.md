@@ -89,7 +89,7 @@ Nécessite [Colima](https://github.com/abiosoft/colima) (`colima start`) ou tout
 **Back office AdminJS** : Express (http://api-express.localhost:8088/admin) et NestJS (http://api-nest.localhost:8088/admin) exposent chacun un back office pour gérer utilisateurs, défis et photos. Connexion : `admin@local.dev` / `admin` (identifiants de dev, définis dans `docker-compose.yml`). Comme la base est partagée, les deux voient les mêmes données.
 
 Trois outils pour explorer/comparer les 4 API :
-- **[Bruno](https://www.usebruno.com/)** (`make bruno`) : collection de requêtes (`bruno/`), un environnement par backend — pour tester une requête en détail ou un scénario à plusieurs étapes (register → login → upload). Le comportement connu de chaque backend est résumé dans `bruno/README.md`.
+- **[Bruno](https://www.usebruno.com/)** (`make bruno`) : collection de requêtes (`docs/bruno/`), un environnement par backend — pour tester une requête en détail ou un scénario à plusieurs étapes (register → login → upload). Le comportement connu de chaque backend est résumé dans `docs/bruno/README.md`.
 - **Comparateur navigateur** (`make compare`) : `public/api-compare.html`, envoie la même requête aux 4 API en parallèle et affiche les réponses côte à côte — pour repérer une divergence de comportement rapidement.
 - **Docs API / Swagger UI** (`make docs`) : `public/api-docs.html`, génère une doc interactive à partir de `public/openapi.yaml` (spec écrite à la main — aucun des 4 backends ne génère de Swagger) avec un sélecteur de serveur et un bouton "Try it out".
 

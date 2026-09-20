@@ -54,7 +54,7 @@ sh-%:
 	docker compose exec $* sh
 
 bruno:
-	open -a Bruno ./bruno || echo "Ouvre l'app Bruno manuellement sur le dossier ./bruno"
+	open -a Bruno ./docs/bruno || echo "Ouvre l'app Bruno manuellement sur le dossier ./docs/bruno"
 
 compare:
 	open http://frontend.localhost:8088/api-compare.html

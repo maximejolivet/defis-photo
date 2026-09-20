@@ -7,7 +7,7 @@ info:
     Laravel, Symfony) du stack de comparaison local. Choisis un serveur
     dans le menu déroulant pour pointer vers l'implémentation de ton choix —
     les réponses peuvent légèrement diverger d'un backend à l'autre (voir
-    CLAUDE.md et bruno/README.md pour les écarts connus).
+    CLAUDE.md et docs/bruno/README.md pour les écarts connus).
 
 servers:
   - url: http://api-express.localhost:8088
